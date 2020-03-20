@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smart University</string>
+    <string name="login_form_header">Se Connecter</string>
+    <string name="login_form_password_hint">Mot de passe</string>
+    <string name="login_form_user_hint">Nom d\'utilisateur</string>
+    <string name="login_form_stay_logged_text">Me garder connecter.</string>
+    <string name="login_form_sumbit_button_text">Se connecter</string>
+    <string name="login_form_dont_have_account">Pas de compte? Contectez l\'administration.</string>
+    <string name="logged_in_log_out">Se Déconnecter</string>
+    <string name="logged_in_welcome">Bienvenue!</string>
+    <string name="login_form_login_result_on_failure">Nom d\'utilisateur ou mot de passe incorrect</string>
+    <string name="login_form_login_result_on_response">Une erreur interne s\'est produite. Réessayer ultérieurement. Code: </string>
+    <string name="login_form_fill_all_fields">Veuillez remplir tous les champs obligatoires.</string>
+</resources>
