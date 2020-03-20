@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class User
 {
+	public static final int MIN_PASSWORD_LENGHT = 6;
+	
 	public enum User_Type 
 	{
 		Undefined,

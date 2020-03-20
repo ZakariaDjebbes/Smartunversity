@@ -11,9 +11,10 @@ import javax.ws.rs.core.Response.Status;
 import com.data.DAO_User;
 import com.dots.Dots_Create_User;
 import com.dots.Dots_Login_User;
-import com.helpers.RequestResult;
+import com.helpers.RequestReponse;
 import com.helpers.Utility;
 import com.modele.User;
+import com.rest.exceptions.RequestNotValidException;
 
 @Path("/auth")
 public class Authentification
@@ -26,23 +27,15 @@ public class Authentification
 	@Path("/login")
 	public Response Login(Dots_Login_User userLoginDots)
 	{
-		// validation
-		if (userLoginDots == null)
-		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestResult("Request body is empty"));
-		}
-		// validation
-		if (userLoginDots.Validate() != null)
-		{
-			return userLoginDots.Validate();
-		}
+		//validation
+		userLoginDots.Validate();
 
 		// request
 		User userFromDB = DAO_User.GetUser(userLoginDots);
 
 		if (userFromDB == null)
 		{
-			return Utility.Response(Status.UNAUTHORIZED, new RequestResult("This user doesn't exist"));
+			throw new RequestNotValidException(Status.UNAUTHORIZED, new RequestReponse("Invalid username and password combination"));
 		} else
 		{
 			return Utility.Response(Status.OK, userFromDB);
@@ -55,28 +48,20 @@ public class Authentification
 	@Path("/create")
 	public Response CreateUser(Dots_Create_User userCreateDots)
 	{
-		// request shoudn't be empty
-		if (userCreateDots == null)
-		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestResult("Request body is empty"));
-		}
-		// validation
-		if (userCreateDots.Validate() != null)
-		{
-			return userCreateDots.Validate();
-		}
-
+		//validation
+		userCreateDots.Validate();
+		
 		// creating account
 		if (DAO_User.UserExists(userCreateDots.getUsername()))
 		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestResult("Username already exists"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Username already exists"));
 		} else
 		{
 			if (DAO_User.CreateUser(userCreateDots))
 				return Response.ok().build();
 			else
-				return Utility.Response(Status.INTERNAL_SERVER_ERROR,
-						new RequestResult("Internal error prevented the creation of the user"));
+				throw new RequestNotValidException(Status.INTERNAL_SERVER_ERROR,
+						new RequestReponse("Internal error prevented the creation of the user"));
 		}
 	}
 }

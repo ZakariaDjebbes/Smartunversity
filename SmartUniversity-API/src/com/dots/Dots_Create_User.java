@@ -1,13 +1,13 @@
 package com.dots;
 
 import javax.persistence.Entity;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.helpers.RequestResult;
-import com.helpers.Utility;
+import com.helpers.RequestReponse;
+import com.modele.User;
 import com.modele.User.User_Type;
+import com.rest.exceptions.RequestNotValidException;
 
 @XmlRootElement
 @Entity
@@ -27,10 +27,10 @@ public class Dots_Create_User implements IDots
 		this.last_name = last_name;
 		this.user_type = user_type;
 	}
-	
+
 	public Dots_Create_User()
 	{
-		
+
 	}
 
 	public String getUsername()
@@ -84,21 +84,20 @@ public class Dots_Create_User implements IDots
 	}
 
 	@Override
-	public Response Validate()
+	public void Validate()
 	{
-		//Values shouldn't be empty
+		// Values shouldn't be empty
 		if (username.equals("") || password.equals("") || first_name.equals("") || last_name.equals("")
 				|| user_type.equals(User_Type.Undefined))
 		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestResult(
+			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse(
 					"Request body missing important data to create a new user. Required fields are username, password, first name, last name, type"));
 		}
-		//Checking for password size
-		if(password.length() < 6)
+		// Checking for password size
+		if (password.length() < User.MIN_PASSWORD_LENGHT)
 		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestResult("Password must have at least 6 characters"));
+			throw new RequestNotValidException(Status.BAD_REQUEST,
+					new RequestReponse("Password must have atleast " + User.MIN_PASSWORD_LENGHT + " characters"));
 		}
-		
-		return null;
 	}
 }

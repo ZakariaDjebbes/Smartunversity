@@ -1,11 +1,11 @@
 package com.dots;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.helpers.RequestResult;
-import com.helpers.Utility;
+import com.helpers.RequestReponse;
+import com.modele.User;
+import com.rest.exceptions.RequestNotValidException;
 
 @XmlRootElement
 public class Dots_Login_User implements IDots
@@ -45,17 +45,13 @@ public class Dots_Login_User implements IDots
 	}
 
 	@Override
-	public Response Validate()
-	{
-		int passwordMin = 6;
-		
+	public void Validate()
+	{		
 		// Check notEmpty
 		if (username.equals("") || password.equals(""))
-			return Utility.Response(Status.BAD_REQUEST, new RequestResult("Username or password is empty"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Username or password is empty"));
 		// Check size
-		if (password.length() < passwordMin)
-			return Utility.Response(Status.BAD_REQUEST, new RequestResult("Password must have atleast "+ passwordMin +" characters"));
-
-		return null;
+		if (password.length() < User.MIN_PASSWORD_LENGHT)
+			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Password must have atleast "+ User.MIN_PASSWORD_LENGHT +" characters"));
 	}
 }

@@ -5,18 +5,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
-public class RequestResult
+public class RequestReponse
 {	
 	private boolean isSuccessful = false;
 	private String message = null;
 
-	public RequestResult(String message, boolean isSuccessful)
+	public RequestReponse(String message, boolean isSuccessful)
 	{
 		this.message = message;
 		this.isSuccessful = isSuccessful;
 	}
 	
-	public RequestResult(String message)
+	public RequestReponse(String message)
 	{
 		this.message = message;
 	}
