@@ -4,84 +4,109 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Date;
 
-import com.dots.Dots_Create_User;
 import com.dots.Dots_Login_User;
-import com.modele.User;
-import com.modele.User.User_Type;
+import com.modele.Utilisateur;
+import com.modele.Utilisateur.Code_Departement;
+import com.modele.Utilisateur.Type_Utilisateur;
 
 public class DAO_User extends DAO_Initialize
 {
-	public static User GetUser(Dots_Login_User userLoginDots)
+	public static Utilisateur GetUser(Dots_Login_User userLoginDots)
 	{
-		User resultUtilisateur = null;
+		Utilisateur resultUtilisateur = null;
 		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
 		{
-			String command = "SELECT * FROM User WHERE username = ? AND password = BINARY ?;";
+			String command = "SELECT * FROM utilisateur WHERE user = ? AND pass = BINARY ?;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
-				statement.setString(1, userLoginDots.getUsername());
-				statement.setString(2, userLoginDots.getPassword());
+				statement.setString(1, userLoginDots.getUser());
+				statement.setString(2, userLoginDots.getPass());
 
 				try (ResultSet resultSet = statement.executeQuery())
 				{
 					if (resultSet.next())
 					{
 						int id = resultSet.getInt(1);
-						String username = resultSet.getString(2);
-						String user_password = resultSet.getString(3);
-						String first_name = resultSet.getString(4);
-						String last_name = resultSet.getString(5);
-						User_Type user_type = User_Type.valueOf(resultSet.getString(6));
+						String nom = resultSet.getString(4);
+						String prenom = resultSet.getString(5);
+						String adresse = resultSet.getString(6);
+						Date date_n = (Date) resultSet.getDate(7);
+						String email = resultSet.getString(8);
+						String telephone = resultSet.getString(9);
+						Type_Utilisateur type_utilisateur = Type_Utilisateur.valueOf(resultSet.getString(10));
+						Code_Departement code_departement = Code_Departement.valueOf(resultSet.getString(11));
 
-						resultUtilisateur = new User(id, username, user_password, first_name, last_name, user_type);
+						resultUtilisateur = new Utilisateur(id, userLoginDots.getUser(), userLoginDots.getPass(), nom,
+								prenom, adresse, date_n, email, telephone, type_utilisateur, code_departement);
+						return resultUtilisateur;
 					} else
 					{
 						return null;
 					}
 
-					return resultUtilisateur;
 				}
 			}
 		} catch (Exception e)
 		{
-			System.out.println("Connection error in "+ Thread.currentThread().getStackTrace()[1].getMethodName() +">>> " + e.getMessage());
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
 			return null;
 		}
 	}
 
-	public static boolean CreateUser(Dots_Create_User userCreateDots)
+	public static Utilisateur GetUserByID(int id)
 	{
+		Utilisateur resultUtilisateur = null;
 		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
 		{
-			String command = "INSERT INTO USER VALUES (NULL, ?, ?, ?, ?, ?)";
+			String command = "SELECT * FROM utilisateur WHERE id_utilisateur = ?;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
-				statement.setString(1, userCreateDots.getUsername());
-				statement.setString(2, userCreateDots.getPassword());
-				statement.setString(3, userCreateDots.getFirst_name());
-				statement.setString(4, userCreateDots.getLast_name());
-				statement.setString(5, userCreateDots.getUser_type().toString());
+				statement.setInt(1, id);;
 
-				int modifs = statement.executeUpdate();
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					if (resultSet.next())
+					{
+						String user = resultSet.getString(2);
+						String pass = resultSet.getString(3);
+						String nom = resultSet.getString(4);
+						String prenom = resultSet.getString(5);
+						String adresse = resultSet.getString(6);
+						Date date_n = (Date) resultSet.getDate(7);
+						String email = resultSet.getString(8);
+						String telephone = resultSet.getString(9);
+						Type_Utilisateur type_utilisateur = Type_Utilisateur.valueOf(resultSet.getString(10));
+						Code_Departement code_departement = Code_Departement.valueOf(resultSet.getString(11));
 
-				return modifs == 0 ? false : true;
+						resultUtilisateur = new Utilisateur(id, user, pass, nom,
+								prenom, adresse, date_n, email, telephone, type_utilisateur, code_departement);
+						return resultUtilisateur;
+					} else
+					{
+						return null;
+					}
+
+				}
 			}
 		} catch (Exception e)
 		{
-			System.out.println("Connection error in "+ Thread.currentThread().getStackTrace()[1].getMethodName() +">>> " + e.getMessage());
-			return false;
-		}
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return null;
+		}		
 	}
 	
 	public static boolean UserExists(String username)
 	{
 		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
 		{
-			String command = "SELECT * FROM User WHERE username = ?;";
+			String command = "SELECT * FROM utilisateur WHERE user = ?;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
-				statement.setString(1, username);
+				statement.setString(1, username.toLowerCase());
 
 				try (ResultSet resultSet = statement.executeQuery())
 				{
@@ -96,7 +121,60 @@ public class DAO_User extends DAO_Initialize
 			}
 		} catch (Exception e)
 		{
-			System.out.println("Connection error in "+ Thread.currentThread().getStackTrace()[1].getMethodName() +">>> " + e.getMessage());
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return false;
+		}
+	}
+	
+	public static int UpdateUser(Utilisateur utilisateur)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		{
+			String command = "UPDATE utilisateur SET user = ?, pass = ?, nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, date_n = ?, type_utilisateur = ?, code_departement = ? WHERE id_utilisateur = ? LIMIT 1;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setString(1, utilisateur.getUser());
+				statement.setString(2, utilisateur.getPass());
+				statement.setString(3, utilisateur.getNom());
+				statement.setString(4, utilisateur.getPrenom());
+				statement.setString(5, utilisateur.getAdresse());
+				statement.setString(6, utilisateur.getEmail());
+				statement.setString(7, utilisateur.getTelephone());
+				statement.setDate(8, new java.sql.Date(utilisateur.getDate().getTime()));
+				statement.setString(9, String.valueOf(utilisateur.getUser_type()));
+				statement.setString(10, String.valueOf(utilisateur.getCode_departement()));
+				statement.setInt(11, utilisateur.getId());
+
+				int updatedRows = statement.executeUpdate();
+
+				return updatedRows;
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return 0;
+		}
+	}
+	
+	public static boolean DeleteUserByID(int id)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		{
+			String command = "DELETE FROM utilisateur WHERE id_utilisateur = ? LIMIT 1;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setInt(1, id);
+		
+				int deletedRows = statement.executeUpdate();
+
+				return deletedRows == 1? true : false;
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
 			return false;
 		}
 	}

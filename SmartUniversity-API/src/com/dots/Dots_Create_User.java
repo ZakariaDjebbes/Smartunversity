@@ -5,8 +5,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.helpers.RequestReponse;
-import com.modele.User;
-import com.modele.User.User_Type;
+import com.modele.Utilisateur;
+import com.modele.Utilisateur.Type_Utilisateur;
 import com.rest.exceptions.RequestNotValidException;
 
 @XmlRootElement
@@ -17,9 +17,9 @@ public class Dots_Create_User implements IDots
 	private String password = "";
 	private String first_name = "";
 	private String last_name = "";
-	private User_Type user_type;
+	private Type_Utilisateur user_type;
 
-	public Dots_Create_User(String username, String password, String first_name, String last_name, User_Type user_type)
+	public Dots_Create_User(String username, String password, String first_name, String last_name, Type_Utilisateur user_type)
 	{
 		this.username = username;
 		this.password = password;
@@ -53,7 +53,7 @@ public class Dots_Create_User implements IDots
 		return last_name;
 	}
 
-	public User_Type getUser_type()
+	public Type_Utilisateur getUser_type()
 	{
 		return user_type;
 	}
@@ -78,7 +78,7 @@ public class Dots_Create_User implements IDots
 		this.last_name = last_name;
 	}
 
-	public void setUser_type(User_Type user_type)
+	public void setUser_type(Type_Utilisateur user_type)
 	{
 		this.user_type = user_type;
 	}
@@ -88,16 +88,16 @@ public class Dots_Create_User implements IDots
 	{
 		// Values shouldn't be empty
 		if (username.equals("") || password.equals("") || first_name.equals("") || last_name.equals("")
-				|| user_type.equals(User_Type.Undefined))
+				|| user_type.equals(Type_Utilisateur.undefined))
 		{
 			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse(
 					"Request body missing important data to create a new user. Required fields are username, password, first name, last name, type"));
 		}
 		// Checking for password size
-		if (password.length() < User.MIN_PASSWORD_LENGHT)
+		if (password.length() < Utilisateur.MIN_PASS_LENGHT)
 		{
 			throw new RequestNotValidException(Status.BAD_REQUEST,
-					new RequestReponse("Password must have atleast " + User.MIN_PASSWORD_LENGHT + " characters"));
+					new RequestReponse("Password must have atleast " + Utilisateur.MIN_PASS_LENGHT + " characters"));
 		}
 	}
 }

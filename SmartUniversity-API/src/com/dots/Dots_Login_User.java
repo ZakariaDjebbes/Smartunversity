@@ -4,54 +4,57 @@ import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.helpers.RequestReponse;
-import com.modele.User;
+import com.modele.Utilisateur;
 import com.rest.exceptions.RequestNotValidException;
 
 @XmlRootElement
 public class Dots_Login_User implements IDots
 {
-	private String username = "";
-	private String password = "";
-
-	public Dots_Login_User(String username, String password)
-	{
-		this.username = username;
-		this.password = password;
-	}
+	private String user = "";
+	private String pass = "";
 
 	public Dots_Login_User()
 	{
 
 	}
 
-	public String getUsername()
+	public Dots_Login_User(String user, String pass)
 	{
-		return username;
+		this.user = user;
+		this.pass = pass;
+	}
+	
+	public String getUser()
+	{
+		return user;
 	}
 
-	public String getPassword()
+
+	public String getPass()
 	{
-		return password;
+		return pass;
 	}
 
-	public void setUsername(String username)
+
+	public void setUser(String user)
 	{
-		this.username = username;
+		this.user = user;
 	}
 
-	public void setPassword(String password)
+
+	public void setPass(String pass)
 	{
-		this.password = password;
+		this.pass = pass;
 	}
 
 	@Override
 	public void Validate()
 	{		
 		// Check notEmpty
-		if (username.equals("") || password.equals(""))
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Username or password is empty"));
+		if (user.equals("") || pass.equals(""))
+			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("User or Pass is empty"));
 		// Check size
-		if (password.length() < User.MIN_PASSWORD_LENGHT)
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Password must have atleast "+ User.MIN_PASSWORD_LENGHT +" characters"));
+		if (pass.length() < Utilisateur.MIN_PASS_LENGHT)
+			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Pass must have atleast "+ Utilisateur.MIN_PASS_LENGHT +" characters"));
 	}
 }
