@@ -19,7 +19,17 @@ public class Redirect extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String link = session.getAttribute("link").toString();
+		String link = null;
+		
+		try
+		{
+			link = session.getAttribute("link").toString();
+				
+		} catch (Exception e)
+		{
+			link = "index.jsp";
+		}
+		
 		request.getRequestDispatcher(link).forward(request, response);
 	}
 	

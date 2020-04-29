@@ -23,7 +23,7 @@ public class Utilisateur
 		MI, TLSI, IFA
 	}
 
-	protected int id = 0;
+	protected int id_utilisateur = 0;
 	protected String user = null;
 	protected String pass = null;
 	protected String nom = null;
@@ -33,12 +33,11 @@ public class Utilisateur
 	protected String email = null;
 	protected String telephone = null;
 	protected Type_Utilisateur type_utilisateur;
-	protected Code_Departement code_departement = null;
 	
-	public Utilisateur(int id, String user, String pass, String nom, String prenom, String adresse, Date date_n,
-			String email, String telephone, Type_Utilisateur type_utilisateur, Code_Departement code_departement)
+	public Utilisateur(int id_utilisateur, String user, String pass, String nom, String prenom, String adresse, Date date_n,
+			String email, String telephone, Type_Utilisateur type_utilisateur)
 	{
-		this.id = id;
+		this.id_utilisateur = id_utilisateur;
 		this.user = user;
 		this.pass = pass;
 		this.nom = nom;
@@ -48,7 +47,6 @@ public class Utilisateur
 		this.email = email;
 		this.telephone = telephone;
 		this.type_utilisateur = type_utilisateur;
-		this.code_departement = code_departement;
 	}
 
 	public Utilisateur()
@@ -56,9 +54,9 @@ public class Utilisateur
 
 	}
 
-	public int getId()
+	public int getId_utilisateur()
 	{
-		return id;
+		return id_utilisateur;
 	}
 
 	public String getUser()
@@ -108,14 +106,9 @@ public class Utilisateur
 		return type_utilisateur;
 	}
 
-	public Code_Departement getCode_departement()
+	public void setId_utilisateur(int id)
 	{
-		return code_departement;
-	}
-
-	public void setId(int id)
-	{
-		this.id = id;
+		this.id_utilisateur = id;
 	}
 
 	public void setUser(String user)
@@ -170,17 +163,12 @@ public class Utilisateur
 		this.type_utilisateur = user_type;
 	}
 
-	public void setCode_departement(Code_Departement code_departement)
-	{
-		this.code_departement = code_departement;
-	}
-
 	@Override
 	public String toString()
 	{
-		return "Utilisateur [id=" + id + ", user=" + user + ", pass=" + pass + ", nom=" + nom + ", prenom=" + prenom
+		return "Utilisateur [id=" + id_utilisateur + ", user=" + user + ", pass=" + pass + ", nom=" + nom + ", prenom=" + prenom
 				+ ", adresse=" + adresse + ", date_n=" + date_n + ", email=" + email + ", telephone=" + telephone
-				+ ", type_utilisateur=" + type_utilisateur + ", code_departement=" + code_departement + "]";
+				+ ", type_utilisateur=" + type_utilisateur + "]";
 	}
 	
 	@Override
@@ -198,7 +186,7 @@ public class Utilisateur
 		Utilisateur other = (Utilisateur)obj;
 		
 		if(user.equals(other.user) && pass.equals(other.pass) && nom.equals(other.nom) && prenom.equals(other.prenom) 
-				&& adresse.equals(other.adresse) && email.equals(other.email) && code_departement.equals(other.code_departement)
+				&& adresse.equals(other.adresse) && email.equals(other.email)
 				&& telephone.equals(other.telephone) && Utility.SameDate(date_n, other.date_n)) 
 		{
 			return true;

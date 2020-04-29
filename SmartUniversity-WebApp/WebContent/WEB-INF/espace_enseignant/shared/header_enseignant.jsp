@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <nav class="navbar navbar-light navbar-expand-xl fixed-top bg-white clean-navbar">
 	<div class="container">
-		<a class="navbar-brand logo" href="#"><img src="assets/img/Logo/logo.png" style="width: 50px;">Faculté&nbsp;<span class="text-success"><strong>NTIC</strong></span>&nbsp;</a>
+		<a class="navbar-brand logo" href="#"><img src="assets/img/Logo/logo.png" class="nav-brand-img" style="width: 50px;">Faculté&nbsp;<span class="text-success"><strong>NTIC</strong></span>&nbsp;</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
 			<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
 		</button>
@@ -16,12 +16,9 @@
 				</li>
 				<li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Gérer les absences</a>
 					<div class="dropdown-menu" role="menu">
+						<a class="dropdown-item dropdown-hover" href="ConsulterSeancesEnseignant">Consulter vos séances</a>
 						<form method="post" action="FormLink">
-							<input type="hidden" name="link" value="/WEB-INF/espace_enseignant/index_enseignant.jsp">
-							<button type="submit" class="dropdown-item btn btn-link btn-nav" role="presentation">Marquer la présence</button>
-						</form>
-						<form method="post" action="FormLink">
-							<input type="hidden" name="link" value="/WEB-INF/espace_enseignant/index_enseignant.jsp">
+							<input type="hidden" name="link" value="ConsulterSeances">
 							<button type="submit" class="dropdown-item btn btn-link btn-nav" role="presentation">Consulter les relevés d'absences</button>
 						</form>
 						<form method="post" action="FormLink">

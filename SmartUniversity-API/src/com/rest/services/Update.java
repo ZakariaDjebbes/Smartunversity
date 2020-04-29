@@ -43,7 +43,7 @@ public class Update
 					new RequestReponse("Update failed due to a bad request"));
 		} else
 		{
-			Utilisateur userFromDB = DAO_User.GetUserByID(utilisateur.getId());
+			Utilisateur userFromDB = DAO_User.GetUserByID(utilisateur.getId_utilisateur());
 			switch (userFromDB.getUser_type())
 			{
 			case enseignant:

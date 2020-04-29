@@ -3,6 +3,10 @@ html, body {
   width: 100%;
 }
 
+.nav-brand-img
+{
+ margin-right: 10px;
+}
 .sp-loading {
   text-align: center;
   max-width: 270px;
@@ -235,6 +239,7 @@ html, body {
 
 .form-search {
   margin-bottom: 20px !important;
+  margin-top: 20px !important;
   max-width: 350px !important;
   float: right !important;
 }
@@ -285,4 +290,27 @@ html, body {
 	background: none;
 	color: #28A745;
 	transition: 0.5s; 
+}
+
+.btn.btn-success.btn-success-inverted:hover 
+{
+  background-color: white;
+  color: #28A745;
+}
+
+.dropdown-item.dropdown-hover:hover
+{
+	background: none;
+	color: #28A745;
+	transition: 0.5s; 
+}
+
+table.table.table-center td
+{
+	vertical-align: middle !important;
+}
+
+.btn-margin-top
+{
+	margin-top: 20px;
 }

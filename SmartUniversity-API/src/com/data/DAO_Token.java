@@ -44,7 +44,8 @@ public class DAO_Token extends DAO_Initialize
 					}
 				}
 			}
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
 			System.out.println("Connection error in "+ Thread.currentThread().getStackTrace()[1].getMethodName() +" >>> " + e.getMessage());
 			return false;
@@ -69,7 +70,8 @@ public class DAO_Token extends DAO_Initialize
 					return false;
 				}
 			}
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			System.out.println("Connection error in "+ Thread.currentThread().getStackTrace()[1].getMethodName() +" >>> " + e.getMessage());
 			return false;

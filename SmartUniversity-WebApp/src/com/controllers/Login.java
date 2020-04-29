@@ -49,8 +49,9 @@ public class Login extends HttpServlet
 		WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/auth");
 		Response apiResponse = target.request(MediaType.APPLICATION_JSON).post(Entity.json(new Dot_Login(user, pass)));
 		apiResponse.bufferEntity();
-		RequestResponse requestResponse = apiResponse.readEntity(RequestResponse.class);
-		if (requestResponse.getMessage() == null)
+		RequestResponse requestResponse = RequestResponse.GetRequestResponse(apiResponse);
+		
+		if (requestResponse == null)
 		{
 			if (keepLogged)
 			{
@@ -62,14 +63,13 @@ public class Login extends HttpServlet
 			LoginResponse loginResponse = apiResponse.readEntity(LoginResponse.class);
 
 			session.setAttribute("token", loginResponse.getToken());
-			target = client.target("http://localhost:8080/SmartUniversity-API/api/get/" + loginResponse.getId());
+			target = client.target("http://localhost:8080/SmartUniversity-API/api/get/user/" + loginResponse.getId());
 			apiResponse = target.request(MediaType.APPLICATION_JSON)
 					.header(HttpHeaders.AUTHORIZATION, "Bearer " + session.getAttribute("token").toString()).get();
 			apiResponse.bufferEntity();
 
-			requestResponse = apiResponse.readEntity(RequestResponse.class);
-
-			if (requestResponse.getMessage() == null)
+			requestResponse = RequestResponse.GetRequestResponse(apiResponse);
+			if (requestResponse == null)
 			{
 				Utilisateur utilisateur = apiResponse.readEntity(Utilisateur.class);
 
@@ -85,7 +85,8 @@ public class Login extends HttpServlet
 					break;
 				}
 
-			} else
+			}
+			else
 			{
 				System.out.println(requestResponse.getMessage());
 				Redirect.SendRedirect(request, response, "login.jsp");
@@ -93,7 +94,8 @@ public class Login extends HttpServlet
 			}
 
 			apiResponse.close();
-		} else
+		} 
+		else
 		{
 			message = requestResponse.getMessage();
 			session.setAttribute("message", message);

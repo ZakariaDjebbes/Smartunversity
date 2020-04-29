@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
 	<div class="container">
-		<a class="navbar-brand logo" href="#"><img src="assets/img/Logo/logo.png" style="width: 50px;">Faculté&nbsp;<span class="text-success"><strong>NTIC</strong></span>&nbsp;</a>
+		<a class="navbar-brand logo" href="#"><img src="assets/img/Logo/logo.png" style="width: 50px;" class="nav-brand-img">Faculté&nbsp;<span class="text-success"><strong>NTIC</strong></span>&nbsp;</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
 			<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
 		</button>

@@ -36,10 +36,10 @@ public class Authentication
 		// Authenticate the user using the credentials provided
 		Utilisateur userFromDB = Authenticate(dots_Login_User);
 		// Issue a token for the user
-		String token = IssueToken(userFromDB.getId(), userFromDB.getUser());
+		String token = IssueToken(userFromDB.getId_utilisateur(), userFromDB.getUser());
 
 		// Return the token on the response
-		LoginResponse response = new LoginResponse(token, userFromDB.getId());
+		LoginResponse response = new LoginResponse(token, userFromDB.getId_utilisateur());
 		
 		return Utility.Response(Status.OK, response);
 	}

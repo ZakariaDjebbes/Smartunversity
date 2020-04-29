@@ -8,7 +8,6 @@ import java.util.Date;
 
 import com.dots.Dots_Login_User;
 import com.modele.Utilisateur;
-import com.modele.Utilisateur.Code_Departement;
 import com.modele.Utilisateur.Type_Utilisateur;
 
 public class DAO_User extends DAO_Initialize
@@ -36,10 +35,9 @@ public class DAO_User extends DAO_Initialize
 						String email = resultSet.getString(8);
 						String telephone = resultSet.getString(9);
 						Type_Utilisateur type_utilisateur = Type_Utilisateur.valueOf(resultSet.getString(10));
-						Code_Departement code_departement = Code_Departement.valueOf(resultSet.getString(11));
 
 						resultUtilisateur = new Utilisateur(id, userLoginDots.getUser(), userLoginDots.getPass(), nom,
-								prenom, adresse, date_n, email, telephone, type_utilisateur, code_departement);
+								prenom, adresse, date_n, email, telephone, type_utilisateur);
 						return resultUtilisateur;
 					} else
 					{
@@ -79,10 +77,9 @@ public class DAO_User extends DAO_Initialize
 						String email = resultSet.getString(8);
 						String telephone = resultSet.getString(9);
 						Type_Utilisateur type_utilisateur = Type_Utilisateur.valueOf(resultSet.getString(10));
-						Code_Departement code_departement = Code_Departement.valueOf(resultSet.getString(11));
 
 						resultUtilisateur = new Utilisateur(id, user, pass, nom,
-								prenom, adresse, date_n, email, telephone, type_utilisateur, code_departement);
+								prenom, adresse, date_n, email, telephone, type_utilisateur);
 						return resultUtilisateur;
 					} else
 					{
@@ -99,39 +96,11 @@ public class DAO_User extends DAO_Initialize
 		}		
 	}
 	
-	public static boolean UserExists(String username)
-	{
-		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
-		{
-			String command = "SELECT * FROM utilisateur WHERE user = ?;";
-			try (PreparedStatement statement = connection.prepareStatement(command))
-			{
-				statement.setString(1, username.toLowerCase());
-
-				try (ResultSet resultSet = statement.executeQuery())
-				{
-					if (resultSet.next())
-					{
-						return true;
-					} else
-					{
-						return false;
-					}
-				}
-			}
-		} catch (Exception e)
-		{
-			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
-					+ " >>> " + e.getMessage());
-			return false;
-		}
-	}
-	
 	public static int UpdateUser(Utilisateur utilisateur)
 	{
 		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
 		{
-			String command = "UPDATE utilisateur SET user = ?, pass = ?, nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, date_n = ?, type_utilisateur = ?, code_departement = ? WHERE id_utilisateur = ? LIMIT 1;";
+			String command = "UPDATE utilisateur SET user = ?, pass = ?, nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, date_n = ?, type_utilisateur = ? WHERE id_utilisateur = ? LIMIT 1;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
 				statement.setString(1, utilisateur.getUser());
@@ -143,8 +112,7 @@ public class DAO_User extends DAO_Initialize
 				statement.setString(7, utilisateur.getTelephone());
 				statement.setDate(8, new java.sql.Date(utilisateur.getDate().getTime()));
 				statement.setString(9, String.valueOf(utilisateur.getUser_type()));
-				statement.setString(10, String.valueOf(utilisateur.getCode_departement()));
-				statement.setInt(11, utilisateur.getId());
+				statement.setInt(10, utilisateur.getId_utilisateur());
 
 				int updatedRows = statement.executeUpdate();
 

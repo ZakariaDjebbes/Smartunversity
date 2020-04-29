@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 
 import com.modele.Enseignant;
 import com.modele.Utilisateur;
+import com.modele.Utilisateur.Code_Departement;
 
 public class DAO_Enseignant extends DAO_Initialize
 {
@@ -18,27 +19,31 @@ public class DAO_Enseignant extends DAO_Initialize
 			String command = "SELECT * FROM enseignant WHERE id_enseignant = ?;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
-				statement.setInt(1, user.getId());
+				statement.setInt(1, user.getId_utilisateur());
 
 				try (ResultSet resultSet = statement.executeQuery())
 				{
 					if (resultSet.next())
 					{
 						String grade = resultSet.getString(2);
-						resultEnseignant = new Enseignant(user, grade);
+						Code_Departement code_departement = Code_Departement.valueOf(resultSet.getString(3));
+						resultEnseignant = new Enseignant(user, grade, code_departement);
 						return resultEnseignant;				
-					} else
+					} 
+					else
 					{
 						return null;
 					}
 
 				}
 			}
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			System.out.println("Connection error in "+ Thread.currentThread().getStackTrace()[1].getMethodName() +" >>> " + e.getMessage());
 			return null;
 		}
 	}
-
+	
+	
 }

@@ -11,7 +11,7 @@ public class DAO_Initialize
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver"); // init le driver ?autoReconnect=true&useSSL=false
-			dbURL = "jdbc:mysql://localhost:3306/ntic"; // données récup directement dans le web.xml
+			dbURL = "jdbc:mysql://localhost:3306/ntic?autoReconnect=true"; // données récup directement dans le web.xml
 			dbLogin = "adminBD";
 			dbPassword = "247365";
 		} catch (Exception exception)

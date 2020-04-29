@@ -43,15 +43,15 @@ public class ModifierProfil extends HttpServlet
 		Utilisateur oldUtilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		if (!newUtilisateur.equals(oldUtilisateur))
 		{
-			newUtilisateur.setId(oldUtilisateur.getId());
+			newUtilisateur.setId_utilisateur(oldUtilisateur.getId_utilisateur());
 			Client client = ClientBuilder.newClient();
 			WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/update/updateUser");
 			Response apiResponse = target.request(MediaType.APPLICATION_JSON)
 					.header(HttpHeaders.AUTHORIZATION, "Bearer " + session.getAttribute("token").toString())
 					.put(Entity.json(newUtilisateur));
 			apiResponse.bufferEntity();
-			RequestResponse requestResponse = apiResponse.readEntity(RequestResponse.class);
-			if (requestResponse.getMessage() == null)
+			RequestResponse requestResponse = RequestResponse.GetRequestResponse(apiResponse);
+			if (requestResponse == null)
 			{
 				Utilisateur utilisateur = apiResponse.readEntity(Utilisateur.class);
 				switch (utilisateur.getUser_type())
@@ -68,13 +68,15 @@ public class ModifierProfil extends HttpServlet
 
 				isDone = true;
 				message = "Modification réussi.";
-			} else
+			} 
+			else
 			{
 				message = requestResponse.getMessage();
 				session.setAttribute("message", message);
 			}
 			apiResponse.close();
-		} else
+		} 
+		else
 		{
 			message = "Veuillez modifier au moins un champs.";
 		}
@@ -108,6 +110,6 @@ public class ModifierProfil extends HttpServlet
 		String telephone = request.getParameter("telephone");
 
 		return new Utilisateur(0, user, pass, nom, prenom, adresse, date_n, email, telephone,
-				utilisateur.getUser_type(), utilisateur.getCode_departement());
+				utilisateur.getUser_type());
 	}
 }

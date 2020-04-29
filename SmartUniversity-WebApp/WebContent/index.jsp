@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="shared/keepLogged.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@
 		<div class="container">
 			<div class="block-heading">
 				<h2 class="text-success">Faculté des nouvelles téchnologies de l'information et de la communication</h2>
-				<p>Ce site web est mit a la dispostion des étudiants et enseigants de notre faculté afin de les aider dans leurs gestion des absences, emploi du temps...</p>
+				<p>Gestionnaire d'absences destiné aux enseingants et aux etudiants.</p>
 			</div>
 			<%
 				if(session.getAttribute("message") != null)

@@ -8,7 +8,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Enseignant extends Utilisateur
 {
 	private String grade = null;
-
+	private Code_Departement code_departement;
+	
 	public Enseignant()
 	{
 
@@ -19,12 +20,23 @@ public class Enseignant extends Utilisateur
 		this.grade = grade;
 	}
 
-	public Enseignant(Utilisateur utilisateur, String grade)
+	public Enseignant(Utilisateur utilisateur, String grade, Code_Departement code_departement)
 	{
-		super(utilisateur.id, utilisateur.user, utilisateur.pass, utilisateur.nom, utilisateur.prenom,
+		super(utilisateur.id_utilisateur, utilisateur.user, utilisateur.pass, utilisateur.nom, utilisateur.prenom,
 				utilisateur.adresse, utilisateur.date_n, utilisateur.email, utilisateur.telephone,
-				utilisateur.type_utilisateur, utilisateur.code_departement);
+				utilisateur.type_utilisateur);
 		this.grade = grade;
+		this.code_departement = code_departement;
+	}
+
+	public Code_Departement getCode_departement()
+	{
+		return code_departement;
+	}
+
+	public void setCode_departement(Code_Departement code_departement)
+	{
+		this.code_departement = code_departement;
 	}
 
 	public String getGrade()
