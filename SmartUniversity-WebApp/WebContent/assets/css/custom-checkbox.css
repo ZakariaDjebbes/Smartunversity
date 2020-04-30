@@ -1,0 +1,35 @@
+.checkbox-input
+{
+	-webkit-appearance: none;
+	visibility: hidden;
+	display: none;
+}
+
+.checkbox-label
+{
+	display:block;
+}
+
+.checkbox-span
+{
+	position: relative;
+	display: block;
+	background-color: #DC3545;
+	padding: 6px 0;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: ease-in 0.3s;
+	color: white;	
+	border: 1px solid #DC3545;
+}
+
+.checkbox-span::selection 
+{
+	background: transparent; 
+}
+
+.checkbox-input:checked ~ .checkbox-span
+{
+	background-color: #28A745;
+	border-color: #28A745;
+}

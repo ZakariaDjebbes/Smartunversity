@@ -23,9 +23,9 @@ public class Redirect extends HttpServlet {
 		
 		try
 		{
-			link = session.getAttribute("link").toString();
-				
-		} catch (Exception e)
+			link = session.getAttribute("link").toString();			
+		} 
+		catch (Exception e)
 		{
 			link = "index.jsp";
 		}

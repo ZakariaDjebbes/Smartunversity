@@ -148,10 +148,12 @@ public class Utilisateur
 		try
 		{
 			this.date_n = formatter.parse(date);
-		} catch (ParseException e)
+		}
+		catch (ParseException e)
 		{
 			e.printStackTrace();
-		}	}
+		}	
+	}
 
 	public void setEmail(String email)
 	{

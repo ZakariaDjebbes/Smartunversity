@@ -14,7 +14,7 @@ import com.helpers.Utility;
 import com.rest.annotations.Secured;
 import com.rest.exceptions.RequestNotValidException;
 
-@Path("/delete")
+@Path("delete")
 public class Delete
 {
 	

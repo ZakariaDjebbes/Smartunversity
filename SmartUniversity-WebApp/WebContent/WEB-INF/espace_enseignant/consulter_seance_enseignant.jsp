@@ -14,11 +14,14 @@
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
 <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
 <link rel="stylesheet" href="assets/css/Data-Table.css">
-<link rel="stylesheet" href="assets/css/Filter.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
 <link rel="stylesheet" href="assets/css/Pretty-Search-Form.css">
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/custom-checkbox.css">
+<link rel="stylesheet" href="assets/alertify/css/alertify.min.css">
+<link rel="stylesheet" href="assets/alertify/css/themes/bootstrap.min.css">
+
 </head>
 
 <body>
@@ -125,7 +128,7 @@
 									<td>
 										${seance.getSeance().getHeure()}
 									</td>
-									<td>
+									<td style="max-width: 280px;">
 										<button class="btn btn-outline-success form-control" tabindex="-1" data-toggle="modal" data-target="#modal${seance.getSeance().getCode_seance()}">Marquer la présence</button>
 										<div class="modal fade" id="modal${seance.getSeance().getCode_seance()}">
 										  <div class="modal-dialog modal-lg" role="document">
@@ -136,47 +139,56 @@
 										          <span aria-hidden="true" class="text-danger">&times;</span>
 										        </button>
 										      </div>
-										      <div class="modal-body">
-													<div class="text-center">
-														<h6>Liste des étudiants du groupe ${seance.getSeance().getGroupe()}</h6>
-														<small><em>Cochez les cases des étudiants présents.</em></small>
-													</div>
-													<table class="table table-striped table-bordered text-center table-center">
-														<thead>
-															<tr class="table-success">
-																<th>Nom</th>
-																<th>Prénom</th>
-																<th>Date de naissance</th>
-																<th>Présence</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach var="etudiant" items="${seance.getEtudiants()}">
-												      			<tr>
-												      				<td>
-												      					${etudiant.getNom()}
-												      				</td>
-												      				<td>
-												      					${etudiant.getPrenom()}
-												      				</td>
-												      				<td>
-												      					${etudiant.getDate()}
-												      				</td>
-												      				<td>
-												      				</td>
-												      			</tr>
-												      		</c:forEach>
-											      		</tbody>
-										      		</table>
-										      		<div class="modal-footer row-bottom">
-										      			<input type="submit" value="Valider" class="form-control mr-auto btn btn-outline-success">
-										      			<input type="reset" value="Réinitialiser" class="form-control btn btn-outline-danger">
-										      		</div>
-										       </div>
+										      <form action="MarquerPresence" class="form-normal marquer-presence">
+											      <input type="hidden" name="code_seance" value="${seance.getSeance().getCode_seance()}">
+											      <div class="modal-body">
+														<div class="text-center">
+															<h6>Liste des étudiants du groupe ${seance.getSeance().getGroupe()}</h6>
+															<small class="text-small"><em>Cochez les cases des étudiants présents.</em></small>
+														</div>
+														<div class="table-responsive">
+														<table class="table table-striped table-bordered text-center table-center">
+															<thead>
+																<tr class="table-success">
+																	<th>Nom</th>
+																	<th>Prénom</th>
+																	<th>Date de naissance</th>
+																	<th>Présence</th>
+																</tr>
+															</thead>
+															<tbody>
+																<c:forEach var="etudiant" items="${seance.getEtudiants()}">
+													      			<tr>
+													      				<td>
+													      					${etudiant.getNom()}
+													      				</td>
+													      				<td>
+													      					${etudiant.getPrenom()}
+													      				</td>
+													      				<td>
+													      					${etudiant.getDate()}
+													      				</td>
+													      				<td>
+													      				<label class="checkbox-label" for="${etudiant.getId_utilisateur()}">
+														      				<input class="checkbox-input" id="${etudiant.getId_utilisateur()}" type="checkbox" name="${etudiant.getId_utilisateur()}">
+														      				<span class="checkbox-span">Absent</span>
+														      			</label>
+													      				</td>
+													      			</tr>
+													      		</c:forEach>
+												      		</tbody>
+											      		</table>
+											      		</div>
+											      		<div class="modal-footer row-bottom">
+											      			<input type="submit" value="Valider" class="form-control mr-auto btn btn-outline-success">
+											      		</div>
+											       </div>
+										       </form>
 										    </div>
 										  </div>
 										</div>
 										<button class="btn btn-outline-info btn-margin-top form-control">Demander un changement</button>
+										<button class="btn btn-outline-warning btn-margin-top form-control">Relevé d'absences</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -184,11 +196,9 @@
 					</table>
 				</div>
 			</div>
-		</div>
-		<div>
 			<form action="" method="" class="form-normal">
 				<div class="form-group text-center">
-					<button type="submit" class="btn btn-success btn-success-inverted">Demander l'ajout</button>
+					<button type="submit" class="btn btn-success btn-success-inverted form-control">Demander une séance supplémentaire</button>
 				</div>
 			</form>
 		</div>
@@ -201,10 +211,63 @@
 	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+	<script src="assets/alertify/alertify.min.js"></script>
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
-	<script src="assets/js/script.js"></script>
 	<script src="assets/js/Table-With-Search.js"></script>
+	<script src="assets/js/custom-checkbox-handler.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$(".marquer-presence").submit(function(event){
+			let $form = $(this);
+			let submitButton = $(this).find("input[type=submit]:focus");
+			let disabledTime = 6;
+			
+			submitButton.prop("disabled",true);
+			setTimeout(function(){
+		        submitButton.prop('disabled', false);
+		    }, disabledTime * 1000);
+			startSubmitTimer(disabledTime - 1, submitButton);
+			
+			$.post($form.attr("action"), $form.serialize(), function(response){
+				alertify.set('notifier','position', 'top-center');
+				alertify.set('notifier','delay', 3);
+				if(response == "true")
+				{
+					alertify.success("Présence marqué pour ce groupe!");
+				}
+				else
+				{
+					alertify.error("Une erreur s'est produite");
+				}
+			});	
+			
+			event.preventDefault();
+		});
+	});	
+	
+	function startSubmitTimer(duration, submit) {
+	    let timer = duration, minutes, seconds;
+	    let initialValue = submit.prop('value');
+	    
+	    let interval = setInterval(function () {
+	        minutes = parseInt(timer / 60, 10);
+	        seconds = parseInt(timer % 60, 10);
+
+	        minutes = minutes < 10 ? "0" + minutes : minutes;
+	        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+	        submit.prop('value',initialValue + '(' + seconds + ')');
+
+	        if (--timer < 0) 
+	        {
+	        	clearInterval(interval);
+	        	submit.prop('value', initialValue);
+	        }
+	    }, 1000);
+	}
+	</script>
 </body>
 
 </html>

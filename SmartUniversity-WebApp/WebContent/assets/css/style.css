@@ -314,3 +314,8 @@ table.table.table-center td
 {
 	margin-top: 20px;
 }
+
+.btn.btn-outline-warning:hover
+{
+	color: white;
+}

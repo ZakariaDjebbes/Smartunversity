@@ -16,7 +16,10 @@
 				</li>
 				<li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Gérer les absences</a>
 					<div class="dropdown-menu" role="menu">
-						<a class="dropdown-item dropdown-hover" href="ConsulterSeancesEnseignant">Consulter vos séances</a>
+						<form method="post" action="FormLink">
+							<input type="hidden" name="link" value="ConsulterSeancesEnseignant">
+							<button type="submit" class="dropdown-item btn btn-link btn-nav" role="presentation">Consulter vos séances</button>
+						</form>
 						<form method="post" action="FormLink">
 							<input type="hidden" name="link" value="ConsulterSeances">
 							<button type="submit" class="dropdown-item btn btn-link btn-nav" role="presentation">Consulter les relevés d'absences</button>

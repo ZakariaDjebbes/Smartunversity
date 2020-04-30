@@ -105,4 +105,13 @@ public class Get
 		
 		return Utility.Response(Status.OK, etudiants);
 	}
+	
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("absence")
+	public Response GetAbsencesBySeance(@QueryParam("code_seance")String code_seance, @QueryParam("date_absence") String date)
+	{
+		return null;
+	}
 }

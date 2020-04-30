@@ -26,17 +26,6 @@
 				<h2 class="text-success">Faculté des nouvelles téchnologies de l'information et de la communication</h2>
 				<p>Gestionnaire d'absences destiné aux enseingants et aux etudiants.</p>
 			</div>
-			<%
-				if(session.getAttribute("message") != null)
-				{
-			%>
-					<div class="alert alert-info" role="alert">
-	  					${message}
-					</div>
-			<%
-				}
-			session.removeAttribute("message");
-			%>
 			<div class="row align-items-center">
 				<div class="col-md-6">
 					<img class="img-thumbnail" src="assets/img/scenery/ntic_2.png">
