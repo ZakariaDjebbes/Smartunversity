@@ -1,0 +1,19 @@
+.filter-select
+{
+	border-radius: 20px;
+	border-color: #28A745;
+	color: #28A745;
+}
+
+.filter-select:hover
+{
+	background-color: #fff;
+	border-color: #98e3b2;
+	outline: 0;
+	box-shadow: 0 0 0 .2rem rgba(152,227,178,0.4);
+}
+
+.btn-filter
+{
+	border-radius: 20px;
+}

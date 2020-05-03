@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="shared/keepLogged.jsp" %>
+<%@ include file="shared/keepLogged.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -35,7 +35,8 @@
 					<div class="getting-started-info">
 						<p>
 							La Faculté des Nouvelles Technologies de l'Information et de la Communication (NTIC) a été crée par le Décret exécutif N° 11-401 du 3 Moharram 1433 correspondant au 28 novembre 2011 portant
-							création de l'université de CONSTANTINE 2..<br>
+							création de l'université de CONSTANTINE 2..
+							<br>
 						</p>
 					</div>
 					<a class="btn btn-outline-success btn-lg" role="button" href="login.jsp">Se connecter</a>
@@ -50,37 +51,46 @@
 				<p>La faculté NTIC regroupe trois départements</p>
 			</div>
 			<div class="row justify-content-center">
-				<div class="col-sm-6 col-lg-4">
+				<div class="col-12 col-md-6 col-lg-4">
 					<div class="card clean-card text-center">
 						<div class="card-body info">
-							<h4 class="card-title">Tronc Commun Mathématique et informatique (MI)</h4>
+							<h4 class="card-title">Tronc Commun Mathématique et informatique</h4>
 							<p class="card-text">
-								<br>L’objectif du Tronc Commun Mathématiques/Informatique (MI) est de donner une formation de base commune pour toutes les Branches (formation du 2e cycle) qui sont: Systèmes
-								d’Information (SI), Génie Logiciel (GL), Technologies de l’Information (TI), et Sciences de l’Informatique (SCI) et ne prépare pas spécifiquement à l’une d’elles. Pour cette raison, il lui a
-								été donné le nom de Tronc Commun.
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-lg-4">
-					<div class="card clean-card text-center">
-						<div class="card-body info">
-							<h4 class="card-title">Informatique Fondamentale et ses Applications (IFA)</h4>
-							<p class="card-text">
-								<br>Le département d’Informatique Fondamentale et ses Applications (IFA) recouvre deux parcours (Licence/Master). Hormis, les deux années tronc commun qui sont gérés par le Département
-								Mathématiques/Informatique (MI), le département IFA assure deux types de licences: licence SCience de l’Informatique (SCI) et licence Technologies de l’Information (TI). Il assure aussi e deux
-								types de Master : Réseaux et Systèmes Distribués (RSD) et Sciences et Technologies de l’Information et de la Communication (STIC).
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-lg-4">
-					<div class="card clean-card text-center">
-						<div class="card-body info">
-							<h4 class="card-title">Technologies des Logiciels et des Systèmes d'information (TLSI)</h4>
-							<p class="card-text">
-								<br>Le département Technologies des Logiciels et des Systèmes d’Information (TLSI) recouvre deux parcours (Licence/Master). Hormis, les deux années tronc commun qui correspond au
-								Mathématiques/Informatique (MI), nous avons deux types de licences, à savoir licence Génie Logiciel (GL), Systèmes d’Information et Technologies Web (SITW) et pour le master deux types aussi,
-								à savoir master Génie Logiciel (GL) et master Systèmes d’Information et Technologies Web (SITW) (recherche et professionnel ). <br> <br> <br>
+								<br>
+								Une formation de base commune pour touts les Étudiants de la faculté visant à enseigner les bases de l'informatique et des mathématiques.
 							</p>
+						</div>
+						<div class="card-footer text-right">
+							<a role="button" class="btn btn-success" href="#">Plus d'informations...</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="card clean-card text-center" style="height: 100%;">
+						<div class="card-body info">
+							<h4 class="card-title">Informatique Fondamentale et ses Applications</h4>
+							<p class="card-text">
+								<br>
+								Cette formation propose deux parcours
+
+							</p>
+						</div>
+						<div class="card-footer text-right">
+							<a role="button" class="btn btn-success" href="#">Plus d'informations...</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-lg-4">
+					<div class="card clean-card text-center" style="height: 100%;">
+						<div class="card-body info">
+							<h4 class="card-title">Technologies des Logiciels et des Systèmes d'information</h4>
+							<p class="card-text">
+								<br>
+								Cette formation propose deux parcours
+							</p>
+						</div>
+						<div class="card-footer text-right">
+							<a role="button" class="btn btn-success" href="#">Plus d'informations...</a>
 						</div>
 					</div>
 				</div>
@@ -105,8 +115,12 @@
 					</div>
 				</div>
 				<div>
-					<a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a
-						class="carousel-control-next" href="#carousel-1" role="button" data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a>
+					<a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span>
+					</a>
+					<a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
+						<span class="carousel-control-next-icon"></span><span class="sr-only">Next</span>
+					</a>
 				</div>
 				<ol class="carousel-indicators">
 					<li data-target="#carousel-1" data-slide-to="0" class="active"></li>

@@ -24,7 +24,7 @@ public class Create
 	@Path("absence")
 	public Response CreateAbsence(Dot_Create_Absence absence)
 	{
-		if(DAO_Absence.AddAbsence(absence))
+		if(DAO_Absence.CreateAbsence(absence))
 		{
 			return Utility.Response(Status.OK, new RequestReponse("Absence created with success"));
 		}

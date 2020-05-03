@@ -12,13 +12,13 @@ public class Dot_Seance
 {
 	private Seance seance = null;
 	private Module module = null;
-	private ArrayList<Etudiant> etudiants = null;
+	private ArrayList<Dot_Etudiant> dot_etudiants = null;
 
-	public Dot_Seance(Seance seance, Module module, ArrayList<Etudiant> etudiants)
+	public Dot_Seance(Seance seance, Module module, ArrayList<Dot_Etudiant> etudiants)
 	{
 		this.seance = seance;
 		this.module = module;
-		this.etudiants = etudiants;
+		this.dot_etudiants = etudiants;
 	}
 
 	public Seance getSeance()
@@ -41,23 +41,57 @@ public class Dot_Seance
 		this.module = module;
 	}
 	
-	public ArrayList<Etudiant> getEtudiants()
+	public ArrayList<Dot_Etudiant> getDot_Etudiants()
 	{
-		Collections.sort(etudiants, new Comparator<Etudiant>()
+		Collections.sort(dot_etudiants, new Comparator<Dot_Etudiant>()
 		{
 
 			@Override
-			public int compare(Etudiant etudiant1, Etudiant etudiant2)
+			public int compare(Dot_Etudiant etudiant1, Dot_Etudiant etudiant2)
 			{
-				return etudiant1.getNom().compareTo(etudiant2.getNom());
-	}
+				return etudiant1.getEtudiant().getNom().compareTo(etudiant2.getEtudiant().getNom());
+			}
 		});
+		
+		return dot_etudiants;
+	}
+
+	public void setDot_Etudiants(ArrayList<Dot_Etudiant> etudiants)
+	{
+		this.dot_etudiants = etudiants;
+	}
+	
+	public static Dot_Seance GetSeanceByCode_Seance(ArrayList<Dot_Seance> seances, String code_seance)
+	{
+		Dot_Seance seance = null;
+		
+		for (Dot_Seance dot_Seance : seances)
+		{
+			if(dot_Seance.getSeance().getCode_seance().equals(code_seance))
+			{
+				seance = dot_Seance;
+				break;
+			}
+		}
+		
+		return seance;
+	}
+
+	public ArrayList<Etudiant> GetEtudiants()
+	{
+		ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
+		
+		for (Dot_Etudiant dot_Etudiant : dot_etudiants)
+		{
+			etudiants.add(dot_Etudiant.getEtudiant());
+		}
 		
 		return etudiants;
 	}
-
-	public void setEtudiants(ArrayList<Etudiant> etudiants)
+	
+	@Override
+	public String toString()
 	{
-		this.etudiants = etudiants;
+		return "Dot_Seance [seance=" + seance + ", module=" + module + ", etudiants=" + dot_etudiants + "]";
 	}
 }

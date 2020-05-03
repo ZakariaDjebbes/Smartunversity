@@ -19,8 +19,10 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.helpers.Dot_Etudiant;
 import com.helpers.Dot_Seance;
 import com.helpers.RequestResponse;
+import com.modele.Absence;
 import com.modele.Enseignant;
 import com.modele.Etudiant;
 import com.modele.Module;
@@ -75,7 +77,7 @@ public class ConsulterSeancesEnseignant extends HttpServlet
 			for (Seance seance : seances)
 			{
 				//requete pour chercher les étudiants de cette séance
-				target = client.target("http://localhost:8080/SmartUniversity-API/api/get/etudiant")
+				target = client.target("http://localhost:8080/SmartUniversity-API/api/get/etudiants")
 						.queryParam("annee", seance.getAnnee())
 						.queryParam("specialite", seance.getSpecialite())
 						.queryParam("groupe", seance.getGroupe());
@@ -85,6 +87,7 @@ public class ConsulterSeancesEnseignant extends HttpServlet
 				requestResponse = RequestResponse.GetRequestResponse(apiResponse);
 				
 				ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
+				ArrayList<Dot_Etudiant> dot_Etudiants = new ArrayList<Dot_Etudiant>();
 				
 				if(requestResponse == null)
 				{
@@ -103,8 +106,31 @@ public class ConsulterSeancesEnseignant extends HttpServlet
 				
 				Module module = apiResponse.readEntity(Module.class);
 				
+				//requete pour les absences des étudiants
+				for (Etudiant etudiant : etudiants)
+				{
+					ArrayList<Absence> absences = new ArrayList<Absence>();
+					target = client.target("http://localhost:8080/SmartUniversity-API/api/get/absences");
+					apiResponse = target.queryParam("code_seance", seance.getCode_seance())
+										.queryParam("id_etudiant", etudiant.getId_utilisateur())
+										.request(MediaType.APPLICATION_JSON)
+										.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+										.get();
+					apiResponse.bufferEntity();
+					
+					requestResponse = RequestResponse.GetRequestResponse(apiResponse);
+					
+					if(requestResponse == null)
+					{
+						absences = apiResponse.readEntity(new GenericType<ArrayList<Absence>>() {});
+					}
+					
+					Dot_Etudiant dot_Etudiant = new Dot_Etudiant(etudiant, absences);
+					dot_Etudiants.add(dot_Etudiant);
+				}
+				
 				//Mettre tout ca dans le même objet pour facilité l'accés
-				Dot_Seance dot_Seance = new Dot_Seance(seance, module, etudiants);
+				Dot_Seance dot_Seance = new Dot_Seance(seance, module, dot_Etudiants);
 				
 				//Ajouter a la liste des séances
 				dot_Seances.add(dot_Seance);

@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.data.DAO_Absence;
 import com.data.DAO_Enseignant;
 import com.data.DAO_Etudiant;
 import com.data.DAO_Module;
@@ -21,6 +22,7 @@ import com.helpers.Utility;
 import com.modele.Module;
 import com.modele.Seance;
 import com.modele.Utilisateur;
+import com.modele.Absence;
 import com.modele.Etudiant;
 import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
@@ -93,8 +95,8 @@ public class Get
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("etudiant")
-	public Response GetEtudiantsForSeance(@QueryParam("annee") Annee annee, @QueryParam("specialite") Specialite specialite, @QueryParam("groupe") int groupe)
+	@Path("etudiants")
+	public Response GetEtudiantsOfSeance(@QueryParam("annee") Annee annee, @QueryParam("specialite") Specialite specialite, @QueryParam("groupe") int groupe)
 	{
 		ArrayList<Etudiant> etudiants = DAO_Etudiant.GetEtudiants(annee, specialite, groupe);
 		
@@ -106,12 +108,35 @@ public class Get
 		return Utility.Response(Status.OK, etudiants);
 	}
 	
+//	@GET
+//	@Secured
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("absences")
+//	public Response GetAbsencesBySeance(@QueryParam("code_seance")String code_seance)
+//	{
+//		ArrayList<Absence> absences = DAO_Absence.GetAbsencesOfSeance(code_seance);
+//		
+//		if(absences.size() == 0)
+//		{
+//			return Utility.Response(Status.NOT_FOUND, new RequestReponse("Couldn't find any result for the requested query"));
+//		}
+//		
+//		return Utility.Response(Status.OK, absences);
+//	}
+//	
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("absence")
-	public Response GetAbsencesBySeance(@QueryParam("code_seance")String code_seance, @QueryParam("date_absence") String date)
+	@Path("absences")
+	public Response GetAbsencesByEtudiant(@QueryParam("code_seance")String code_seance, @QueryParam("id_etudiant") int id_etudiant)
 	{
-		return null;
+		ArrayList<Absence> absences = DAO_Absence.GetAbsencesOfStudentBySeance(code_seance, id_etudiant);
+		
+		if(absences.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, new RequestReponse("Couldn't find any absence for the requested student"));
+		}
+		
+		return Utility.Response(Status.OK, absences);
 	}
 }

@@ -58,7 +58,7 @@ public class MarquerPresence extends HttpServlet {
     	}
     	else 
     	{
-    		ArrayList<Etudiant> etudiants = currentSeance.getEtudiants();
+    		ArrayList<Etudiant> etudiants = currentSeance.GetEtudiants();
     		ArrayList<Etudiant> etudiantsAbsent = new ArrayList<Etudiant>();
     		
     		isDone = true;
