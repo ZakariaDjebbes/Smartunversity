@@ -34,13 +34,7 @@
 								Modifier votre profil
 							</button>
 						</form>
-						<form method="post" action="FormLink">
-							<input type="hidden" name="link" value="/WEB-INF/espace_enseignant/supprimer_profil_enseignant.jsp">
-							<button type="submit" class="dropdown-item btn btn-link btn-nav">
-							Supprimer votre profil
-							</button>
-						</form>
-						  <div class="dropdown-divider"></div>
+						<div class="dropdown-divider"></div>
 						<form method="post" action="Logout">
 							<button type="submit" class="dropdown-item btn btn-link btn-nav text-danger">Se déconnecter</button>
 						</form>

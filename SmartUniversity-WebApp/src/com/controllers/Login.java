@@ -17,7 +17,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.helpers.Dot_Login;
+import com.dots.Dot_Login;
 import com.helpers.LoginResponse;
 import com.helpers.RequestResponse;
 import com.modele.Enseignant;

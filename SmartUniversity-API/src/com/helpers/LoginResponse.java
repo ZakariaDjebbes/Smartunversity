@@ -1,5 +1,8 @@
 package com.helpers;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class LoginResponse
 {
 	private String token = null;

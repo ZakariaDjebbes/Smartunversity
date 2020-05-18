@@ -4,7 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Dot_Create_Absence implements IDots
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Dot_Create_Absence implements IDot
 {
 	private String code_seance = null;
 	private int id_etudiant = 0;

@@ -25,23 +25,22 @@ public class Seance
 		jeudi
 	}
 	
-	public enum Etat_Seance
+	public enum Etat_Demande
 	{
 		valide,
 		refuse,
 		nonTraite
 	}
 	
-	private String code_seance = null;
-	private String code_module = null;
-	private Type_Seance type;
-	private Annee annee;
-	private Specialite specialite;
-	private int section = 0;
-	private int groupe = 0;
-	private Jour jour;
-	private String heure = null;
-	private Etat_Seance etat_seance;
+	protected String code_seance = null;
+	protected String code_module = null;
+	protected Type_Seance type;
+	protected Annee annee;
+	protected Specialite specialite;
+	protected int section = 0;
+	protected int groupe = 0;
+	protected Jour jour;
+	protected String heure = null;
 
 	public Seance()
 	{
@@ -49,7 +48,7 @@ public class Seance
 	}
 
 	public Seance(String code_seance, String code_module, Type_Seance type, Annee annee, Specialite specialite,
-			int section, int groupe, Jour jour, String heure, Etat_Seance etat_seance)
+			int section, int groupe, Jour jour, String heure)
 	{
 		this.code_seance = code_seance;
 		this.code_module = code_module;
@@ -60,7 +59,6 @@ public class Seance
 		this.groupe = groupe;
 		this.jour = jour;
 		this.heure = heure;
-		this.etat_seance = etat_seance;
 	}
 
 	public String getCode_seance()
@@ -98,11 +96,6 @@ public class Seance
 		return heure;
 	}
 
-	public Etat_Seance getEtat_seance()
-	{
-		return etat_seance;
-	}
-
 	public void setCode_seance(String code_seance)
 	{
 		this.code_seance = code_seance;
@@ -136,11 +129,6 @@ public class Seance
 	public void setHeure(String heure)
 	{
 		this.heure = heure;
-	}
-
-	public void setEtat_seance(Etat_Seance etat_seance)
-	{
-		this.etat_seance = etat_seance;
 	}
 
 	public Annee getAnnee()

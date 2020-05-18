@@ -102,9 +102,9 @@ public class ModifierProfil extends HttpServlet
 		try
 		{
 			date_n = formatter.parse(request.getParameter("date_n"));
-		} catch (ParseException e)
+		} 
+		catch (ParseException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String telephone = request.getParameter("telephone");

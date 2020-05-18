@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.data.DAO_Token;
 import com.data.DAO_User;
-import com.dots.Dots_Login_User;
+import com.dots.Dot_Login_User;
 import com.helpers.LoginResponse;
 import com.helpers.RequestReponse;
 import com.helpers.Utility;
@@ -28,7 +28,7 @@ public class Authentication
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response AuthenticationService(Dots_Login_User dots_Login_User)
+	public Response AuthenticationService(Dot_Login_User dots_Login_User)
 	{
 		//validation
 		dots_Login_User.Validate();
@@ -44,7 +44,7 @@ public class Authentication
 		return Utility.Response(Status.OK, response);
 	}
 
-	private Utilisateur Authenticate(Dots_Login_User dots_Login_User)
+	private Utilisateur Authenticate(Dot_Login_User dots_Login_User)
 	{
 		// Authenticate against a database
 		// Throw an Exception if the credentials are invalid

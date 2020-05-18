@@ -15,6 +15,6 @@ public class NullPointerExceptionHandler implements ExceptionMapper<NullPointerE
 	@Override
 	public Response toResponse(NullPointerException exception)
 	{
-		return Utility.Response(Status.BAD_REQUEST, new RequestReponse("Failed to parse json data, An expected field is missing in request body"));
+		return Utility.Response(Status.BAD_REQUEST, new RequestReponse("Failed to parse json data, An expected field is missing in the request body"));
 	}
 }

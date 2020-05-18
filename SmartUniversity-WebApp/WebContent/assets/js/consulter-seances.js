@@ -1,5 +1,55 @@
 $(document).ready(function () {
-	//marquer la présence handlers
+	//data table
+    let table =  $('#table-seances').DataTable({
+        "sDom": '<"top"p>rt<"bottom"><"clear">',
+        "oLanguage": {
+        	"oPaginate": {
+        	"sPrevious": "Précédant", // This is the link to the previous page
+        	"sNext": "Suivant", // This is the link to the next page
+        		}
+        	}
+    });
+    
+    
+    //filter options
+    let selectOptions = ["Module","Jour","Heure","Spécialité","Type","Groupe","Année"];
+	
+
+    function handleFilterOptions()
+    {
+    	let selects = [];
+    	let cols = [];
+    	let params;
+    	
+    	for(selectOption of selectOptions)
+    	{
+    		
+    		selects.push($("#select-" + lowerize(selectOption)));
+    		cols.push(table.column(":contains("+selectOption+")"));
+    	}
+    	
+    	for(let i = 0; i < selects.length; i++)
+    	{
+    		selects[i].on('change', function(){
+    			let select = $(this);
+    			    			
+    			if(selectOptions.includes(select.val()))
+    			{
+    				console.log("mabite reset");
+            	    cols[i].search('').draw();
+    			}
+    			else
+    			{
+    				console.log("mabite enflé" + select.val());
+    				cols[i].search(select.val()).draw();
+    			}
+    		});
+    	}
+    }
+    
+    handleFilterOptions();
+    /*
+    //marquer la présence handlers
 	$(".marquer-presence").submit(function (event) {
 		let $form = $(this);
 		let submitButton = $(this).find("input[type=submit]:focus");
@@ -27,15 +77,18 @@ $(document).ready(function () {
 				{
 					alertify.error("Une erreur s'est produite.");
 				}
-			});
-		event.preventDefault();
-	});
+				//console.log(response);
 
+			});
+		//event.preventDefault();
+	});
+	*/
 	//Oprations handler
 	let button_marquer = $(".button-marquer");
 	let button_releve = $(".button-releve");
 	let button_exclus = $(".button-exclus");
 	let button_changement = $(".button-changement");
+	let button_seance_supp = $(".button-seance-supp");
 	
 	button_marquer.click(function(){
 		let button = $(this);
@@ -73,6 +126,15 @@ $(document).ready(function () {
 		toggleOperation(current, type);
 	});
 
+	button_seance_supp.click(function(){
+		let button = $(this);
+		let current = button.prop("value");
+		let type = "seance-supp";
+		
+		toggleButton(button);
+		toggleOperation(current, type);
+	});
+	
 	function toggleButton(button)
 	{
 		if(button.hasClass('active'))
@@ -92,6 +154,7 @@ $(document).ready(function () {
 		button_marquer.removeClass('active');
 		button_releve.removeClass('active');
 		button_exclus.removeClass('active');
+		button_seance_supp.removeClass('active');
 	}
 
 	function toggleOperation(current, type)
@@ -114,7 +177,11 @@ $(document).ready(function () {
 		{
 			previous = "changement";
 		}
-
+		else if($("#content-seance-supp-" + current).is(":visible"))
+		{
+			previous ="seance-supp";
+		}
+		
 		let target = $("#content-" + type + "-" + current);
 
 		if(previous == null)
@@ -134,25 +201,30 @@ $(document).ready(function () {
 				});
 			}
 		}
+	}});
+	
+	function startSubmitTimer(duration, submit) 
+	{
+		let timer = duration, minutes, seconds;
+		let initialValue = submit.prop('value');
+	
+		let interval = setInterval(function () {
+			minutes = parseInt(timer / 60, 10);
+			seconds = parseInt(timer % 60, 10);
+	
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+	
+			submit.prop('value', initialValue + '(' + seconds + ')');
+	
+			if (--timer < 0) {
+				clearInterval(interval);
+				submit.prop('value', initialValue);
+			}
+		}, 1000);
 	}
-});
-
-function startSubmitTimer(duration, submit) {
-	let timer = duration, minutes, seconds;
-	let initialValue = submit.prop('value');
-
-	let interval = setInterval(function () {
-		minutes = parseInt(timer / 60, 10);
-		seconds = parseInt(timer % 60, 10);
-
-		minutes = minutes < 10 ? "0" + minutes : minutes;
-		seconds = seconds < 10 ? "0" + seconds : seconds;
-
-		submit.prop('value', initialValue + '(' + seconds + ')');
-
-		if (--timer < 0) {
-			clearInterval(interval);
-			submit.prop('value', initialValue);
-		}
-	}, 1000);
-}
+	
+	function lowerize(string) 
+	{
+		  return string.charAt(0).toLowerCase() + string.slice(1);
+	}

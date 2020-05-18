@@ -6,13 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 
-import com.dots.Dots_Login_User;
+import com.dots.Dot_Login_User;
 import com.modele.Utilisateur;
 import com.modele.Utilisateur.Type_Utilisateur;
 
 public class DAO_User extends DAO_Initialize
 {
-	public static Utilisateur GetUser(Dots_Login_User userLoginDots)
+	public static Utilisateur GetUser(Dot_Login_User userLoginDots)
 	{
 		Utilisateur resultUtilisateur = null;
 		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))

@@ -7,11 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="Login" method="post">
+	<form action="CallServlet" method="post" enctype="multipart/form-data">
 		<label>Username</label>
 		<input type="text" name="user">
 		<label>Password</label>
 		<input type="password" name="pass">
+		<label>Fichier justificiation</label>
+		<input type="file" name="file">
 		<input type="submit" value="Submit">
 	</form>
 </body>

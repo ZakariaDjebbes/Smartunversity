@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.data.DAO_Enseignant;
 import com.data.DAO_User;
-import com.dots.Dots_Login_User;
+import com.dots.Dot_Login_User;
 import com.helpers.RequestReponse;
 import com.helpers.Utility;
 import com.modele.Utilisateur;
@@ -30,7 +30,7 @@ public class Update
 	public Response UpdateUser(Utilisateur utilisateur)
 	{
 		// validation
-		Dots_Login_User dots_Login_User = new Dots_Login_User(utilisateur.getUser(), utilisateur.getPass());
+		Dot_Login_User dots_Login_User = new Dot_Login_User(utilisateur.getUser(), utilisateur.getPass());
 
 		dots_Login_User.Validate();
 

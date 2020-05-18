@@ -77,7 +77,7 @@ public class DAO_Absence extends DAO_Initialize
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
 				statement.setString(1, code_seance);
-		
+
 				try (ResultSet resultSet = statement.executeQuery())
 				{
 					while (resultSet.next())
@@ -100,4 +100,35 @@ public class DAO_Absence extends DAO_Initialize
 			return null;
 		}
 	}
-}
+
+	public static Absence GetAbsenceByNumero(int numero_absence)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		{
+			String command = "SELECT * FROM Absence WHERE numero_absence = ?;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setInt(1, numero_absence);
+
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					if (resultSet.next())
+					{
+						int id_etudiant = resultSet.getInt(2);
+						String code_seance = resultSet.getString(1);
+						Date date = resultSet.getDate(4);
+						Absence absence = new Absence(numero_absence, code_seance, id_etudiant, date);
+						return absence;
+					}
+					
+					return null;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return null;
+		}
+}}

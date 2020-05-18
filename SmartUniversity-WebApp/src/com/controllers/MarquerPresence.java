@@ -19,80 +19,98 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.helpers.Dot_Create_Absence;
-import com.helpers.Dot_Seance;
-import com.modele.Etudiant;
+import com.dots.Dot_Create_Absence;
+import com.helpers.EtudiantResponse;
+import com.helpers.SeanceResponse;
 
 @WebServlet("/MarquerPresence")
-public class MarquerPresence extends HttpServlet {
+public class MarquerPresence extends HttpServlet
+{
 	private static final long serialVersionUID = 1L;
-       
-    public MarquerPresence() {
-        super();
-    }
 
-    @SuppressWarnings("unchecked")
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	public MarquerPresence()
 	{
-    	HttpSession session = request.getSession();
-    	String token = session.getAttribute("token").toString();
-    	boolean isDone = false;
-    	String code_seance = request.getParameter("code_seance");
-    	ArrayList<Dot_Seance> seances = (ArrayList<Dot_Seance>) session.getAttribute("seances");
-    	Dot_Seance currentSeance = null;
-    	    	
-    	for (Dot_Seance seance : seances)
+		super();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		HttpSession session = request.getSession();
+		String token = session.getAttribute("token").toString();
+		boolean isDone = false;
+		String message = "";
+		String code_seance = request.getParameter("code-seance");
+		ArrayList<SeanceResponse> seances = (ArrayList<SeanceResponse>) session.getAttribute("seances");
+		SeanceResponse currentSeance = SeanceResponse.GetByCodeSeance(seances, code_seance);
+
+		Client client = ClientBuilder.newClient();
+		WebTarget target;
+
+		// erreur?
+		if (currentSeance == null)
 		{
-			if(seance.getSeance().getCode_seance().equals(code_seance))
+			isDone = false;
+		} else
+		{
+			ArrayList<EtudiantResponse> etudiants = currentSeance.getEtudiants();
+			ArrayList<EtudiantResponse> etudiantsAbsent = new ArrayList<EtudiantResponse>();
+
+			if (etudiants != null)
 			{
-				currentSeance = seance;
-				break;
-			}
-		}
-    	    
-    	//erreur?
-    	if(currentSeance == null)
-    	{
-    		isDone = false;
-    	}
-    	else 
-    	{
-    		ArrayList<Etudiant> etudiants = currentSeance.GetEtudiants();
-    		ArrayList<Etudiant> etudiantsAbsent = new ArrayList<Etudiant>();
-    		
-    		isDone = true;
-    		//recup des etudiants depuis le formulaire
-    		for (Etudiant etudiant : etudiants)
-			{
-    			//recup de la checkbox
-				String checkbox = request.getParameter(String.valueOf(etudiant.getId_utilisateur()));
-				//si la checkbox est checked alors l'etudiant est présent donc pas d'absence...
-				if(checkbox == null)
+
+				isDone = true;
+				// recup des etudiants depuis le formulaire
+				for (EtudiantResponse etudiant : etudiants)
 				{
-					etudiantsAbsent.add(etudiant);
+					// recup de la checkbox
+					String checkbox = request.getParameter(String.valueOf(etudiant.getEtudiant().getId_utilisateur()));
+					// si la checkbox est checked alors l'etudiant est présent donc pas d'absence...
+					if (checkbox == null)
+					{
+						etudiantsAbsent.add(etudiant);
+					}
+				}
+				// creation des absences
+				for (EtudiantResponse etudiant : etudiantsAbsent)
+				{
+					Dot_Create_Absence absence = new Dot_Create_Absence(code_seance,
+							etudiant.getEtudiant().getId_utilisateur(), new Date());
+
+					client = ClientBuilder.newClient();
+					target = client.target("http://localhost:8080/SmartUniversity-API/api/create/absence");
+					Response apiResponse = target.request(MediaType.APPLICATION_JSON)
+							.header(HttpHeaders.AUTHORIZATION, "Bearer " + token).put(Entity.json(absence));
+
+					if (apiResponse.getStatusInfo() != Status.OK)
+					{
+						isDone = false;
+					}
+					apiResponse.close();
 				}
 			}
-    		//creation des absences
-    		for (Etudiant etudiant : etudiantsAbsent)
-			{
-    			Dot_Create_Absence absence = new Dot_Create_Absence(code_seance, etudiant.getId_utilisateur(), new Date());
-    			
-    			Client client = ClientBuilder.newClient();
-    			WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/create/absence");
-    			Response apiResponse = target.request(MediaType.APPLICATION_JSON)
-    					.header(HttpHeaders.AUTHORIZATION, "Bearer " + token).put(Entity.json(absence));
-    			
-    			if(apiResponse.getStatusInfo() != Status.OK)
-    			{
-    				isDone = false;
-    			}
-    			apiResponse.close();
-			}
 		}
-    	
-		response.setContentType("text/plain");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(String.valueOf(isDone));
+		
+		if(isDone)
+		{
+			message = String.format("Présence marquer avec succès pour le groupe %s du module %s", 
+					currentSeance.getSeance().getGroupe(),
+					currentSeance.getModule().getNom());
+		}
+		else 
+		{
+			message= "Une erreur s'est produite...";
+		}
+
+		ConsulterSeancesEnseignant.UpadteSeancesFromAPI(session);
+		session.setAttribute("message", message);
+		session.setAttribute("isDone", isDone);
+		
+		Redirect.SendRedirect(request, response, "/WEB-INF/espace_enseignant/consulter_seance_enseignant.jsp");
+		
+//		response.setContentType("text/json");
+//		response.setCharacterEncoding("UTF-8");
+//		response.getWriter().write();
 	}
 }

@@ -19,14 +19,9 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.helpers.Dot_Etudiant;
-import com.helpers.Dot_Seance;
 import com.helpers.RequestResponse;
-import com.modele.Absence;
+import com.helpers.SeanceResponse;
 import com.modele.Enseignant;
-import com.modele.Etudiant;
-import com.modele.Module;
-import com.modele.Seance;
 
 /**
  * Servlet implementation class ConsulterSeances
@@ -47,126 +42,72 @@ public class ConsulterSeancesEnseignant extends HttpServlet
 		doPost(req, resp);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();
-		String token = session.getAttribute("token").toString();
-		String message = "";
-		boolean isDone = false;
-		
-		Enseignant enseignant = (Enseignant) session.getAttribute("utilisateur");
-
-		Client client = ClientBuilder.newClient();
-		
-		//Requete pour chercher les seances
-		WebTarget target = client
-				.target("http://localhost:8080/SmartUniversity-API/api/get/seances/" + enseignant.getId_utilisateur());
-		Response apiResponse = target.request(MediaType.APPLICATION_JSON)
-				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token).get();
-		apiResponse.bufferEntity();
-		RequestResponse requestResponse = RequestResponse.GetRequestResponse(apiResponse);
-		
-		if(requestResponse == null)
-		{
-			//Liste des séances
-			ArrayList<Seance> seances = apiResponse.readEntity(new GenericType<ArrayList<Seance>>() {}); 
-			//Liste des séances avec leurs nom module avec les étudiants de la séance
-			ArrayList<Dot_Seance> dot_Seances = new ArrayList<Dot_Seance>();
-			apiResponse.close();
-			
-			for (Seance seance : seances)
-			{
-				//requete pour chercher les étudiants de cette séance
-				target = client.target("http://localhost:8080/SmartUniversity-API/api/get/etudiants")
-						.queryParam("annee", seance.getAnnee())
-						.queryParam("specialite", seance.getSpecialite())
-						.queryParam("groupe", seance.getGroupe());
-				apiResponse = target.request(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-						.get();
-				apiResponse.bufferEntity();
-				requestResponse = RequestResponse.GetRequestResponse(apiResponse);
-				
-				ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
-				ArrayList<Dot_Etudiant> dot_Etudiants = new ArrayList<Dot_Etudiant>();
-				
-				if(requestResponse == null)
-				{
-					etudiants = apiResponse.readEntity(new GenericType<ArrayList<Etudiant>>() {});
-				}
-				else 
-				{
-					System.out.println("Api responded with: " + requestResponse.getMessage() + " At ConsulterSeancesEnseignant");
-				}
-				
-				//requete pour chercher les modules des séances
-				target = client.target("http://localhost:8080/SmartUniversity-API/api/get/module/" + seance.getCode_module());
-				apiResponse = target.request(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-						.get();
-				apiResponse.bufferEntity();
-				
-				Module module = apiResponse.readEntity(Module.class);
-				
-				//requete pour les absences des étudiants
-				for (Etudiant etudiant : etudiants)
-				{
-					ArrayList<Absence> absences = new ArrayList<Absence>();
-					target = client.target("http://localhost:8080/SmartUniversity-API/api/get/absences");
-					apiResponse = target.queryParam("code_seance", seance.getCode_seance())
-										.queryParam("id_etudiant", etudiant.getId_utilisateur())
-										.request(MediaType.APPLICATION_JSON)
-										.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-										.get();
-					apiResponse.bufferEntity();
-					
-					requestResponse = RequestResponse.GetRequestResponse(apiResponse);
-					
-					if(requestResponse == null)
-					{
-						absences = apiResponse.readEntity(new GenericType<ArrayList<Absence>>() {});
-					}
-					
-					Dot_Etudiant dot_Etudiant = new Dot_Etudiant(etudiant, absences);
-					dot_Etudiants.add(dot_Etudiant);
-				}
-				
-				//Mettre tout ca dans le même objet pour facilité l'accés
-				Dot_Seance dot_Seance = new Dot_Seance(seance, module, dot_Etudiants);
-				
-				//Ajouter a la liste des séances
-				dot_Seances.add(dot_Seance);
-				apiResponse.close();
-			}
-			
-			isDone = true;
-			
-			if(dot_Seances.size() > 0)
-			{
-				Collections.sort(dot_Seances, new Comparator<Dot_Seance>()
-				{
-					@Override
-					public int compare(Dot_Seance seance1, Dot_Seance seance2)
-					{
-						return seance1.getModule().getNom().compareTo(seance2.getModule().getNom());
-					}
-				});;
-				
-				session.setAttribute("seances", dot_Seances);	
-			}
-			else 
-			{
-				message = "Vous n'assurez aucune séance pour le moment";
-			}
-			
-		}
-		else 
-		{
-			message = requestResponse.getMessage();
-		}
-		
-		session.setAttribute("message", message);
-		session.setAttribute("isDone", isDone);
+		ConsulterSeancesEnseignant.UpadteSeancesFromAPI(session);
 		
 		Redirect.SendRedirect(request, response, "/WEB-INF/espace_enseignant/consulter_seance_enseignant.jsp");
 	}
 
+	public static void UpadteSeancesFromAPI(HttpSession session)
+	{	
+		String token = session.getAttribute("token").toString();
+		Enseignant enseignant = (Enseignant) session.getAttribute("utilisateur");
+
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target(
+				"http://localhost:8080/SmartUniversity-API/api/get/seances/full/" + enseignant.getId_utilisateur());
+		Response apiResponse = target.request(MediaType.APPLICATION_JSON)
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token).get();
+		apiResponse.bufferEntity();
+		RequestResponse requestResponse = RequestResponse.GetRequestResponse(apiResponse);
+		ArrayList<SeanceResponse> seancesResponse = new ArrayList<SeanceResponse>();
+		if (requestResponse == null)
+		{
+			seancesResponse = apiResponse.readEntity(new GenericType<ArrayList<SeanceResponse>>()
+			{
+			});
+		} else
+		{
+			System.out.println("erreur GetSeanceFromAPI ???? devrait JAMAIS arrivé MERDE....");
+		}
+		
+		
+//		try (FileOutputStream fos = new FileOutputStream("C://Storage/mabite.wordx")) {
+//			   try
+//			{
+//				fos.write(seancesResponse.get(0).getEtudiants().get(1).getAbsences().get(0).getJustification().getFichier());
+//			} catch (IOException e)
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			   //fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
+//			} catch (FileNotFoundException e1)
+//			{
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} catch (IOException e1)
+//			{
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		
+		if (seancesResponse.size() > 1)
+		{
+			Collections.sort(seancesResponse, new Comparator<SeanceResponse>()
+			{
+				@Override
+				public int compare(SeanceResponse seance1, SeanceResponse seance2)
+				{
+					return seance1.getModule().getNom().compareTo(seance2.getModule().getNom());
+				}
+			});
+		}
+		
+		session.setAttribute("seances", seancesResponse);
+	}
+	
 }

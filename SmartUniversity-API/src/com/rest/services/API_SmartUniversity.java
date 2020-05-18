@@ -7,7 +7,6 @@ import javax.ws.rs.core.Application;
 
 import com.data.DAO_Initialize;
 
-
 @ApplicationPath("/api")
 public class API_SmartUniversity extends Application
 {

@@ -44,6 +44,4 @@ public class DAO_Enseignant extends DAO_Initialize
 			return null;
 		}
 	}
-	
-	
 }

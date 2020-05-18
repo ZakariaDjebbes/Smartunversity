@@ -40,5 +40,4 @@ public class DAO_Module extends DAO_Initialize
 			return null;
 		}
 	}
-
 }

@@ -33,7 +33,7 @@ public class SupprimerProfil extends HttpServlet
 		Utilisateur utilisateur = (Utilisateur)session.getAttribute("utilisateur");
 		String token = session.getAttribute("token").toString();
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/delete/"+utilisateur.getId_utilisateur());
+		WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/delete/utilisateur/"+utilisateur.getId_utilisateur());
 		Response apiResponse = target.request().header(HttpHeaders.AUTHORIZATION, "Bearer "+token).delete();
 		RequestResponse requestResponse = apiResponse.readEntity(RequestResponse.class);
 		session.invalidate();

@@ -4,6 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@Entity
+@XmlRootElement
 public class Absence
 {
 	private int numero_absence = 0;
@@ -69,5 +74,6 @@ public class Absence
 		catch (ParseException e)
 		{
 			e.printStackTrace();
-		}		}
+		}		
+	}
 }

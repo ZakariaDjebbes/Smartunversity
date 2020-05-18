@@ -12,7 +12,6 @@ import com.helpers.Utility;
 @Provider
 public class JsonParsingExceptionHandler implements ExceptionMapper<JsonParsingException>
 {
-
 	@Override
 	public Response toResponse(JsonParsingException exception)
 	{

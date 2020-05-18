@@ -1,5 +1,10 @@
 package com.modele;
 
+import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@Entity
+@XmlRootElement
 public class Etudiant extends Utilisateur
 {
 	public enum Annee

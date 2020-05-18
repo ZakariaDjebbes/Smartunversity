@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="shared/keepLogged.jsp" %>
+<%@ include file="shared/keepLogged.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -7,7 +7,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Login - Brand</title>
+<title>Se Connecter - NTIC</title>
+<link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -29,15 +30,13 @@
 			</div>
 			<form class="form-special" method="post" action="Login">
 				<%
-				if(session.getAttribute("message") != null)
-				{
+					if (session.getAttribute("message") != null)
+					{
 				%>
-				<div class="alert alert-danger" role="alert">
-  					${message}
-				</div>
+				<div class="alert alert-danger" role="alert">${message}</div>
 				<%
-				}
-				session.removeAttribute("message");
+					}
+					session.removeAttribute("message");
 				%>
 				<div class="form-group">
 					<label for="email">Nom d'utilisateur</label>
@@ -49,7 +48,8 @@
 				</div>
 				<div class="form-group">
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="keepLogged" id="checkbox"><label class="form-check-label" for="checkbox">Rester connecter</label>
+						<input class="form-check-input" type="checkbox" name="keepLogged" id="checkbox">
+						<label class="form-check-label" for="checkbox">Rester connecter</label>
 					</div>
 				</div>
 				<button class="btn btn-outline-success btn-block" type="submit">Se Connecter</button>
