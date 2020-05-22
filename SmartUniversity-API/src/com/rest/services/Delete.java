@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.data.DAO_Absence;
 import com.data.DAO_ChangementSeance;
 import com.data.DAO_SeanceSupp;
 import com.data.DAO_User;
@@ -34,6 +35,22 @@ public class Delete
 		}
 		
 		return Utility.Response(Status.OK, new RequestReponse("Profil deleted with success"));
+	}
+	
+	@DELETE
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/absence/{numero_absence}")
+	public Response DeleteAbsenceByNumero(@PathParam("numero_absence") int numero_absence)
+	{
+		if(DAO_Absence.DeleteAbsenceByNumero(numero_absence))
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Couldn't find absnece with this code"));			
+		}
+		else 
+		{
+			return Utility.Response(Status.OK, new RequestReponse("Absence deleted with success"));
+		}
 	}
 	
 	@DELETE

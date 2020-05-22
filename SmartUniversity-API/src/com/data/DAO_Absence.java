@@ -131,4 +131,25 @@ public class DAO_Absence extends DAO_Initialize
 					+ " >>> " + e.getMessage());
 			return null;
 		}
-}}
+	}
+	
+	public static boolean DeleteAbsenceByNumero(int numero_absence)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		{
+			String command = "DELETE FROM Absence WHERE numero_absence = ? LIMIT 1;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setInt(1, numero_absence);
+
+				return statement.executeUpdate() == 1;
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return false;
+		}
+	}
+}
