@@ -14,11 +14,13 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import com.data.DAO_CongeAcademique;
 import com.data.DAO_Justification;
+import com.dots.Dot_Create_CongeAcademique;
 import com.dots.Dot_Create_Justification;
-import com.helpers.RequestReponse;
-import com.helpers.Utility;
 import com.rest.annotations.Secured;
+import com.utility.JsonReader;
+import com.utility.Utility;
 
 @Path("/upload")
 public class Upload
@@ -36,15 +38,42 @@ public class Upload
 		Dot_Create_Justification detailJustification = bodyPart.getValueAs(Dot_Create_Justification.class);
 		//validation
 		detailJustification.Validate();
-		
 		//creating
 		if(DAO_Justification.CreateJustification(detailJustification, uploadedInputStream))
 		{
-			return Utility.Response(Status.OK, new RequestReponse("Justification created with success"));
+			return Utility.Response(Status.OK,
+					JsonReader.GetNode("justification_created"));
 		}
 		else 
 		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestReponse("Couldn't create the justification due to invalid data or server side error"));			
+			return Utility.Response(Status.BAD_REQUEST, 
+					JsonReader.GetNode("justification_not_created"));			
+		}		
+	}	
+	
+	@POST
+	@Secured
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("congeAcademique")
+	public Response UploadCongeAcademiqueFile(@FormDataParam("fichier_congeAcademique") InputStream uploadedInputStream,
+			@FormDataParam("fichier_congeAcademique") FormDataContentDisposition fichierJustification,
+			@FormDataParam("detail_congeAcademique") FormDataBodyPart bodyPart)
+	{
+		bodyPart.setMediaType(MediaType.APPLICATION_JSON_TYPE);
+		Dot_Create_CongeAcademique detailcongeAcademique = bodyPart.getValueAs(Dot_Create_CongeAcademique.class);
+		//validation
+		detailcongeAcademique.Validate();
+		//creating
+		if(DAO_CongeAcademique.CreateCongeAcademique(detailcongeAcademique, uploadedInputStream))
+		{
+			return Utility.Response(Status.OK,
+					JsonReader.GetNode("academic_leave_request_created"));
+		}
+		else 
+		{
+			return Utility.Response(Status.BAD_REQUEST, 
+					JsonReader.GetNode("academic_leave_request_not_created"));			
 		}		
 	}	
 }

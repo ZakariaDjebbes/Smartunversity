@@ -6,8 +6,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import com.helpers.RequestReponse;
-import com.helpers.Utility;
+import com.utility.JsonReader;
+import com.utility.Utility;
 
 @Provider
 public class JsonParsingExceptionHandler implements ExceptionMapper<JsonParsingException>
@@ -16,6 +16,6 @@ public class JsonParsingExceptionHandler implements ExceptionMapper<JsonParsingE
 	public Response toResponse(JsonParsingException exception)
 	{
 		return Utility.Response(Status.BAD_REQUEST,
-				new RequestReponse("Failed to parse json data, Request body contains a json error in : " + exception.getLocation()));
+				JsonReader.GetNode("json_parsing_exception"));
 	}
 }

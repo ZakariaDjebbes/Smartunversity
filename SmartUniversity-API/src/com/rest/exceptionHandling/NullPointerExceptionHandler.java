@@ -5,8 +5,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import com.helpers.RequestReponse;
-import com.helpers.Utility;
+import com.utility.JsonReader;
+import com.utility.Utility;
 
 @Provider
 public class NullPointerExceptionHandler implements ExceptionMapper<NullPointerException>
@@ -15,6 +15,7 @@ public class NullPointerExceptionHandler implements ExceptionMapper<NullPointerE
 	@Override
 	public Response toResponse(NullPointerException exception)
 	{
-		return Utility.Response(Status.BAD_REQUEST, new RequestReponse("Failed to parse json data, An expected field is missing in the request body"));
+		return Utility.Response(Status.BAD_REQUEST, 
+				JsonReader.GetNode("null_pointer_exception"));
 	}
 }

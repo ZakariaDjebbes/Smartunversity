@@ -11,7 +11,7 @@ public class DAO_Module extends DAO_Initialize
 {
 	public static Module GetMouleByCode(String code_module)
 	{
-		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
 			String command = "SELECT * FROM Module WHERE code_module = ?;";
 			try (PreparedStatement statement = connection.prepareStatement(command))

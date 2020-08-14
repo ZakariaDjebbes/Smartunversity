@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 public class Enseignant extends Utilisateur
 {
-	private String grade = null;
-	private Code_Departement code_departement;
+	protected String grade = null;
+	protected Code_Departement code_departement;
 	
 	public Enseignant()
 	{

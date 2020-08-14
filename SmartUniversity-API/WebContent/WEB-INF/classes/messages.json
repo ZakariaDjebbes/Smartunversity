@@ -1,0 +1,337 @@
+{
+	"teacher_not_exist": {
+		"message_fr": "L'identifiant de l'enseignant reçu n'existe pas",
+		"message_en": "The received teacher identifier doesn't exist",
+		"message_ar": "place_holder"
+	},
+	"teachers_not_exist": {
+		"message_fr": "Aucun enseignant correspondant n'a été trouvé",
+		"message_en": "No matching teacher was found",
+		"message_ar": "place_holder"
+	},
+	"session_not_exist": {
+		"message_fr": "L'identifiant de la séance reçu n'existe pas",
+		"message_en": "The received session identifier doesn't exist",
+		"message_ar": "place_holder"
+	},
+	"module_not_exist": {
+		"message_fr": "L'identifiant du module reçu n'existe pas",
+		"message_en": "The received module identifier doesn't exist",
+		"message_ar": "place_holder"
+	},
+	"sessions_teacher_not_exist": {
+		"message_fr": "L'enseignant reçu n'a aucune séance",
+		"message_en": "The received teacher has no session",
+		"message_ar": "place_holder"
+	},
+	"sessions_student_not_exist": {
+		"message_fr": "L'etudiant reçu n'a aucune séance",
+		"message_en": "The received student has no session",
+		"message_ar": "place_holder"
+	},
+	"sessions_departement_not_exist": {
+		"message_fr": "Le département reçu n'a aucune séance",
+		"message_en": "The received departement has no session",
+		"message_ar": "place_holder"
+	},
+	"additional_session_not_exist": {
+		"message_fr": "L'identifiant de la séance supplémentaire reçu n'existe pas",
+		"message_en": "The received additional session identifier doesn't exist",
+		"message_ar": "place_holder"
+	},
+	"academic_leave_not_exist": {
+		"message_fr": "L'identifiant du congé académique reçu n'existe pas",
+		"message_en": "The received academic leave request identifier doesn't exist",
+		"message_ar": "place_holder"
+	},
+	"user_not_exist": {
+		"message_fr": "L'identifiant de l'utilisateur reçu n'existe pas",
+		"message_en": "The received user identifier doesn't exist",
+		"message_ar": "place_holder"
+	},
+	"student_not_exist": {
+		"message_fr": "L'identifiant de l'étudiant reçu n'existe pas",
+		"message_en": "The received student identifier doesn't exist",
+		"message_ar": "place_holder"
+	},
+	"students_year_speciality_group_not_exist": {
+		"message_fr": "Impossible de trouver un étudiant pour cette année, spécialité et groupe",
+		"message_en": "Couldn't find any student for this year, speciality and group",
+		"message_ar": "place_holder"
+	},
+	"absence_not_exist": {
+		"message_fr": "L'identifiant de l'absence reçu n'existe pas",
+		"message_en": "The received absence identifier doesn't exist",
+		"message_ar": "place_holder"
+	},
+	"absences_student_not_exist": {
+		"message_fr": "Cet étudiant n'a aucune absence",
+		"message_en": "This student has no absence",
+		"message_ar": "place_holder"
+	},
+	"absences_departement_not_exist": {
+		"message_fr": "Ce département n'a aucune absence",
+		"message_en": "This departement has no absence",
+		"message_ar": "place_holder"
+	},
+	"teacher_unavailable_day_hour": {
+		"message_fr": "Cet enseignant n'est pas disponible ce jour à cette heure",
+		"message_en": "This teacher is not available that day at that hour",
+		"message_ar": "place_holder"
+	},
+	"student_blocked": {
+		"message_fr": "Cet étudiant est bloqué du système pour cause de congé académique",
+		"message_en": "This student is blocked from the system due to academic leave",
+		"message_ar": "place_holder"
+	},
+	"change_request_exist": {
+		"message_fr": "Une demande de changement existe déjà pour cette séance",
+		"message_en": "A change request already exists for this session",
+		"message_ar": "place_holder"
+	},
+	"day_incorrect": {
+		"message_fr": "Le nouveau jour reçu est incorrect",
+		"message_en": "The new day received is incorrect",
+		"message_ar": "place_holder"
+	},
+	"hour_incorrect": {
+		"message_fr": "La nouvelle heure reçue est incorrect",
+		"message_en": "The new hour received is incorrect",
+		"message_ar": "place_holder"
+	},
+	"change_either_day_hour": {
+		"message_fr": "Un changement doit être effectué à au moins l'heure ou le jour de la séance",
+		"message_en": "A change must be made to at least the hour or on the day of the session",
+		"message_ar": "place_holder"
+	},
+	"have_session": {
+		"message_fr": "Vous avez une séance ce jour a cette heure",
+		"message_en": "You have a session this day at that hour",
+		"message_ar": "place_holder"
+	},
+	"same_as_main": {
+		"message_fr": "Impossible de créer une séance supplémentaire avec le même jour et la même heure que la séance principale",
+		"message_en": "Cannot create an additional session with the same day and hour as its main session",
+		"message_ar": "place_holder"
+	},
+	"additional_already_exist": {
+		"message_fr": "Une demande de séance supplémentaire ce jour et cette heure existe déjà pour cette séance",
+		"message_en": "A request for an additional session for this day and this hour already exists for this session",
+		"message_ar": "place_holder"
+	},
+	"teacher_have_other_request": {
+		"message_fr": "Vous avez une autre demande ce jour a cette heure",
+		"message_en": "You have a change request this day at that hour",
+		"message_ar": "place_holder"
+	},
+	"student_have_other_request": {
+		"message_fr": "Vous avez une autre demande de congé académique",
+		"message_en": "You have another request for an academic leave",
+		"message_ar": "place_holder"
+	},
+	"only_image_files": {
+		"message_fr": "Vous ne pouvez envoyer que des images (*.JPEG, *.JPG, *.PNG)",
+		"message_en": "You can only send images (*.JPEG, *.JPG, *.PNG)",
+		"message_ar": "place_holder"
+	},
+	"already_valid_justification": {
+		"message_fr": "Il y a déjà une justification valide pour cette absence",
+		"message_en": "There is already a valid justification for this absence",
+		"message_ar": "place_holder"
+	},
+	"already_untreated_justification": {
+		"message_fr": "Il y a déjà une justification non-traiter pour cette absence",
+		"message_en": "There is already an untreated justification for this absence",
+		"message_ar": "place_holder"
+	},
+	"justification_not_updated": {
+		"message_fr": "La justification n'a pas été mise à jour",
+		"message_en": "The justification has not been updated",
+		"message_ar": "place_holder"
+	},
+	"justification_denied": {
+		"message_fr": "La justification a été correctement refusée",
+		"message_en": "The justification has been correctly denied",
+		"message_ar": "place_holder"
+	},
+	"justification_accepted": {
+		"message_fr": "La justification a été correctement validée",
+		"message_en": "The justification has been correctly validated",
+		"message_ar": "place_holder"
+	},
+	"justification_created": {
+		"message_fr": "La justification a été correctement crée",
+		"message_en": "The justification has been correctly created",
+		"message_ar": "place_holder"
+	},
+	"justification_not_created": {
+		"message_fr": "La justification n'a pas été créée en raison d'une erreur serveur",
+		"message_en": "Justification has not been created due to a server side error",
+		"message_ar": "place_holder"
+	},
+	"justifications_not_exist": {
+		"message_fr": "Cette absence n'a aucune justification",
+		"message_en": "This absence has no justification",
+		"message_ar": "place_holder"
+	},
+	"empty_user_password": {
+		"message_fr": "Le nom d'utilisateur ou le mot de passe est vide",
+		"message_en": "The username or the password is empty",
+		"message_ar": "place_holder"
+	},
+	"password_length": {
+		"message_fr": "Le mot de passe doit contenir au moins six caractères",
+		"message_en": "Password must contain at least six characters",
+		"message_ar": "place_holder"
+	},
+	"invalid_username_password": {
+		"message_fr": "Cette combinaison de nom d'utilisateur et de mot de passe n'existe pas",
+		"message_en": "This combination of username and password does not exist",
+		"message_ar": "place_holder"
+	},
+	"authorization_token_error": {
+		"message_fr": "Impossible de créer ou de mettre à jour le jeton d'autorisation",
+		"message_en": "Unable to create or update the authorization token",
+		"message_ar": "place_holder"
+	},
+	"server_side_error": {
+		"message_fr": "Une erreur serveur est survenue",
+		"message_en": "A server error has occurred",
+		"message_ar": "place_holder"
+	},
+	"illegal_argument_exception": {
+		"message_fr": "Impossible de lire un champ dans le corps de la requête",
+		"message_en": "Could not parse a field in the request body",
+		"message_ar": "place_holder"
+	},
+	"message_body_provider_not_found_exception": {
+		"message_fr": "Impossible de trouver un fournisseur de classe dans le chemin d'accès aux classes",
+		"message_en": "Could not find a class body provider in the class path",
+		"message_ar": "place_holder"
+	},
+	"null_pointer_exception": {
+		"message_fr": "Échec de la lecture des données json, un champ attendu est manquant dans le corps de la requête",
+		"message_en": "Failed to parse json data, An expected field is missing in the request body",
+		"message_ar": "place_holder"
+	},
+	"json_parsing_exception": {
+		"message_fr": "Échec de la lecture des données json, le corps de la demande contient une erreur json",
+		"message_en": "Failed to parse json data, Request body contains a json error",
+		"message_ar": "place_holder"
+	},
+	"absence_created": {
+		"message_fr": "L'absence a été créée avec succès",
+		"message_en": "The absence has been created with success",
+		"message_ar": "place_holder"
+	},
+	"absence_not_created": {
+		"message_fr": "Impossible de créer l'absence en raison d'une erreur serveur",
+		"message_en": "Could not create the absence due to a server side error",
+		"message_ar": "place_holder"
+	},
+	"change_request_created": {
+		"message_fr": "La demande de changement d'horaire a été correctement créée",
+		"message_en": "The schedule change request was successfully created",
+		"message_ar": "place_holder"
+	},
+	"change_request_not_created": {
+		"message_fr": "Impossible de créer la demande de changement d'horaire en raison d'une erreur serveur",
+		"message_en": "Could not create the schedule change request due to a server side error",
+		"message_ar": "place_holder"
+	},
+	"change_request_deleted": {
+		"message_fr": "La demande de changement d'horaire a été correctement supprimée",
+		"message_en": "The schedule change request has been correctly deleted",
+		"message_ar": "place_holder"
+	},
+	"additional_session_request_created": {
+		"message_fr": "La demande de séance supplémentaire a été correctement créée",
+		"message_en": "The additional session request has been successfully created",
+		"message_ar": "place_holder"
+	},
+	"additional_session_request_not_created": {
+		"message_fr": "Impossible de créer la demande de séance supplémentaire d'horaire en raison d'une erreur serveur",
+		"message_en": "Could not create the additional session request due to a server side error",
+		"message_ar": "place_holder"
+	},
+	"additional_session_request_deleted": {
+		"message_fr": "La demande de session supplémentaire a été supprimée avec succès",
+		"message_en": "The additional session request has been successfully deleted",
+		"message_ar": "place_holder"
+	},
+	"academic_leave_request_deleted": {
+		"message_fr": "La demande de congé académique a été supprimée avec succès",
+		"message_en": "The academic leave request has been successfully deleted",
+		"message_ar": "place_holder"
+	},
+	"academic_leave_request_created": {
+		"message_fr": "La demande de congé académique a été créée avec succès",
+		"message_en": "The academic leave request has been successfully created",
+		"message_ar": "place_holder"
+	},
+	"academic_leave_student_not_exist": {
+		"message_fr": "Cet étudiant n'a pas de demande de congé académique",
+		"message_en": "This student does not have an academic leave request",
+		"message_ar": "place_holder"
+	},
+	"academic_leave_request_not_created": {
+		"message_fr": "La demande de congé académique n'a pas été créée en raison d'une erreur serveur",
+		"message_en": "The academic leave request has not been created due to a server side error",
+		"message_ar": "place_holder"
+	},
+	"demand_accepted": {
+		"message_fr": "La demande a été correctement validée",
+		"message_en": "The request has been correctly validated",
+		"message_ar": "place_holder"
+	},
+	"demand_denied": {
+		"message_fr": "La demande a été correctement refusée",
+		"message_en": "The request has been correctly denied",
+		"message_ar": "place_holder"
+	},
+	"demand_not_updated": {
+		"message_fr": "La demande n'a pas été mise à jour",
+		"message_en": "The request has not been updated",
+		"message_ar": "place_holder"
+	},
+	"demands_departement_not_exist": {
+		"message_fr": "Ce département n'a aucune demande",
+		"message_en": "This departement has no demands",
+		"message_ar": "place_holder"
+	},
+	"teacher_assigned": {
+		"message_fr": "L'enseignant a été correctement affecté à la séance",
+		"message_en": "The teacher has been correctly assigned to the session",
+		"message_ar": "place_holder"
+	},
+	"teacher_not_assigned": {
+		"message_fr": "L'enseignant n'a pas été affecté à la session en raison d'une erreur serveur",
+		"message_en": "The teacher has not been assigned to the session due to a server side error",
+		"message_ar": "place_holder"
+	},
+	"profile_deleted": {
+		"message_fr": "Le profil a été supprimé avec succès",
+		"message_en": "The profile has been deleted with success",
+		"message_ar": "place_holder"
+	},
+	"profile_not_updated": {
+		"message_fr": "Le profil n'a pas été mis à jour en raison d'une erreur serveur",
+		"message_en": "The profile was not updated due to a server side error",
+		"message_ar": "place_holder"
+	},
+	"absence_deleted": {
+		"message_fr": "L'absence a été supprimée avec succès",
+		"message_en": "The absence has been successfully deleted",
+		"message_ar": "place_holder"
+	},
+	"session_cleared": {
+		"message_fr": "La session a été désaffecter avec succès",
+		"message_en": "The session has been successfully cleared",
+		"message_ar": "place_holder"
+	},
+	"internal_error": {
+		"message_fr": "Une erreur interne a empêché l'opération",
+		"message_en": "An internal error prevented the operation",
+		"message_ar": "place_holder"
+	}
+}

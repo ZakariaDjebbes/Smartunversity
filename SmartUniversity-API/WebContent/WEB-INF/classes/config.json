@@ -1,0 +1,8 @@
+{
+	"dbConfig": {
+		"dbUrl": "jdbc:mysql://localhost:3306/ntic?autoReconnect=true&allowMultiQueries=true",
+		"dbUser": "adminBD",
+		"dbPassword": "247365",
+		"dbConnector": "com.mysql.jdbc.Driver"
+	}
+}

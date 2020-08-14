@@ -1,7 +1,9 @@
 package com.modele;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ public class Justification
 	private int numero_justification = 0;
 	private int numero_absence = 0;
 	private byte[] fichier = null;
+	private String extension = null;
 	private Date date_justification = null;
 	private Etat_Demande etat_justification;
 	
@@ -34,6 +37,13 @@ public class Justification
 		this.etat_justification = etat_justification;
 	}
 
+	public String getFormattedDate_jusitifcation()
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		formatter.applyPattern("yyyy-MM-dd");
+		return formatter.format(date_justification);
+	}
+	
 	public int getNumero_justification()
 	{
 		return numero_justification;
@@ -68,12 +78,35 @@ public class Justification
 	{
 		return fichier;
 	}
+	
+	public String base64EncodedFichier()
+	{
+		byte[] encodeBase64 = Base64.getEncoder().encode(fichier);
+		try
+		{
+			return new String(encodeBase64, "UTF-8");
+		} catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 	public void setFichier(byte[] fichier)
 	{
 		this.fichier = fichier;
 	}
+	
+	public String getExtension()
+	{
+		return extension;
+	}
 
+	public void setExtension(String extension)
+	{
+		this.extension = extension;
+	}
 	public void setDate_justification(String date_justification)
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

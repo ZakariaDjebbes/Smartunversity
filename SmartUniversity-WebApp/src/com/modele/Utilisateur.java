@@ -2,7 +2,9 @@ package com.modele;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,14 +15,41 @@ import com.utility.Utility;
 @Entity
 public class Utilisateur
 {
+	/***
+	 * @author Zaki
+	 *Values are by default setup to be in this order ("FRENCH", "ENGLISH", "ARABIC")
+	 */
 	public enum Type_Utilisateur
 	{
-		etudiant, enseignant, chefDepartement, responsableFormation, admin
+		etudiant, enseignant, chefDepartement, responsableFormation, admin;
 	}
 
+	/***
+	 * @author Zaki
+	 *Values are by default setup to be in this order ("FRENCH", "ENGLISH", "ARABIC")
+	 */
 	public enum Code_Departement
 	{
-		MI, TLSI, IFA
+		MI("Tronc commun mathématiques et informatique", "PLACE HOLDER", "PLACE HOLDER"), 
+		TLSI("Technologies des Logiciels et des Systèmes d'information", "PLACE HOLDER", "PLACE HOLDER"), 
+		IFA("Informatique Fondamentale et ses Applications", "PLACE HOLDER", "PLACE HOLDER");
+		
+		private final List<String> values;
+		
+		Code_Departement(String... values)
+		{
+			this.values = Arrays.asList(values);
+		}
+
+		public List<String> getValues()
+		{
+			return values;
+		}
+		
+		public String getValue(int index)
+		{
+			return values.get(index);
+		}
 	}
 
 	protected int id_utilisateur = 0;
@@ -33,9 +62,9 @@ public class Utilisateur
 	protected String email = null;
 	protected String telephone = null;
 	protected Type_Utilisateur type_utilisateur;
-	
-	public Utilisateur(int id_utilisateur, String user, String pass, String nom, String prenom, String adresse, Date date_n,
-			String email, String telephone, Type_Utilisateur type_utilisateur)
+
+	public Utilisateur(int id_utilisateur, String user, String pass, String nom, String prenom, String adresse,
+			Date date_n, String email, String telephone, Type_Utilisateur type_utilisateur)
 	{
 		this.id_utilisateur = id_utilisateur;
 		this.user = user;
@@ -166,28 +195,28 @@ public class Utilisateur
 	@Override
 	public String toString()
 	{
-		return "Utilisateur [id=" + id_utilisateur + ", user=" + user + ", pass=" + pass + ", nom=" + nom + ", prenom=" + prenom
-				+ ", adresse=" + adresse + ", date_n=" + date_n + ", email=" + email + ", telephone=" + telephone
-				+ ", type_utilisateur=" + type_utilisateur + "]";
+		return "Utilisateur [id=" + id_utilisateur + ", user=" + user + ", pass=" + pass + ", nom=" + nom + ", prenom="
+				+ prenom + ", adresse=" + adresse + ", date_n=" + date_n + ", email=" + email + ", telephone="
+				+ telephone + ", type_utilisateur=" + type_utilisateur + "]";
 	}
-	
+
 	@Override
 	public boolean equals(Object obj)
 	{
-		if(obj == this)
+		if (obj == this)
 		{
 			return true;
 		}
-		if(obj == null)
+		if (obj == null)
 		{
 			return false;
 		}
-		
-		Utilisateur other = (Utilisateur)obj;
-		
-		if(user.equals(other.user) && pass.equals(other.pass) && nom.equals(other.nom) && prenom.equals(other.prenom) 
-				&& adresse.equals(other.adresse) && email.equals(other.email)
-				&& telephone.equals(other.telephone) && Utility.SameDate(date_n, other.date_n)) 
+
+		Utilisateur other = (Utilisateur) obj;
+
+		if (user.equals(other.user) && pass.equals(other.pass) && nom.equals(other.nom) && prenom.equals(other.prenom)
+				&& adresse.equals(other.adresse) && email.equals(other.email) && telephone.equals(other.telephone)
+				&& Utility.SameDate(date_n, other.date_n))
 		{
 			return true;
 		}

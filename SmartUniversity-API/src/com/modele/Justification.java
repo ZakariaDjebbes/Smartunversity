@@ -16,10 +16,11 @@ public class Justification
 	private int numero_justification = 0;
 	private int numero_absence = 0;
 	private byte[] fichier = null;
+	private String extension = null;
 	private Date date_justification = null;
 	private Etat_Demande etat_justification;
 	
-	public Justification(int numero_justification, int numero_absence, byte[] fichier, Date date_justification,
+	public Justification(int numero_justification, int numero_absence, byte[] fichier, String extension, Date date_justification,
 			Etat_Demande etat_justification)
 	{
 		this.numero_justification = numero_justification;
@@ -27,13 +28,14 @@ public class Justification
 		this.fichier = fichier;
 		this.date_justification = date_justification;
 		this.etat_justification = etat_justification;
+		this.extension = extension;
 	}
 
 	public Justification()
 	{
 		
 	}
-	
+
 	public int getNumero_justification()
 	{
 		return numero_justification;
@@ -72,6 +74,16 @@ public class Justification
 	public void setFichier(byte[] fichier)
 	{
 		this.fichier = fichier;
+	}
+
+	public String getExtension()
+	{
+		return extension;
+	}
+
+	public void setExtension(String extension)
+	{
+		this.extension = extension;
 	}
 
 	public void setDate_justification(String date_justification)

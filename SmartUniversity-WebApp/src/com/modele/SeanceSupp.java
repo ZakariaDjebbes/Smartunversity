@@ -78,4 +78,10 @@ public class SeanceSupp
 	{
 		this.etat_seance = etat_seance;
 	}
+	
+	@Override
+	public int hashCode()
+	{
+		return code_seance_supp;
+	}
 }

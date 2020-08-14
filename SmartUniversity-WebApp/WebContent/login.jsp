@@ -1,21 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="shared/keepLogged.jsp"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta http-equiv="Cache-control" content="no-cache">
 <title>Se Connecter - NTIC</title>
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-<link rel="stylesheet" href="assets/css/Data-Table.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-<link rel="stylesheet" href="assets/css/Pretty-Search-Form.css">
+<link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -29,22 +26,23 @@
 				<p>Connectez vous a votre compte NTIC afin d'acceder au fonctionalités du site.</p>
 			</div>
 			<form class="form-special" method="post" action="Login">
-				<%
-					if (session.getAttribute("message") != null)
-					{
-				%>
-				<div class="alert alert-danger" role="alert">${message}</div>
-				<%
-					}
-					session.removeAttribute("message");
-				%>
+				<c:if test="${not empty message}">
+					<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						${message}
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<c:remove var="isDone" />
+					<c:remove var="message" />
+				</c:if>
 				<div class="form-group">
 					<label for="email">Nom d'utilisateur</label>
-					<input class="form-control item" type="text" id="email" name="user">
+					<input class="form-control item" type="text" id="username" name="username">
 				</div>
 				<div class="form-group">
 					<label for="password">Mot de passe</label>
-					<input class="form-control" type="password" id="password" name="pass">
+					<input class="form-control" type="password" id="password" name="password">
 				</div>
 				<div class="form-group">
 					<div class="form-check">
@@ -60,12 +58,8 @@
 	<jsp:include page="shared/footer.jsp"></jsp:include>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
-	<script src="assets/js/Table-With-Search.js"></script>
 </body>
 
 </html>

@@ -4,13 +4,16 @@ import java.util.ArrayList;
 
 import javax.ws.rs.core.Response.Status;
 
+import com.data.DAO_ChangementSeance;
+import com.data.DAO_Enseignant;
 import com.data.DAO_Seance;
 import com.data.DAO_SeanceSupp;
-import com.helpers.RequestReponse;
+import com.modele.Enseignant;
 import com.modele.Seance;
 import com.modele.Seance.Jour;
 import com.modele.SeanceSupp;
 import com.rest.exceptions.RequestNotValidException;
+import com.utility.JsonReader;
 
 public class Dot_Create_SeanceSupp implements IDot
 {
@@ -62,25 +65,52 @@ public class Dot_Create_SeanceSupp implements IDot
 	@Override
 	public void Validate()
 	{
-		if(DAO_Seance.GetSeanceByCode_Seance(code_seance) == null)
+		//TODO ensure that the group / speciality / section exist
+
+		Seance seance = DAO_Seance.GetSeanceByCode_Seance(code_seance);
+		Enseignant enseignant = DAO_Enseignant.GetEnseignantBySeance(seance);		
+		
+		if(seance == null)
 		{			
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Cannot create additional seances for a non existing seance"));
+			throw new RequestNotValidException(Status.BAD_REQUEST,
+					JsonReader.GetNode("session_not_exist"));
 		}
 		
-		Seance seance = DAO_Seance.GetSeanceByCode_Seance(code_seance);
 		ArrayList<SeanceSupp> others = DAO_SeanceSupp.GetSeancesSupp(code_seance);
 		
 		if(seance.getJour().equals(jour) && seance.getHeure().equals(heure))
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Cannot create additional seances with the same hour and day of its main seance"));
+			throw new RequestNotValidException(Status.BAD_REQUEST,
+					JsonReader.GetNode("same_as_main"));
 		}
 		
 		for (SeanceSupp seanceSupp : others)
 		{
 			if(seanceSupp.getJour().equals(jour) && seanceSupp.getHeure().equals(heure))
 			{
-				throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("An additional seance with this day and this hour for this seance already exists"));
+				throw new RequestNotValidException(Status.BAD_REQUEST, 
+						JsonReader.GetNode("additional_already_exist"));
 			}
 		}
+		
+		if(!DAO_Seance.IsEnseignantDisponible(enseignant.getId_utilisateur(), heure, jour))
+		{
+			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
+					JsonReader.GetNode("have_session"));
+		}
+		
+		if(!DAO_ChangementSeance.IsEnseignantDisponible(enseignant.getId_utilisateur(), heure, jour))
+		{
+			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
+					JsonReader.GetNode("teacher_have_other_request"));
+		}
+		
+		if(!DAO_SeanceSupp.IsEnseignantDisponible(enseignant.getId_utilisateur(), heure, jour))
+		{
+			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
+					JsonReader.GetNode("teacher_have_other_request"));
+		}
+		
+		//TODO check if groupe is disponible
 	}
 }

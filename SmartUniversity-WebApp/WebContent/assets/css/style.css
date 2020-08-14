@@ -3,6 +3,16 @@ html, body {
   width: 100%;
 }
 
+.pull-left
+{
+ float: left!important;
+}
+
+.pull-right
+{
+ float: right!important;
+}
+
 .nav-brand-img
 {
  margin-right: 10px;
@@ -366,4 +376,204 @@ li.list-group-item.list-group-item-light-success
 {
 	transition: 0.3s;
 	color: #912745 !important;
+}
+
+.btn.btn-icon.btn-icon-info
+{
+	color: #23A7BC !important;
+}
+
+.btn.btn-icon.btn-icon-info:hover
+{
+	transition: 0.3s;
+	color: #166B78 !important;
+}
+
+.btn.btn-icon.btn-icon-success
+{
+	color: #28a745 !important;
+}
+
+.btn.btn-icon.btn-icon-success:hover
+{
+	transition: 0.3s;
+	color: #208637 !important;
+}
+
+.btn.btn-icon.btn-icon-dark
+{
+	color: #292b2c !important;
+}
+
+.btn.btn-icon.btn-icon-dark:hover
+{
+	transition: 0.3s;
+	color: #757c7d !important
+}
+
+.select-list {
+  max-height: 295px;
+  overflow: scroll;
+  margin-bottom: 10px;
+  overflow-x: hidden;
+}
+
+.select-list a.active
+{
+	background-color: #E6F6EA !important;
+	border-color: #66B377 !important;
+}
+
+
+.justification-image {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.justification-image:hover {
+  opacity: 0.7;
+}
+
+.modal-img-justification {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  padding-top: 100px;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.img-modal {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+.caption-modal-justification {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+.img-modal, .caption-modal-justification {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.close-img-modal {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close-img-modal {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 700px) {
+  .img-modal {
+    width: 100%;
+  }
+}
+
+#marquer-presence a.active {
+  background-color: #0275d8;
+}
+
+#marquer-presence a {
+  color: #0275d8;
+}
+
+#relever-absences a.active {
+  background-color: #5cb85c;
+}
+
+#relever-absences a {
+  color: #5cb85c;
+}
+
+#etudiants-exclus a.active {
+  background-color: #f0ad4e;
+}
+
+#etudiants-exclus a {
+  color: #f0ad4e;
+}
+
+#demande-changement a.active {
+  background-color: #5bc0de;
+}
+
+#demande-changement a {
+  color: #5bc0de;
+}
+
+#seances-supp a.active {
+  background-color: #292b2c;
+}
+
+#seances-supp a {
+  color: #292b2c;
+}
+
+#tabs-seance .nav.nav-pills.nav-fill .nav-item a.active {
+  color: white !important;
+}
+
+.nav.nav-pills.nav-fill {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #bcbcbc;
+  border-radius: 3px;
+}
+
+.tab-content {
+  padding-top: 15px;
+}
+
+#list-etudiants-relever {
+  max-height: 295px;
+  overflow: scroll;
+  margin-bottom: 10px;
+  overflow-x: hidden;
+}
+
+#demande-etudiants a.active {
+  background-color: #5cb85c;
+}
+
+.demande-tab a {
+  color: #5cb85c;
+}
+
+#demande-enseignants a.active {
+  background-color: #5cb85c;
 }

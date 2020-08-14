@@ -1,0 +1,8 @@
+{
+	"dbConfig": {
+		"dbUrl": "jdbc:mysql://node1627-pntic.oxa.cloud/ntic",
+		"dbUser": "adminBD",
+		"dbPassword": "xExjF73G75YZVZyk",
+		"dbConnector": "com.mysql.jdbc.Driver"
+	}
+}

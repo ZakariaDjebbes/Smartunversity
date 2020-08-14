@@ -1,5 +1,7 @@
 package com.helpers;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.modele.Absence;
@@ -10,15 +12,15 @@ public class AbsenceResponse
 {
 	private Absence absence = null;
 	private boolean isJustifier = false;
-	private Justification justification = null;
+	private ArrayList<Justification> justifications = null;
 	
-	public AbsenceResponse(Absence absence, boolean isJustifier, Justification justification)
+	public AbsenceResponse(Absence absence, boolean isJustifier, ArrayList<Justification> justifications)
 	{
 		this.absence = absence;
 		this.isJustifier = isJustifier;
-		this.justification = justification;
+		this.justifications = justifications;
 	}
-	
+
 	public AbsenceResponse()
 	{
 		
@@ -34,9 +36,9 @@ public class AbsenceResponse
 		return isJustifier;
 	}
 
-	public Justification getJustification()
+	public ArrayList<Justification> getJustifications()
 	{
-		return justification;
+		return justifications;
 	}
 
 	public void setAbsence(Absence absence)
@@ -49,8 +51,8 @@ public class AbsenceResponse
 		this.isJustifier = isJustifier;
 	}
 
-	public void setJustification(Justification justification)
+	public void setJustifications(ArrayList<Justification> justifications)
 	{
-		this.justification = justification;
+		this.justifications = justifications;
 	}
 }

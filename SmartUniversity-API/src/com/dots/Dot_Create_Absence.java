@@ -4,7 +4,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.data.DAO_Etudiant;
+import com.data.DAO_Seance;
+import com.modele.Etudiant;
+import com.modele.Etudiant.Etat_Etudiant;
+import com.rest.exceptions.RequestNotValidException;
+import com.utility.JsonReader;
 
 @XmlRootElement
 public class Dot_Create_Absence implements IDot
@@ -66,6 +74,21 @@ public class Dot_Create_Absence implements IDot
 	@Override
 	public void Validate()
 	{
+		Etudiant etudiant = DAO_Etudiant.GetEtudiantById(id_etudiant);
 		
+		if(DAO_Seance.GetSeanceByCode_Seance(code_seance) == null)
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("session_not_exist"));			
+		}
+		
+		if(etudiant == null)
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("student_not_exist"));			
+		}
+		
+		if(etudiant.getEtat_etudiant() == Etat_Etudiant.bloque)
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("student_blocked"));			
+		}
 	}
 }

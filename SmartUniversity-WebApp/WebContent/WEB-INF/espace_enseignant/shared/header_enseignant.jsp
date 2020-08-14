@@ -1,50 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<nav class="navbar navbar-light navbar-expand-xl fixed-top bg-white clean-navbar">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
 	<div class="container">
-		<a class="navbar-brand logo" href="#"><img src="assets/img/Logo/logo.png" class="nav-brand-img" style="width: 50px;">Faculté&nbsp;<span class="text-success"><strong>NTIC</strong></span>&nbsp;</a>
+		<a class="navbar-brand logo" href="index.jsp">
+			<img src="assets/img/Logo/logo.png" class="nav-brand-img" style="width: 50px;">
+			Faculté&nbsp;<span class="text-success"><strong>NTIC</strong></span>&nbsp;
+		</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
 			<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navcol-1">
 			<ul class="nav navbar-nav ml-auto">
 				<li class="nav-item">
-					<form method="post" action="FormLink">
-						<input type="hidden" name="link" value="/WEB-INF/espace_enseignant/index_enseignant.jsp">
-						<button type="submit" class="dropdown-item btn btn-link btn-nav">Acceuil</button>
-					</form>
+					<a href="index.jsp" class="dropdown-item btn btn-link btn-nav" role="button">Accueil</a>
 				</li>
-				<li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Gérer les absences</a>
+				<c:if test="${utilisateur.getUser_type() eq 'chefDepartement'}">
+					<li class="nav-item dropdown">
+						<a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Votre Département</a>
+						<div class="dropdown-menu" role="menu">
+							<a href="${pageContext.request.contextPath}/User/ConsulterSeancesChefDepartement" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les séances</a>
+							<a href="${pageContext.request.contextPath}/User/ConsulterAbsencesChefDepartement" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les absences</a>
+							<a href="${pageContext.request.contextPath}/User/ConsulterDemandesChefDepartement" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les demandes</a>
+						</div>
+					</li>
+				</c:if>
+				<li class="nav-item dropdown">
+					<a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Vos séances</a>
 					<div class="dropdown-menu" role="menu">
-						<form method="post" action="FormLink">
-							<input type="hidden" name="link" value="ConsulterSeancesEnseignant">
-							<button type="submit" class="dropdown-item btn btn-link btn-nav">Consulter vos séances</button>
-						</form>
-						<form method="post" action="FormLink">
-							<input type="hidden" name="link" value="/WEB-INF/espace_enseignant/index_enseignant.jsp">
-							<button type="submit" class="dropdown-item btn btn-link btn-nav">Consulter les statistiques de vos groupes</button>
-						</form>
+						<a href="${pageContext.request.contextPath}/User/ConsulterSeancesEnseignant" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter vos séances</a>
+						<a href="#" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de vos groupes</a>
 					</div>
 				</li>
-				<li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Gérer votre Profil</a>
+				<li class="nav-item dropdown">
+					<a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Votre profil</a>
 					<div class="dropdown-menu" role="menu">
-						<form method="post" action="FormLink">
-							<input type="hidden" name="link" value="/WEB-INF/espace_enseignant/modifier_profil_enseignant.jsp">
-							<button type="submit" class="dropdown-item btn btn-link btn-nav">
-								Modifier votre profil
-							</button>
-						</form>
+						<a  class="text-center dropdown-item btn btn-link btn-nav disabled" role="button">${utilisateur.getNom()} ${utilisateur.getPrenom()}</a>
 						<div class="dropdown-divider"></div>
-						<form method="post" action="Logout">
-							<button type="submit" class="dropdown-item btn btn-link btn-nav text-danger">Se déconnecter</button>
-						</form>
-					</div></li>
-				<li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><img src="assets/img/Logo/french_flag.png"
-						style="width: 25px; margin-right: 10px;">Français (FR)</a>
+						<a href="${pageContext.request.contextPath}/User/ModifierProfil" class="text-center dropdown-item btn btn-link btn-nav" role="button">Modifier votre compte</a>
+						<a href="${pageContext.request.contextPath}/User/Logout" class="text-center text-danger dropdown-item btn btn-link btn-nav" role="button">Se déconnecter</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+						<i class="icon-globe fa-lg"></i>
+					</a>
 					<div class="dropdown-menu" role="menu">
-						<a class="dropdown-item" href="#"><img src="assets/img/Logo/english_flag.png" style="width: 25px; margin-right: 10px;">English (EN)</a><a class="dropdown-item"
-							role="presentation" href="#"><img src="assets/img/Logo/arabic_flag.png" style="width: 25px; margin-right: 10px;">العربية &nbsp; &nbsp; &nbsp; (AR)</a>
-					</div></li>
+						<a class="text-center dropdown-item" href="#">Français</a>
+						<a class="text-center dropdown-item" href="#">English</a>
+						<a class="text-center dropdown-item" href="#">العربية</a>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>

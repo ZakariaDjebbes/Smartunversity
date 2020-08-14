@@ -4,12 +4,15 @@ import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.data.DAO_ChangementSeance;
+import com.data.DAO_Enseignant;
 import com.data.DAO_Seance;
-import com.helpers.RequestReponse;
-import com.helpers.Utility;
+import com.data.DAO_SeanceSupp;
+import com.modele.Enseignant;
 import com.modele.Seance;
 import com.modele.Seance.Jour;
 import com.rest.exceptions.RequestNotValidException;
+import com.utility.JsonReader;
+import com.utility.Utility;
 
 @XmlRootElement
 public class Dot_Create_ChangementSeance implements IDot
@@ -62,32 +65,52 @@ public class Dot_Create_ChangementSeance implements IDot
 
 	@Override
 	public void Validate()
-	{
-		// the two new values cannot be the same as the older ones and they must exist in enums and a seance can only have 1 changement
+	{		
 		Seance seance = DAO_Seance.GetSeanceByCode_Seance(code_seance);
+		Enseignant enseignant = DAO_Enseignant.GetEnseignantBySeance(seance);
 		
 		if(DAO_ChangementSeance.GetChangementSeance(code_seance) != null)
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse(
-					"A changement demand already exists for this seance"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, 
+					JsonReader.GetNode("change_request_exist"));
 		}
 		
 		if(!Utility.IsInEnum(String.valueOf(nouveau_jour), Jour.class))
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse(
-					"The new day given is incorrect"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, 
+					JsonReader.GetNode("day_incorrect"));
 		}
 		
 		if(!Utility.HourExists(nouvelle_heure))
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse(
-					"The new hour given is incorrect"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, 
+					JsonReader.GetNode("hour_incorrect"));
 		}
 		
 		if(seance.getJour().equals(nouveau_jour) && seance.getHeure().equals(nouvelle_heure))
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse(
-					"A change must be made to atleast one of the following values: {nouveau_jour, nouvelle_heure}"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, 
+					JsonReader.GetNode("change_either_day_hour"));
 		}
+		
+		if(!DAO_Seance.IsEnseignantDisponible(enseignant.getId_utilisateur(), nouvelle_heure, nouveau_jour))
+		{
+			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
+					JsonReader.GetNode("have_session"));
+		}
+		
+		if(!DAO_ChangementSeance.IsEnseignantDisponible(enseignant.getId_utilisateur(), nouvelle_heure, nouveau_jour))
+		{
+			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
+					JsonReader.GetNode("teacher_have_other_request"));
+		}
+		
+		if(!DAO_SeanceSupp.IsEnseignantDisponible(enseignant.getId_utilisateur(), nouvelle_heure, nouveau_jour))
+		{
+			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
+					JsonReader.GetNode("teacher_have_other_request"));
+		}
+		
+		//TODO check if groupe is disponible
 	}
 }

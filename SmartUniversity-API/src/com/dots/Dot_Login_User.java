@@ -3,9 +3,9 @@ package com.dots;
 import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.helpers.RequestReponse;
 import com.modele.Utilisateur;
 import com.rest.exceptions.RequestNotValidException;
+import com.utility.JsonReader;
 
 @XmlRootElement
 public class Dot_Login_User implements IDot
@@ -52,9 +52,12 @@ public class Dot_Login_User implements IDot
 	{		
 		// Check notEmpty
 		if (user.equals("") || pass.equals(""))
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("User or Pass is empty"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, 
+					JsonReader.GetNode("empty_user_password"));
 		// Check size
 		if (pass.length() < Utilisateur.MIN_PASS_LENGHT)
-			throw new RequestNotValidException(Status.BAD_REQUEST, new RequestReponse("Pass must have atleast "+ Utilisateur.MIN_PASS_LENGHT +" characters"));
+			throw new RequestNotValidException(Status.BAD_REQUEST,
+					JsonReader.GetNode("password_length")
+					);
 	}
 }

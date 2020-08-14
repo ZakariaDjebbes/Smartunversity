@@ -6,16 +6,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 
+import javax.ws.rs.core.Response.Status;
+
 import com.dots.Dot_Login_User;
 import com.modele.Utilisateur;
 import com.modele.Utilisateur.Type_Utilisateur;
+import com.rest.exceptions.RequestNotValidException;
+import com.utility.JsonReader;
 
 public class DAO_User extends DAO_Initialize
 {
 	public static Utilisateur GetUser(Dot_Login_User userLoginDots)
 	{
 		Utilisateur resultUtilisateur = null;
-		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
 			String command = "SELECT * FROM utilisateur WHERE user = ? AND pass = BINARY ?;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
@@ -50,14 +54,16 @@ public class DAO_User extends DAO_Initialize
 		{
 			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
 					+ " >>> " + e.getMessage());
-			return null;
+			
+			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT,
+					JsonReader.GetNode("server_side_error"));	
 		}
 	}
 
 	public static Utilisateur GetUserByID(int id)
 	{
 		Utilisateur resultUtilisateur = null;
-		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
 			String command = "SELECT * FROM utilisateur WHERE id_utilisateur = ?;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
@@ -98,7 +104,7 @@ public class DAO_User extends DAO_Initialize
 	
 	public static int UpdateUser(Utilisateur utilisateur)
 	{
-		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
 			String command = "UPDATE utilisateur SET user = ?, pass = ?, nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, date_n = ?, type_utilisateur = ? WHERE id_utilisateur = ? LIMIT 1;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
@@ -128,7 +134,7 @@ public class DAO_User extends DAO_Initialize
 	
 	public static boolean DeleteUserByID(int id)
 	{
-		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
 			String command = "DELETE FROM utilisateur WHERE id_utilisateur = ? LIMIT 1;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
@@ -143,6 +149,7 @@ public class DAO_User extends DAO_Initialize
 		{
 			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
 					+ " >>> " + e.getMessage());
+			
 			return false;
 		}
 	}

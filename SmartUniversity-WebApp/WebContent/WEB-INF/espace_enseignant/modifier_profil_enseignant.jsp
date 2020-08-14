@@ -7,15 +7,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>Modifier votre Profil - NTIC</title>
+<base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
 <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
-<link rel="stylesheet" href="assets/css/Data-Table.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-<link rel="stylesheet" href="assets/css/Pretty-Search-Form.css">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -31,14 +28,24 @@
 							<i class="fa fa-pencil"></i>Modification de votre profil
 						</h2>
 					</div>
-					<form id="form_profil_enseignant" method="post" action="ModifierProfil">
+					<form id="form_profil_enseignant" method="post" action="${pageContext.request.contextPath}/User/ModifierProfil">
 						<c:if test="${not empty isDone && not empty message}">
 							<c:choose>
 								<c:when test="${isDone}">
-									<div class="alert alert-success" role="alert">${message}</div>
+									<div class="alert alert-success alert-dismissible fade show" role="alert">
+										${message}
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
 								</c:when>
 								<c:when test="${not isDone}">
-									<div class="alert alert-danger" role="alert">${message}</div>
+									<div class="alert alert-danger alert-dismissible fade show" role="alert">
+										${message}
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
 								</c:when>
 							</c:choose>
 							<c:remove var="isDone" />
@@ -158,12 +165,34 @@
 							<span class="text-danger"><i class="fa fa-close"></i>Supprimer</span>&nbsp;votre profil
 						</h2>
 					</div>
-					<form class="text-center" action="SupprimerProfil" method="get">
+					<div class="text-center">
 						<h2>Êtes-vous sur de vouloir supprimer votre profil?</h2>
 						<small class="d-block">La suppression du profil est <span class="text-danger">définitive</span>.&nbsp;
 						</small>
-						<button class="btn btn-outline-danger text-center" type="submit" style="margin: 30px 0px; padding: 6px 20px;">Supprimer mon profil</button>
-					</form>
+						<button class="btn btn-outline-danger text-center" type="button" data-toggle="modal" data-target="#supprimer-profil-modal" style="margin: 30px 0px; padding: 6px 20px;">Supprimer mon
+							profil</button>
+						<div class="modal fade" id="supprimer-profil-modal" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Attention!</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										Vous allez supprimer votre compte <span class="text-danger">définitivement</span>.
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+										<form class="text-center form-normal" action="${pageContext.request.contextPath}/User/SupprimerProfil" method="get">
+											<button type="submit" class="btn btn-outline-danger">Supprimer mon profil</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -172,13 +201,9 @@
 	<jsp:include page="/WEB-INF/espace_enseignant/shared/footer_enseignant.jsp"></jsp:include>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/modifier_profil_buttonHandler.js"></script>
-	<script src="assets/js/Table-With-Search.js"></script>
 </body>
 
 </html>

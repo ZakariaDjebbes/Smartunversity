@@ -67,12 +67,6 @@ public class ChangementSeance
 	{
 		this.etat_demande = etat_demande;
 	}
-
-	public String CapitalizedJour()
-	{
-		String str = String.valueOf(nouveau_jour);
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
 	
 	@Override
 	public String toString()

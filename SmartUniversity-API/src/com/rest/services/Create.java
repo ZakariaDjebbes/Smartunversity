@@ -10,13 +10,15 @@ import javax.ws.rs.core.Response.Status;
 
 import com.data.DAO_Absence;
 import com.data.DAO_ChangementSeance;
+import com.data.DAO_Enseignement;
 import com.data.DAO_SeanceSupp;
+import com.dots.Dot_Affecter_Seance;
 import com.dots.Dot_Create_Absence;
 import com.dots.Dot_Create_ChangementSeance;
 import com.dots.Dot_Create_SeanceSupp;
-import com.helpers.RequestReponse;
-import com.helpers.Utility;
 import com.rest.annotations.Secured;
+import com.utility.JsonReader;
+import com.utility.Utility;
 
 @Path("/create")
 public class Create
@@ -30,11 +32,13 @@ public class Create
 	{
 		if(DAO_Absence.CreateAbsence(absence))
 		{
-			return Utility.Response(Status.OK, new RequestReponse("Absence created with success"));
+			return Utility.Response(Status.OK,
+					JsonReader.GetNode("absence_created"));
 		}
 		else 
 		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestReponse("Couldn't create absence"));
+			return Utility.Response(Status.BAD_REQUEST,
+					JsonReader.GetNode("absence_not_created"));
 		}
 	}
 	
@@ -51,11 +55,13 @@ public class Create
 		//create
 		if(DAO_ChangementSeance.CreateChangementSeance(changementSeance))
 		{
-			return Utility.Response(Status.OK, new RequestReponse("Seance changement created with success"));
+			return Utility.Response(Status.OK,
+					JsonReader.GetNode("change_request_created"));
 		}
 		else 
 		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestReponse("Seance changement couldn't be created due to invalid data or server side error"));
+			return Utility.Response(Status.BAD_REQUEST,
+					JsonReader.GetNode("change_request_not_created"));
 		}
 	}
 	
@@ -72,34 +78,34 @@ public class Create
 		//create
 		if(DAO_SeanceSupp.CreateSeanceSupp(seanceSupp))
 		{
-			return Utility.Response(Status.OK, new RequestReponse("Additional seance created with success"));
+			return Utility.Response(Status.OK,
+					JsonReader.GetNode("additional_session_request_created"));
 		}
 		else
 		{
-			return Utility.Response(Status.BAD_REQUEST, new RequestReponse("Additional seance couldn't be created due to invalid data or server side error"));			
+			return Utility.Response(Status.BAD_REQUEST,
+					JsonReader.GetNode("additional_session_request_not_created"));
 		}
 	}
 	
-	
-	//LOOK in Upload.java
-//	@PUT
-//	@Secured
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Path("justification")
-//	public Response createJustification(Dot_Create_Justification justification)
-//	{
-//		//validation
-//		justification.Validate();
-//		
-//		//creation
-//		if(DAO_Justification.CreateJustification(justification))
-//		{
-//			return Utility.Response(Status.OK, new RequestReponse("Justification created with success"));
-//		}
-//		else 
-//		{
-//			return Utility.Response(Status.BAD_REQUEST, new RequestReponse("Couldn't create the justification due to invalid data or server side error"));			
-//		}
-//	}
+	@PUT
+	@Secured
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/departement/affecterSeance")
+	public Response affecterSeance(Dot_Affecter_Seance dot_Affecter_Seance)
+	{
+		dot_Affecter_Seance.Validate();
+		
+		if(DAO_Enseignement.AffecterSeance(dot_Affecter_Seance))
+		{
+			return Utility.Response(Status.OK,
+					JsonReader.GetNode("teacher_assigned"));		
+		}
+		else 
+		{
+			return Utility.Response(Status.BAD_REQUEST,
+					JsonReader.GetNode("teacher_not_assigned"));
+		}
+	}
 }

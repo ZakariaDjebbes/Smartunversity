@@ -88,4 +88,17 @@ public class EtudiantResponse
 	{
 		this.nombreAbsences = nombreAbsences;
 	}
+	
+	public static EtudiantResponse GetEtudiantByID(ArrayList<EtudiantResponse> etudiantsResponse, int id)
+	{
+		for (EtudiantResponse etudiantResponse : etudiantsResponse)
+		{
+			if(etudiantResponse.getEtudiant().getId_utilisateur() == id)
+			{
+				return etudiantResponse;
+			}
+		}
+		
+		return null;
+	}
 }

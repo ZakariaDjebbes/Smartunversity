@@ -9,7 +9,7 @@ public class DAO_Token extends DAO_Initialize
 {
 	public static boolean CreateOrUpdateToken(int id, String token)
 	{
-		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
 			String command = "SELECT * FROM Token Where id_utilisateur = ?;";
 			try(PreparedStatement statement = connection.prepareStatement(command))
@@ -54,7 +54,7 @@ public class DAO_Token extends DAO_Initialize
 	
 	public static boolean CheckToken(String token)
 	{
-		try (Connection connection = DriverManager.getConnection(dbURL, dbLogin, dbPassword))
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
 			String command = "SELECT * FROM Token Where token = ?;";
 			try(PreparedStatement statement = connection.prepareStatement(command))

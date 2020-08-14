@@ -20,7 +20,9 @@ import javax.ws.rs.core.Response;
 import com.dots.Dot_Login;
 import com.helpers.LoginResponse;
 import com.helpers.RequestResponse;
+import com.modele.ChefDepartement;
 import com.modele.Enseignant;
+import com.modele.Etudiant;
 import com.modele.Utilisateur;
 
 @WebServlet("/Login")
@@ -33,16 +35,12 @@ public class Login extends HttpServlet
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();
 		String message = null;
-		String user = request.getParameter("user").toString().toLowerCase();
-		String pass = request.getParameter("pass").toString();
+		String user = request.getParameter("username").toString().toLowerCase();
+		String pass = request.getParameter("password").toString();
 		boolean keepLogged = request.getParameter("keepLogged") == null ? false : true;
 
 		Client client = ClientBuilder.newClient();
@@ -59,7 +57,6 @@ public class Login extends HttpServlet
 				cookie.setMaxAge(Integer.MAX_VALUE);
 				response.addCookie(cookie);
 			}
-
 			LoginResponse loginResponse = apiResponse.readEntity(LoginResponse.class);
 
 			session.setAttribute("token", loginResponse.getToken());
@@ -80,7 +77,16 @@ public class Login extends HttpServlet
 					session.setAttribute("utilisateur", enseignant);
 					Redirect.SendRedirect(request, response, "/WEB-INF/espace_enseignant/index_enseignant.jsp");
 					return;
-
+				case chefDepartement:
+					ChefDepartement chefDepartement = apiResponse.readEntity(ChefDepartement.class);
+					session.setAttribute("utilisateur", chefDepartement);
+					Redirect.SendRedirect(request, response, "/WEB-INF/espace_enseignant/espace_chef_departement/index_chef_departement.jsp");
+					return;
+				case etudiant:
+					Etudiant etudiant = apiResponse.readEntity(Etudiant.class);
+					session.setAttribute("utilisateur", etudiant);
+					Redirect.SendRedirect(request, response, "/WEB-INF/espace_etudiant/index_etudiant.jsp");
+					break;
 				default:
 					break;
 				}
@@ -88,7 +94,7 @@ public class Login extends HttpServlet
 			}
 			else
 			{
-				System.out.println(requestResponse.getMessage());
+				System.out.println(requestResponse.getMessage_fr());
 				Redirect.SendRedirect(request, response, "login.jsp");
 				return;
 			}
@@ -97,7 +103,7 @@ public class Login extends HttpServlet
 		} 
 		else
 		{
-			message = requestResponse.getMessage();
+			message = requestResponse.getMessage_fr();
 			session.setAttribute("message", message);
 			Redirect.SendRedirect(request, response, "login.jsp");
 			return;

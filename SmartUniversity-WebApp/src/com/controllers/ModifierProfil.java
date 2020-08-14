@@ -20,10 +20,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.helpers.RequestResponse;
+import com.modele.ChefDepartement;
 import com.modele.Enseignant;
 import com.modele.Utilisateur;
 
-@WebServlet("/ModifierProfil")
+@WebServlet("/User/ModifierProfil")
 public class ModifierProfil extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -33,6 +34,13 @@ public class ModifierProfil extends HttpServlet
 		super();
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		request.getRequestDispatcher("/WEB-INF/espace_enseignant/modifier_profil_enseignant.jsp").forward(request, response);
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();
@@ -48,7 +56,7 @@ public class ModifierProfil extends HttpServlet
 			WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/update/updateUser");
 			Response apiResponse = target.request(MediaType.APPLICATION_JSON)
 					.header(HttpHeaders.AUTHORIZATION, "Bearer " + session.getAttribute("token").toString())
-					.put(Entity.json(newUtilisateur));
+					.post(Entity.json(newUtilisateur));
 			apiResponse.bufferEntity();
 			RequestResponse requestResponse = RequestResponse.GetRequestResponse(apiResponse);
 			if (requestResponse == null)
@@ -62,6 +70,9 @@ public class ModifierProfil extends HttpServlet
 					Enseignant enseignant = apiResponse.readEntity(Enseignant.class);
 					session.setAttribute("utilisateur", enseignant);
 					break;
+				case chefDepartement:
+					ChefDepartement chefDepartement = apiResponse.readEntity(ChefDepartement.class);
+					session.setAttribute("utilisateur", chefDepartement);
 				default:
 					break;
 				}
@@ -71,7 +82,7 @@ public class ModifierProfil extends HttpServlet
 			} 
 			else
 			{
-				message = requestResponse.getMessage();
+				message = requestResponse.getMessage_fr();
 				session.setAttribute("message", message);
 			}
 			apiResponse.close();

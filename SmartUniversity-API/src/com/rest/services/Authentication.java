@@ -12,14 +12,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.data.DAO_Etudiant;
 import com.data.DAO_Token;
 import com.data.DAO_User;
 import com.dots.Dot_Login_User;
 import com.helpers.LoginResponse;
-import com.helpers.RequestReponse;
-import com.helpers.Utility;
+import com.modele.Etudiant;
+import com.modele.Etudiant.Etat_Etudiant;
 import com.modele.Utilisateur;
+import com.modele.Utilisateur.Type_Utilisateur;
 import com.rest.exceptions.RequestNotValidException;
+import com.utility.JsonReader;
+import com.utility.Utility;
 
 @Path("/auth")
 public class Authentication
@@ -51,8 +55,16 @@ public class Authentication
 		Utilisateur utilisateur = DAO_User.GetUser(dots_Login_User);
 		if (utilisateur == null)
 			throw new RequestNotValidException(Status.UNAUTHORIZED,
-					new RequestReponse("Invalid username and password combination"));
-		
+					JsonReader.GetNode("invalid_username_password"));
+		if(utilisateur.getUser_type() == Type_Utilisateur.etudiant)
+		{
+			Etudiant etudiant = DAO_Etudiant.GetEtudiantById(utilisateur.getId_utilisateur());
+			if(etudiant.getEtat_etudiant() == Etat_Etudiant.bloque)
+			{
+			throw new RequestNotValidException(Status.UNAUTHORIZED,
+					JsonReader.GetNode("student_blocked"));
+			}
+		}
 		return utilisateur;
 	}
 
@@ -68,6 +80,6 @@ public class Authentication
 			return token;
 		else 
 			throw new RequestNotValidException(Status.UNAUTHORIZED,
-						new RequestReponse("Unable to create or update authorization token"));
+					JsonReader.GetNode("student_blocked"));
 	}
 }

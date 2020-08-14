@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="shared/keepLogged.jsp"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,123 +9,113 @@
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-<link rel="stylesheet" href="assets/css/Data-Table.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-<link rel="stylesheet" href="assets/css/Pretty-Search-Form.css">
+<link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/device-mockup/device-mockups.min.css">
 </head>
 
 <body>
 	<jsp:include page="shared/header.jsp"></jsp:include>
 	<main class="page landing-page">
-	<section class="clean-block clean-info dark">
+	<section class="clean-block clean-info">
 		<div class="container">
 			<div class="block-heading">
-				<h2 class="text-success">Faculté des nouvelles téchnologies de l'information et de la communication</h2>
-				<p>Gestionnaire d'absences destiné aux enseingants et aux etudiants.</p>
+				<h2 class="text-success">Faculté des nouvelles technologies NTIC</h2>
+				<p>Application de gestion d'absences</p>
 			</div>
 			<div class="row align-items-center">
 				<div class="col-md-6">
 					<img class="img-thumbnail" src="assets/img/scenery/ntic_2.png">
 				</div>
 				<div class="col-md-6">
-					<h3>Présentation de la faculté</h3>
+					<h3>Présentation de l'application</h3>
 					<div class="getting-started-info">
 						<p>
-							La Faculté des Nouvelles Technologies de l'Information et de la Communication (NTIC) a été crée par le Décret exécutif N° 11-401 du 3 Moharram 1433 correspondant au 28 novembre 2011 portant
-							création de l'université de CONSTANTINE 2..
+							Ce site web est mit a la dispostion des étudiants et enseigants de la faculté des nouvelles technologies afin de les aider dans leurs gestion des absences, emplois du temps et des demandes de
+							leurs departement.
 							<br>
 						</p>
+						<a class="btn btn-outline-success btn-lg" role="button" href="login.jsp">Connectez-vous</a>
 					</div>
-					<a class="btn btn-outline-success btn-lg" role="button" href="login.jsp">Se connecter</a>
 				</div>
 			</div>
 		</div>
 	</section>
-	<section class="clean-block about-us">
+	<section class="clean-block features dark">
 		<div class="container">
 			<div class="block-heading">
-				<h2 class="text-success">Nos Départements</h2>
-				<p>La faculté NTIC regroupe trois départements</p>
+				<h2 class="text-success">Fonctionnalités de l'application</h2>
+				<p>Différentes fonctionnalités proposer par cette application</p>
 			</div>
 			<div class="row justify-content-center">
-				<div class="col-12 col-md-6 col-lg-4">
-					<div class="card clean-card text-center">
-						<div class="card-body info">
-							<h4 class="card-title">Tronc Commun Mathématique et informatique</h4>
-							<p class="card-text">
-								<br>
-								Une formation de base commune pour touts les Étudiants de la faculté visant à enseigner les bases de l'informatique et des mathématiques.
-							</p>
-						</div>
-						<div class="card-footer text-right">
-							<a role="button" class="btn btn-success" href="#">Plus d'informations...</a>
-						</div>
-					</div>
+				<div class="col-md-5 feature-box">
+					<i class="icon-note icon"></i>
+					<h4>Gestion des absences</h4>
+					<p>Gère les absences et les justificatifs d'absences de chaque departement de la faculté.</p>
 				</div>
-				<div class="col-12 col-md-6 col-lg-4">
-					<div class="card clean-card text-center" style="height: 100%;">
-						<div class="card-body info">
-							<h4 class="card-title">Informatique Fondamentale et ses Applications</h4>
-							<p class="card-text">
-								<br>
-								Cette formation propose deux parcours
-
-							</p>
-						</div>
-						<div class="card-footer text-right">
-							<a role="button" class="btn btn-success" href="#">Plus d'informations...</a>
-						</div>
-					</div>
+				<div class="col-md-5 feature-box">
+					<i class="icon-pencil icon"></i>
+					<h4>Gestion des demandes</h4>
+					<p>Gère les demandes des utilisateurs de l'application (Congé académique, séances supplémentaires...) de chaque département.</p>
 				</div>
-				<div class="col-12 col-md-6 col-lg-4">
-					<div class="card clean-card text-center" style="height: 100%;">
-						<div class="card-body info">
-							<h4 class="card-title">Technologies des Logiciels et des Systèmes d'information</h4>
-							<p class="card-text">
-								<br>
-								Cette formation propose deux parcours
-							</p>
-						</div>
-						<div class="card-footer text-right">
-							<a role="button" class="btn btn-success" href="#">Plus d'informations...</a>
-						</div>
-					</div>
+				<div class="col-md-5 feature-box">
+					<i class="icon-list icon"></i>
+					<h4>Gestion des séances</h4>
+					<p>Gestion des séances de chaque département de la faculté.</p>
+				</div>
+				<div class="col-md-5 feature-box">
+					<i class="icon-screen-smartphone icon"></i>
+					<h4>Disponible sur mobile</h4>
+					<p>L'application est également disponible sur mobile. (uniquement pour enseignants et etudiants).</p>
+				</div>
+				<div class="col-md-5 feature-box">
+					<i class="icon-chart icon"></i>
+					<h4>Calcul des statistiques</h4>
+					<p>Affiche les statistiques des absences des différents departements, groupes, années et spécialités.</p>
 				</div>
 			</div>
 		</div>
 	</section>
-	<section class="clean-block slider dark">
+	<section id="mobile" class="clean-block clean-info">
 		<div class="container">
 			<div class="block-heading">
-				<h2 class="text-success">La Faculté en Images</h2>
+				<h2 class="text-success">Téléchargez l'application mobile</h2>
+				<p>Toutes les fonctionalités égalment sur mobile!</p>
 			</div>
-			<div class="carousel slide" data-ride="carousel" data-interval="2500" id="carousel-1">
-				<div class="carousel-inner" role="listbox">
-					<div class="carousel-item active">
-						<img class="w-100 d-block" src="assets/img/scenery/ntic_1.jpg" alt="Slide Image">
-					</div>
-					<div class="carousel-item">
-						<img class="w-100 d-block" src="assets/img/scenery/ntic_3.png" alt="Slide Image">
-					</div>
-					<div class="carousel-item">
-						<img class="w-100 d-block" src="assets/img/scenery/ntic_4.png" alt="Slide Image">
+			<div class="row">
+				<div class="col">
+					<div class="device-wrapper">
+						<div class="device" data-device="galaxyS5" data-orientation="portrait" data-color="white">
+							<div class="screen" style="background-image: url('assets/img/scenery/mobile_app_login.png')">
+							</div>
+						</div>
 					</div>
 				</div>
-				<div>
-					<a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
-						<span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span>
-					</a>
-					<a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
-						<span class="carousel-control-next-icon"></span><span class="sr-only">Next</span>
-					</a>
+				<div class="col-12 col-md-8 mt-5">
+					<h5>
+						<i class="icon-exclamation icon text-success"></i> L'application mobile est uniquement disponible pour:
+					</h5>
+					<ul>
+						<li>Les enseignants</li>
+						<li>Les etudiants</li>
+					</ul>
+					<h5>
+						<i class="icon-settings icon text-success"></i> Toutes les fonctionalités sont disponibles:
+					</h5>
+					<p>Les fonctionalités disponible sur l'application web sont équivalentes a celles de l'application mobile!</p>
+					<h5>
+						<i class="icon-refresh icon text-success"></i> Synchronisation entre application web et mobile:
+					</h5>
+					<p>Les données sont totalement synchroniser entre mobile et web!.</p>
+					<div class="text-center mt-5">
+						<a class="btn btn-outline-success" href="#">
+							<i class="fa fa-android"></i>Télécharger
+						</a>
+						<p>
+							<small class="text-muted">*Requiert android 6.0 ou plus</small>
+						</p>
+					</div>
 				</div>
-				<ol class="carousel-indicators">
-					<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-					<li data-target="#carousel-1" data-slide-to="1"></li>
-					<li data-target="#carousel-1" data-slide-to="2"></li>
-				</ol>
 			</div>
 		</div>
 	</section>
@@ -135,12 +123,7 @@
 	<jsp:include page="shared/footer.jsp"></jsp:include>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
-	<script src="assets/js/Table-With-Search.js"></script>
 </body>
-
 </html>

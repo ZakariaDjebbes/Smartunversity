@@ -1,20 +1,74 @@
 $(document).ready(function () {
+	
+	let tablePageLength = 25;
+	
 	//data table
     let table =  $('#table-seances').DataTable({
-        "sDom": '<"top"p>rt<"bottom"><"clear">',
+    	"sDom": '<"pull-right"f><"top">rt<"bottom">p<"clear">',
+		"pageLength": tablePageLength,
+		"fnDrawCallback": function(oSettings) {
+	        if ($('#table-historique tr').length < tablePageLength) {
+	            $('.dataTables_paginate').hide();
+	        }
+	    },
         "oLanguage": {
         	"oPaginate": {
-        	"sPrevious": "Précédant", // This is the link to the previous page
-        	"sNext": "Suivant", // This is the link to the next page
-        		}
-        	}
+        					"sPrevious": "Précédant", 
+        					"sNext": "Suivant", 
+        				 },
+			"sSearch": "Chercher: ",
+			"sZeroRecords": "Aucune séance ne correspond aux filtres",
+        	},
+    	"columnDefs": [
+       	    { "orderable": false, "targets": 7 }
+       	  ],      	
     });
     
     
     //filter options
     let selectOptions = ["Module","Jour","Heure","Spécialité","Type","Groupe","Année"];
 	
+    
+    
+    function clearDoublesOfSelects()
+    {
+    	for(selectOption of selectOptions)
+    	{
+    		let options = $('#select-'+ lowerize(selectOption) +' option');
 
+    		let exist = {};
+	        
+    		options.each(function() {
+	            if (exist[$(this).val()]){
+	                $(this).remove();
+	            }else{
+	                exist[$(this).val()] = true;
+	            }
+	        });
+    	}
+    }
+    
+    
+    function sortSelects()
+    {
+    	for(selectOption of selectOptions)
+    	{
+    		let options = $('#select-'+ lowerize(selectOption) +' option').not(':first');
+
+    		let arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+            arr.sort(function(o1, o2) { 
+        	  let t1 = o1.t.toLowerCase(), t2 = o2.t.toLowerCase();
+
+        	  return t1 > t2 ? 1 : t1 < t2 ? -1 : 0; 
+            });
+            options.each(function(i, o) {
+	            o.value = arr[i].v;
+	            $(o).text(arr[i].t);
+            });	
+	
+    	}    	
+    }
+   
     function handleFilterOptions()
     {
     	let selects = [];
@@ -35,54 +89,24 @@ $(document).ready(function () {
     			    			
     			if(selectOptions.includes(select.val()))
     			{
-    				console.log("mabite reset");
             	    cols[i].search('').draw();
     			}
     			else
     			{
-    				console.log("mabite enflé" + select.val());
     				cols[i].search(select.val()).draw();
     			}
     		});
     	}
     }
     
+    $("#btn-reinit").on('click', function(){
+    	table.search( '' ).columns().search( '' ).draw();    
+    });
+
     handleFilterOptions();
-    /*
-    //marquer la présence handlers
-	$(".marquer-presence").submit(function (event) {
-		let $form = $(this);
-		let submitButton = $(this).find("input[type=submit]:focus");
-		let disabledTime = 6;
+    sortSelects();
+    clearDoublesOfSelects();
 
-		submitButton.prop("disabled",true);
-		setTimeout(function () {
-			submitButton.prop('disabled', false);
-		}, disabledTime * 1000);
-		startSubmitTimer(disabledTime - 1,submitButton);
-
-		$.post($form.attr("action"),$form.serialize(),function (response) {
-				alertify.set(
-					'notifier',
-					'position',
-					'top-center');
-				alertify.set(
-					'notifier',
-					'delay',
-					3);
-				if (response == "true") 
-				{
-					alertify.success("Présence marqué!");
-				} else 
-				{
-					alertify.error("Une erreur s'est produite.");
-				}
-				//console.log(response);
-
-			});
-		//event.preventDefault();
-	});
-	*/
 	//Oprations handler
 	let button_marquer = $(".button-marquer");
 	let button_releve = $(".button-releve");

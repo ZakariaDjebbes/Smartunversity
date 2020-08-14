@@ -1,5 +1,8 @@
 package com.modele;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,26 +13,89 @@ import com.modele.Etudiant.Specialite;
 @Entity
 public class Seance
 {
+	/***
+	 * @author Zaki
+	 *Values are by default setup to be in this order ("FRENCH", "ENGLISH", "ARABIC")
+	 */
 	public enum Type_Seance
 	{
-		TD,
-		TP
+		TD("Travail dirigé", "PLACE HOLDER", "PLACE HOLDER"),
+		TP("Travail pratique", "PLACE HOLDER", "PLACE HOLDER");
+				
+		private final List<String> values;
+		
+		Type_Seance(String... values)
+		{
+			this.values = Arrays.asList(values);
+		}
+
+		public List<String> getValues()
+		{
+			return values;
+		}
+		
+		public String getValue(int index)
+		{
+			return values.get(index);
+		}
 	}
 	
+	/***
+	 * @author Zaki
+	 *Values are by default setup to be in this order ("FRENCH", "ENGLISH", "ARABIC")
+	 */
 	public enum Jour
 	{
-		dimanche,
-		lundi,
-		mardi,
-		mercredi,
-		jeudi
+		dimanche("Dimanche", "PLACE HOLDER", "PLACE HOLDER"),
+		lundi("Lundi", "PLACE HOLDER", "PLACE HOLDER"),
+		mardi("Mardi", "PLACE HOLDER", "PLACE HOLDER"),
+		mercredi("Mercredi", "PLACE HOLDER", "PLACE HOLDER"),
+		jeudi("Jeudi", "PLACE HOLDER", "PLACE HOLDER");
+		
+		private final List<String> values;
+		
+		Jour(String... values)
+		{
+			this.values = Arrays.asList(values);
+		}
+
+		public List<String> getValues()
+		{
+			return values;
+		}
+		
+		public String getValue(int index)
+		{
+			return values.get(index);
+		}
 	}
 	
+	/***
+	 * @author Zaki
+	 *Values are by default setup to be in this order ("FRENCH", "ENGLISH", "ARABIC")
+	 */
 	public enum Etat_Demande
 	{
-		valide,
-		refuse,
-		nonTraite
+		valide("Valider", "PLACE HOLDER", "PLACE HOLDER"),
+		refuse("Refuser", "PLACE HOLDER", "PLACE HOLDER"),
+		nonTraite("Non traiter", "PLACE HOLDER", "PLACE HOLDER");
+
+		private final List<String> values;
+		
+		Etat_Demande(String... values)
+		{
+			this.values = Arrays.asList(values);
+		}
+
+		public List<String> getValues()
+		{
+			return values;
+		}
+		
+		public String getValue(int index)
+		{
+			return values.get(index);
+		}
 	}
 	
 	protected String code_seance = null;
@@ -129,12 +195,6 @@ public class Seance
 	public void setHeure(String heure)
 	{
 		this.heure = heure;
-	}
-
-	public String CapitalizedJour()
-	{
-		String str = String.valueOf(jour);
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 	
 	public Annee getAnnee()

@@ -1,32 +1,98 @@
 package com.modele;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Etudiant extends Utilisateur
 {
+	/***
+	 * @author Zaki
+	 *Values are by default setup to be in this order ("FRENCH", "ENGLISH", "ARABIC")
+	 */
 	public enum Annee
 	{
-		L1,
-		L2,
-		L3,
-		M1,
-		M2
+		L1("1ere année licence", "PLACE HOLDER", "PLACE HOLDER"),
+		L2("2ème année licence", "PLACE HOLDER", "PLACE HOLDER"),
+		L3("3ème année licence", "PLACE HOLDER", "PLACE HOLDER"),
+		M1("1ere année master", "PLACE HOLDER", "PLACE HOLDER"),
+		M2("2ème année master", "PLACE HOLDER", "PLACE HOLDER");
+		
+		private final List<String> values;
+		
+		Annee(String... values)
+		{
+			this.values = Arrays.asList(values);
+		}
+
+		public List<String> getValues()
+		{
+			return values;
+		}
+		
+		public String getValue(int index)
+		{
+			return values.get(index);
+		}
 	}
 	
+	/***
+	 * @author Zaki
+	 *Values are by default setup to be in this order ("FRENCH", "ENGLISH", "ARABIC")
+	 */
 	public enum Specialite
 	{
-		MI,
-		GL,
-		SI,
-		SCI,
-		TI,
-		STIC,
-		STIW,
-		RSD
+		MI("Mathématiques et informatique", "PLACE HOLDER", "PLACE HOLDER"),
+		GL("Génie logiciel", "PLACE HOLDER", "PLACE HOLDER"),
+		SI("Systèmes d'information", "PLACE HOLDER", "PLACE HOLDER"),
+		SCI("Sciences de l’informatique", "PLACE HOLDER", "PLACE HOLDER"),
+		TI("Technologies de l'information", "PLACE HOLDER", "PLACE HOLDER"),
+		STIC("Sciences et technologies de l'information et de la communication", "PLACE HOLDER", "PLACE HOLDER"),
+		STIW("Systèmes d’information et technologies web", "PLACE HOLDER", "PLACE HOLDER"),
+		RSD("Réseaux et systèmes distribués", "PLACE HOLDER", "PLACE HOLDER");
+		
+		private final List<String> values;
+		
+		Specialite(String... values)
+		{
+			this.values = Arrays.asList(values);
+		}
+
+		public List<String> getValues()
+		{
+			return values;
+		}
+		
+		public String getValue(int index)
+		{
+			return values.get(index);
+		}
 	}
 	
+	/***
+	 * @author Zaki
+	 *Values are by default setup to be in this order ("FRENCH", "ENGLISH", "ARABIC")
+	 */
 	public enum Etat_Etudiant
 	{
-		actif,
-		bloque
+		actif("Actif","",""),
+		bloque("En Congé Académique","","");
+		
+		private final List<String> values;
+		
+		Etat_Etudiant(String... values)
+		{
+			this.values = Arrays.asList(values);
+		}
+
+		public List<String> getValues()
+		{
+			return values;
+		}
+		
+		public String getValue(int index)
+		{
+			return values.get(index);
+		}
 	}
 	
 	private Annee annee;
