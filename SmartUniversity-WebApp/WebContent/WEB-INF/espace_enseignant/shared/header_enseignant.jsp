@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="assets/css/notifications-dropdown.css" type="text/css" rel="stylesheet" />
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
 	<div class="container">
 		<a class="navbar-brand logo" href="index.jsp">
@@ -29,12 +30,15 @@
 					<div class="dropdown-menu" role="menu">
 						<a href="${pageContext.request.contextPath}/User/ConsulterSeancesEnseignant" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter vos séances</a>
 						<a href="#" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de vos groupes</a>
+						<c:if test="${utilisateur.getUser_type() eq 'responsableFormation'}">
+							<a href="#" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de votre formation</a>
+						</c:if>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Votre profil</a>
 					<div class="dropdown-menu" role="menu">
-						<a  class="text-center dropdown-item btn btn-link btn-nav disabled" role="button">${utilisateur.getNom()} ${utilisateur.getPrenom()}</a>
+						<a class="text-center dropdown-item btn btn-link btn-nav disabled" role="button">${utilisateur.getNom()} ${utilisateur.getPrenom()}</a>
 						<div class="dropdown-divider"></div>
 						<a href="${pageContext.request.contextPath}/User/ModifierProfil" class="text-center dropdown-item btn btn-link btn-nav" role="button">Modifier votre compte</a>
 						<a href="${pageContext.request.contextPath}/User/Logout" class="text-center text-danger dropdown-item btn btn-link btn-nav" role="button">Se déconnecter</a>
@@ -50,7 +54,74 @@
 						<a class="text-center dropdown-item" href="#">العربية</a>
 					</div>
 				</li>
+				<li class="nav-item dropdown">
+					<div class="dropdown nav-button notifications-button hidden-sm-down">
+						<a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" id="notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+							<i id="notificationsIcon" class="fa fa-bell-o fa-lg" aria-hidden="true"></i> <span id="notificationsBadge" class="badge badge-danger">2</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right notification-dropdown-menu" aria-labelledby="notifications-dropdown">
+							<h5 class="dropdown-header">Vos notifications</h5>
+							<!--
+							<a id="notificationsLoader" class="dropdown-item dropdown-notification" href="#">
+								<p class="notification-solo text-center">
+									<i id="notificationsIcon" class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i> Chargement des dernières notifications...
+								</p>
+							</a>
+							 -->
+							<a class="dropdown-item dropdown-notification" href="#">
+								<div class="notification-read">
+									<sup><span class="badge badge-danger">Nouveau</span></sup> 
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</div>
+								<div class="notifications-body">
+									<p class="notification-texte">
+										Séance supplémentaire <span class="text-success">accepté</span>
+									</p>
+									<p class="notification-date text-muted">
+										<i class="fa fa-clock-o" aria-hidden="true"></i> 10 Juin à 15:30
+									</p>
+								</div>
+							</a>
+							<a class="dropdown-item dropdown-notification" href="#">
+								<div class="notification-read">
+									<i class="fa fa-times" aria-hidden="true"></i>
+								</div>
+								<div class="notifications-body">
+									<p class="notification-texte">
+										Changement d'horaire <span class="text-danger">refusé</span>
+									</p>
+									<p class="notification-date text-muted">
+										<i class="fa fa-clock-o" aria-hidden="true"></i> 10 Juin à 15:30
+									</p>
+								</div>
+							</a>
+							<div id="notificationsContainer" class="notifications-container"></div>
+							<!-- 
+							<a id="notificationAucune" class="dropdown-item dropdown-notification" href="#">
+								<p class="notification-solo text-center">Aucune nouvelle notification</p>
+							</a>
+							 -->
+							<!-- TOUTES -->
+							<a class="dropdown-item dropdown-notification-all" href="#"> Voir toutes les notifications </a>
+						</div>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>
 </nav>
+<!-- 
+    <a class="dropdown-item dropdown-notification" href="{{href}}">
+      <div class="notification-read">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </div>
+      <img class="notification-img" src="https://placehold.it/48x48" alt="Icone Notification" />
+      <div class="notifications-body">
+        <p class="notification-texte">{{texte}}</p>
+        <p class="notification-date text-muted">
+          <i class="fa fa-clock-o" aria-hidden="true"></i> {{date}}
+        </p>
+      </div>
+    </a>
+
+ -->

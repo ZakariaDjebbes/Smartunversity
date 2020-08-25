@@ -113,7 +113,7 @@
 									<div class="col">
 										<c:choose>
 											<c:when test="${seance.hasEtudiants()}">
-												<form action="${pageContext.request.contextPath}/User/MarquerPresence" method="post" class="form-normal marquer-presence">
+												<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/MarquerPresence" method="post" class="form-normal marquer-presence">
 													<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 													<div class="table-responsive">
 														<table class="table table-sm table-striped table-bordered text-center table-center" id="table-presence">
@@ -280,7 +280,7 @@
 							<div role="tabpanel" class="tab-pane fade" id="tab-demande-changement">
 								<c:choose>
 									<c:when test="${empty seance.getChangementSeance()}">
-										<form action="${pageContext.request.contextPath}/User/DemanderChangementSeance" method="post" class="form-normal demander-changement">
+										<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DemanderChangementSeance" method="post" class="form-normal demander-changement">
 											<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 											<div class="row">
 												<div class="col text-center text-info">
@@ -384,7 +384,7 @@
 												</label>
 											</div>
 										</div>
-										<form class="form-normal mt-3" method="post" action="${pageContext.request.contextPath}/User/SupprimerDemandeChangement">
+										<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal mt-3" method="post" action="${pageContext.request.contextPath}/User/SupprimerDemandeChangement">
 											<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 											<input type="submit" value="Annuler la demande" class="form-control mr-auto btn btn-outline-danger">
 										</form>
@@ -421,7 +421,7 @@
 																</c:when>
 															</c:choose>	
 															<td>
-																<form action="${pageContext.request.contextPath}/User/AnnulerSeanceSupp" method="post" class="form-normal">
+																<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/AnnulerSeanceSupp" method="post" class="form-normal">
 																	<input type="hidden" name="code-seance" value="${seanceSupp.getCode_seance()}">
 																	<input type="hidden" name="code-seance-supp" value="${seanceSupp.getCode_seance_supp()}">
 																	<input type="submit" value="Annuler" class="form-control mr-auto btn btn-outline-danger">
@@ -434,7 +434,7 @@
 											<div class="text-center mb-4 mt-4">
 												<h6 class="text-dark">Demander une autre seance supplémentaire</h6>
 											</div>
-											<form action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
+											<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
 												<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 												<div class="row">
 													<div class="col">
@@ -470,7 +470,7 @@
 												<i class="icon-exclamation fa-lg text-secondary"></i> <span class="text-secondary">Aucune </span>Seance supplémentaire n'est programmé
 											</h6>
 										</div>
-										<form action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
+										<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
 											<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 											<div class="row">
 												<div class="form-group col">
@@ -522,7 +522,7 @@
 	<script src="assets/js/custom-checkbox-handler.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function () {		
-		let code_seance = ${seance.getSeance().getCode_seance()};
+		let code_seance = "${seance.getSeance().getCode_seance()}";
 		let absences = 
 		[
 		<c:forEach var="etudiant" items="${seance.getEtudiants()}"> 
@@ -626,7 +626,7 @@
 				}
 								
 				let operations =
-				"<form class='form-normal' method='post'>"
+				"<form  onsubmit='return (typeof submitted == 'undefined') ? (submitted = true) : !submitted'  class='form-normal' method='post'>"
 					+"<input type='hidden' name='numero-absence' value='" + absence.numero_absence + "'>"
 					+"<input type='hidden' name='id-etudiant' value='" + absence.id_etudiant + "'>"
 					+"<input type='hidden' name='numero-justification' value='" + absence.numero_justification + "'>"

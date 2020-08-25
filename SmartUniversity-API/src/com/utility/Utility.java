@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.data.DAO_Justification;
+import com.dots.Dot_Create_Utilisateur;
 import com.helpers.AbsenceResponse;
 import com.helpers.EtudiantResponse;
 import com.modele.Absence;
@@ -59,6 +60,17 @@ public class Utility
 		return builder.toString();
 	}
 
+	public static String GetUserName(Dot_Create_Utilisateur dot)
+	{
+		//TODO improve?
+		return String.format("%s_%s_%s", dot.getNom().replaceAll(" .+$", "").toLowerCase(), dot.getPrenom().replaceAll(" .+$", "").toLowerCase(), generateRandomString(6));
+	}
+	
+	public static String GetRandomPassword()
+	{
+		return generateRandomString(10);
+	}
+	
 	public static ArrayList<Specialite> GetSpecialitesOfDepartement(Code_Departement code_departement) throws Exception
 	{
 		ArrayList<Specialite> result = new ArrayList<Specialite>();

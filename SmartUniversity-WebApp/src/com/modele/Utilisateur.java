@@ -21,7 +21,28 @@ public class Utilisateur
 	 */
 	public enum Type_Utilisateur
 	{
-		etudiant, enseignant, chefDepartement, responsableFormation, admin;
+		etudiant("Étudiant", "PLACE HOLDER", "PLACE HOLDER"),
+		enseignant("Enseignant", "PLACE HOLDER", "PLACE HOLDER"), 
+		chefDepartement("Chef de département", "PLACE HOLDER", "PLACE HOLDER"),
+		responsableFormation("Résponsable de formation", "PLACE HOLDER", "PLACE HOLDER"), 
+		admin("Administrateur", "PLACE HOLDER", "PLACE HOLDER");
+
+		private final List<String> values;
+		
+		Type_Utilisateur(String... values)
+		{
+			this.values = Arrays.asList(values);
+		}
+
+		public List<String> getValues()
+		{
+			return values;
+		}
+		
+		public String getValue(int index)
+		{
+			return values.get(index);
+		}
 	}
 
 	/***

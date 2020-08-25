@@ -66,7 +66,7 @@
 					<c:remove var="isDone"/>
 					<c:remove var="message"/>
 				</c:if>
-				<form class="form-normal">
+				<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal">
 					<div class="form-row align-items-center">
 						<div class="col-12 col-md-3 my-1">
 							<select class="custom-select filter-select form-control" id="select-module">
@@ -228,7 +228,7 @@
 																				<h6 class="text-right text-primary">Le ${seance.getSeance().getJour()} à ${seance.getSeance().getHeure()}</h6>
 																			</div>
 																		</div>
-																		<form action="${pageContext.request.contextPath}/User/MarquerPresence" method ="post" class="form-normal marquer-presence">
+																		<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/MarquerPresence" method ="post" class="form-normal marquer-presence">
 																			<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 																			<div class="table-responsive">
 																				<table class="table table-striped table-bordered text-center table-center">
@@ -302,7 +302,7 @@
 																										<ul class="list-group list-group-flush">
 																											<c:forEach var="absence" items="${responseEtudiant.getAbsences()}">
 																												<li class="list-group-item list-group-item-light-success">
-																												<form method="post" class="form-normal">
+																												<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post" class="form-normal">
 																													<input type="hidden" name="numero-absence" value="${absence.getAbsence().getNumero_absence()}">
 																													<input type="hidden" name="id-etudiant" value="${responseEtudiant.getEtudiant().getId_utilisateur()}">
 																													<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
@@ -418,7 +418,7 @@
 																				<h6 class="text-right text-info">Le ${seance.getSeance().getJour()} à ${seance.getSeance().getHeure()}</h6>
 																			</div>
 																		</div>
-																		<form action="${pageContext.request.contextPath}/User/DemanderChangementSeance" method="post" class="form-normal demander-changement">
+																		<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DemanderChangementSeance" method="post" class="form-normal demander-changement">
 																			<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">																			
 																			<hr>
 																			<div class="row">
@@ -515,7 +515,7 @@
 																				</div>
 																			</div>
 																			<hr>
-																			<form class="form-normal" method="post" action="${pageContext.request.contextPath}/User/SupprimerDemandeChangement">
+																			<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal" method="post" action="${pageContext.request.contextPath}/User/SupprimerDemandeChangement">
 																				<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 																				<input type="submit" value="Annuler la demande" class="form-control mr-auto btn btn-outline-danger">
 																			</form>
@@ -553,7 +553,7 @@
 																							<td>${seanceSupp.getHeure()}</td>
 																							<td>${seanceSupp.getEtat_seance()}</td>
 																							<td>
-																								<form action="${pageContext.request.contextPath}/User/AnnulerSeanceSupp" method="post" class="form-normal">
+																								<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/AnnulerSeanceSupp" method="post" class="form-normal">
 																									<input type="hidden" name="code-seance" value="${seanceSupp.getCode_seance()}">																			
 																									<input type="hidden" name="code-seance-supp" value="${seanceSupp.getCode_seance_supp()}">																			
 																									<input type="submit" value="Annuler" class="form-control mr-auto btn btn-outline-danger">
@@ -564,7 +564,7 @@
 																				</tbody>
 																			</table>
 																			<hr>
-																			<form action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
+																			<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
 																				<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">																			
 																				<div class="row">
 																					<div class="col">
@@ -606,7 +606,7 @@
 																				<h6 class="text-right text-secondary">Le ${seance.getSeance().getJour()} à ${seance.getSeance().getHeure()}</h6>
 																			</div>
 																		</div>
-																		<form action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
+																		<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
 																			<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">																			
 																			<hr>
 																			<div class="row">

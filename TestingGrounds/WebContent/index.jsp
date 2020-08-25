@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="CallServlet" method="post" enctype="multipart/form-data">
+	<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="CallServlet" method="post" enctype="multipart/form-data">
 		<label>Username</label>
 		<input type="text" name="user">
 		<label>Password</label>

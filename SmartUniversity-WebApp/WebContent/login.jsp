@@ -25,7 +25,7 @@
 				<h2 class="text-success">Se Connecter</h2>
 				<p>Connectez vous a votre compte NTIC afin d'acceder au fonctionalités du site.</p>
 			</div>
-			<form class="form-special" method="post" action="Login">
+			<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-special" method="post" action="Login">
 				<c:if test="${not empty message}">
 					<div class="alert alert-danger alert-dismissible fade show" role="alert">
 						${message}

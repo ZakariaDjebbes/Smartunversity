@@ -28,7 +28,7 @@
 				<h2 class="text-success">Liste des séances du département</h2>
 				<p>Liste de toutes les séances du département, vous pouvez affecter ou désaffecter des enseignants a ces séances.</p>
 			</div>
-			<form class="form-normal">
+			<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal">
 				<div class="form-row align-items-center">
 					<div class="col-12 col-md-3 my-1">
 						<select class="custom-select filter-select form-control" id="select-module">

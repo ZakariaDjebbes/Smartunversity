@@ -44,7 +44,7 @@
 			</c:when>
 			<c:otherwise>
 			<div id="data-table">
-				<form class="form-normal">
+				<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal">
 					<div class="form-row align-items-center">
 						<div class="col-12 col-md-3 my-1">
 							<select class="custom-select filter-select form-control" id="select-module">

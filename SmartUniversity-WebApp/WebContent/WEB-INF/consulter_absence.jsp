@@ -133,7 +133,7 @@
 											</c:choose>
 										</li>
 										<li class="mt-3">
-											<form method="post" action="${pageContext.request.contextPath}/User/DownloadJustification">
+											<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post" action="${pageContext.request.contextPath}/User/DownloadJustification">
 												<input type="hidden" name="numero-justification" value="${justification.getNumero_justification()}">								
 												<input type="hidden" name="numero-absence" value="${absence.getAbsence().getNumero_absence()}">
 												<input type="hidden" name="id-etudiant" value="${absence.getEtudiant().getId_utilisateur()}">
@@ -160,7 +160,7 @@
 												      	<div class="text-center">
 												      		<img src="" id="justification-in-modal" class="justification-image" style="margin-bottom: 10px;" />
 														</div>
-														<form class="form-normal" method="post" action="${pageContext.request.contextPath}/User/UploadJustification" enctype="multipart/form-data">
+														<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal" method="post" action="${pageContext.request.contextPath}/User/UploadJustification" enctype="multipart/form-data">
 															<div class="custom-file">
 															    <input type="hidden" name="numero-absence" value="${absence.getAbsence().getNumero_absence()}">
 															    <input type="file" accept="image/*" name="ficiher-justification" class="custom-file-input" id="input-upload-justification-modal">
@@ -202,7 +202,7 @@
 											<img class="modal-content img-modal"/>
 											<div class="caption-modal-justification"></div>
 										</div>
-										<form class="form-normal" method="post" action="${pageContext.request.contextPath}/User/UploadJustification" enctype="multipart/form-data">
+										<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal" method="post" action="${pageContext.request.contextPath}/User/UploadJustification" enctype="multipart/form-data">
 											<div class="custom-file">
 												<input type="hidden" name="numero-absence" value="${absence.getAbsence().getNumero_absence()}">
 											    <input type="file" accept="image/*" name="ficiher-justification" class="custom-file-input" id="input-upload-justification">
@@ -319,7 +319,7 @@
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-						        <form action="${pageContext.request.contextPath}/User/RefuserJustification" method="post">
+						        <form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/RefuserJustification" method="post">
 						        	<input type="hidden" name="numero-absence" value="${absence.getAbsence().getNumero_absence()}">
 						    		<input type="hidden" name="numero-justification" value="${justification.getNumero_justification()}">
 						        	<button type="submit" class="btn btn-outline-danger">Refuser</button>
@@ -347,7 +347,7 @@
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-						        <form action="${pageContext.request.contextPath}/User/ValiderJustification" method="post">
+						        <form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/ValiderJustification" method="post">
 						        	<input type="hidden" name="numero-absence" value="${absence.getAbsence().getNumero_absence()}">
 						    		<input type="hidden" name="numero-justification" value="${justification.getNumero_justification()}">
 						        	<button type="submit" class="btn btn-outline-success">Valider</button>

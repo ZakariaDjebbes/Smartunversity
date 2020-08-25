@@ -170,6 +170,7 @@
 		
 		for(seance of data)
 		{
+			let code_seance = seance.code_seance;
 			let type = seance.type;
 			let jour = seance.jour;
 			let heure = seance.heure;
@@ -177,14 +178,14 @@
 			let isExclu = seance.isExclu;
 			let nom = seance.nom;
 			let seancesSupp = seance.seancesSupp;
-			setTemplate(jour, heure, getTemplate(type, nom, nombreAbsences, isExclu), false);
+			setTemplate(jour, heure, getTemplate(type, nom, nombreAbsences, isExclu, code_seance), false);
 			
 			console.log(seancesSupp);
 			for(seanceSupp of seancesSupp)
 			{
 				let suppJour = seanceSupp.jour;
 				let suppHeure = seanceSupp.heure;
-				setTemplate(suppJour, suppHeure, getTemplate(type, nom, nombreAbsences, isExclu), true);
+				setTemplate(suppJour, suppHeure, getTemplate(type, nom, nombreAbsences, isExclu, code_seance), true);
 			}
 		}
 		
@@ -203,7 +204,7 @@
 			element.innerHTML += template;
 		}
 		
-		function getTemplate(type, nom, nombreAbsences, isExclu)
+		function getTemplate(type, nom, nombreAbsences, isExclu, code_seance)
 		{
 			let absencesColor = isExclu ? "text-danger" : "text-success";
 			
@@ -211,7 +212,7 @@
 			+'<hr>'
 			+'<b>' + nom + '</b>'
 			+'<br>'
-			+'<a href=""><span class="badge badge-primary">Consulter</span></a>'
+			+'<a href="${pageContext.request.contextPath}/User/ConsulterSeanceEtudiant?code-seance=' + code_seance + '"><span class="badge badge-primary">Consulter</span></a>'
 			+'<hr>'
 			+'<span class="' + absencesColor + '">' + nombreAbsences + ' absences</span>';
 			

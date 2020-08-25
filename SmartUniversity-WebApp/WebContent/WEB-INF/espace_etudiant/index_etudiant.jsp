@@ -23,10 +23,59 @@
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<div class="block-heading">
+					<div class="block-heading mb-5">
 						<h3 class="text-info">${utilisateur.getNom()} ${utilisateur.getPrenom()}</h3>
-						<p>Vous êtes connecter en tant qu'etudiant</p>
+						<p>Vous êtes connecter en tant qu'étudiant</p>
 					</div>
+					<div>
+						<div class="alert alert-danger" role="alert">
+							<span><strong>Vous avez 3 absences non justifié</strong></span>
+						</div>
+						<div class="alert alert-warning" role="alert">
+							<span><strong>Une demande de congé académique est en attente.</strong></span>
+						</div>
+						<div class="alert alert-warning" role="alert">
+							<span><strong>Vous avez 3 absences avec un justificatif non traiter</strong></span>
+						</div>
+						<div class="alert alert-success" role="alert">
+							<h4 class="alert-heading">
+								Rien a signlé!
+								<br>
+							</h4>
+							<span><strong>Tout semble en ordre pour le moment!</strong>
+							<br></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="clean-block features">
+		<div class="container">
+			<div class="block-heading">
+				<h2 class="text-success">Fonctionalités disponibles</h2>
+				<p>Depuis votre espace enseignant vous disposez des opérations suivantes.</p>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-5 feature-box">
+					<i class="fa fa-calendar icon"></i>
+					<h4>Consulter votre emploi du temps</h4>
+					<p>Consultez votre emploi du temps a tout moment!</p>
+				</div>
+				<div class="col-md-5 feature-box">
+					<i class="icon-eye icon"></i>
+					<h4>Gérer vos absences</h4>
+					<p>Consultez vos absences a tout moment, justifiez les et suivez leurs traitement.</p>
+				</div>
+				<div class="col-md-5 feature-box">
+					<i class="icon-question icon"></i>
+					<h4>Demander un congé académique</h4>
+					<p>Demandez un congé académique pour l'année universitaire ici même.</p>
+				</div>
+				<div class="col-md-5 feature-box">
+					<i class="icon-screen-smartphone icon"></i>
+					<h4>Disponible sur mobile</h4>
+					<p>Faites toutes vos opérations sur votre téléphone mobile!</p>
 				</div>
 			</div>
 		</div>

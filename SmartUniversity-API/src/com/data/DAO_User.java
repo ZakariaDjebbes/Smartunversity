@@ -8,14 +8,47 @@ import java.util.Date;
 
 import javax.ws.rs.core.Response.Status;
 
+import com.dots.Dot_Create_Utilisateur;
 import com.dots.Dot_Login_User;
 import com.modele.Utilisateur;
 import com.modele.Utilisateur.Type_Utilisateur;
 import com.rest.exceptions.RequestNotValidException;
 import com.utility.JsonReader;
+import com.utility.Utility;
 
 public class DAO_User extends DAO_Initialize
 {
+	public static boolean UsernameExists(String username)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+			String command = "SELECT * FROM utilisateur WHERE user = ?;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setString(1, username);
+
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					if (resultSet.next())
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+
+			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT, JsonReader.GetNode("server_side_error"));
+		}
+	}
+	
 	public static Utilisateur GetUser(Dot_Login_User userLoginDots)
 	{
 		Utilisateur resultUtilisateur = null;
@@ -54,9 +87,8 @@ public class DAO_User extends DAO_Initialize
 		{
 			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
 					+ " >>> " + e.getMessage());
-			
-			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT,
-					JsonReader.GetNode("server_side_error"));	
+
+			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT, JsonReader.GetNode("server_side_error"));
 		}
 	}
 
@@ -68,7 +100,8 @@ public class DAO_User extends DAO_Initialize
 			String command = "SELECT * FROM utilisateur WHERE id_utilisateur = ?;";
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
-				statement.setInt(1, id);;
+				statement.setInt(1, id);
+				;
 
 				try (ResultSet resultSet = statement.executeQuery())
 				{
@@ -84,8 +117,8 @@ public class DAO_User extends DAO_Initialize
 						String telephone = resultSet.getString(9);
 						Type_Utilisateur type_utilisateur = Type_Utilisateur.valueOf(resultSet.getString(10));
 
-						resultUtilisateur = new Utilisateur(id, user, pass, nom,
-								prenom, adresse, date_n, email, telephone, type_utilisateur);
+						resultUtilisateur = new Utilisateur(id, user, pass, nom, prenom, adresse, date_n, email,
+								telephone, type_utilisateur);
 						return resultUtilisateur;
 					} else
 					{
@@ -99,9 +132,9 @@ public class DAO_User extends DAO_Initialize
 			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
 					+ " >>> " + e.getMessage());
 			return null;
-		}		
+		}
 	}
-	
+
 	public static int UpdateUser(Utilisateur utilisateur)
 	{
 		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
@@ -131,7 +164,79 @@ public class DAO_User extends DAO_Initialize
 			return 0;
 		}
 	}
+
+	public static boolean UpdateUserPasswordLess(Utilisateur utilisateur)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+			String command = "UPDATE utilisateur SET user = ?, nom = ?, prenom = ?, adresse = ?, email = ?, telephone = ?, date_n = ?, type_utilisateur = ? WHERE id_utilisateur = ? LIMIT 1;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setString(1, utilisateur.getUser());
+				statement.setString(2, utilisateur.getNom());
+				statement.setString(3, utilisateur.getPrenom());
+				statement.setString(4, utilisateur.getAdresse());
+				statement.setString(5, utilisateur.getEmail());
+				statement.setString(6, utilisateur.getTelephone());
+				statement.setDate(7, new java.sql.Date(utilisateur.getDate().getTime()));
+				statement.setString(8, String.valueOf(utilisateur.getUser_type()));
+				statement.setInt(9, utilisateur.getId_utilisateur());
+
+				return statement.executeUpdate() == 1;
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return false;
+		}
+	}
 	
+	public static int CreateUser(Dot_Create_Utilisateur dot_Create_Utilisateur)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+			String command = "INSERT INTO utilisateur VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				String username = "";
+				String password = "";
+				
+				do//prevent duplicates even if the odds are very very very small
+				{
+					username = Utility.GetUserName(dot_Create_Utilisateur);
+				}while(UsernameExists(username));
+
+				password = Utility.GetRandomPassword();
+
+				statement.setString(1, username);
+				statement.setString(2, password);
+				statement.setString(3, dot_Create_Utilisateur.getNom());
+				statement.setString(4, dot_Create_Utilisateur.getPrenom());
+				statement.setString(5, dot_Create_Utilisateur.getAdresse());
+				statement.setDate(6, new java.sql.Date(dot_Create_Utilisateur.getDate().getTime()));
+				statement.setString(7, dot_Create_Utilisateur.getEmail());
+				statement.setString(8, dot_Create_Utilisateur.getTelephone());
+				statement.setString(9, String.valueOf(dot_Create_Utilisateur.getUser_type()));
+
+				int addedRows = statement.executeUpdate();
+				if(addedRows == 1)
+				{
+					int id_utilisateur = DAO_User.GetUser(new Dot_Login_User(username, password, false)).getId_utilisateur();
+					return id_utilisateur;
+				}	
+				
+				return -1;
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+
+			return -1;
+		}
+	}
+
 	public static boolean DeleteUserByID(int id)
 	{
 		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
@@ -140,16 +245,16 @@ public class DAO_User extends DAO_Initialize
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
 				statement.setInt(1, id);
-		
+
 				int deletedRows = statement.executeUpdate();
 
-				return deletedRows == 1? true : false;
+				return deletedRows == 1 ? true : false;
 			}
 		} catch (Exception e)
 		{
 			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
 					+ " >>> " + e.getMessage());
-			
+
 			return false;
 		}
 	}

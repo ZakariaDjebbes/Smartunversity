@@ -168,13 +168,8 @@ public class DAO_ChangementSeance extends DAO_Initialize
 			{
 				statement.setString(1, changementSeance.getHeure());
 				statement.setString(2, String.valueOf(changementSeance.getNouveau_jour()));
-				statement.setString(3, changementSeance.getCode_seance());
-					
-				if(!DeleteChangementSeance(changementSeance.getCode_seance()))
-				{
-					return false;
-				}
-				
+				statement.setString(3, changementSeance.getCode_seance());		
+			
 				return statement.executeUpdate() == 1;
 			}
 		} catch (Exception e)

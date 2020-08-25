@@ -52,7 +52,7 @@ public class ValiderDemande extends HttpServlet
 			target = client.target("http://localhost:8080/SmartUniversity-API/api/update/departement/valider/demande/changement")
 					.queryParam("code_seance", code_seance);
 			
-			redirectTo = "/User/ConsulterDemandesChefDepartement";
+			redirectTo = "/User/ConsulterDemandeChefDepartement?code-seance=" + code_seance + "&type=changement";
 			
 			break;
 		case ConsulterDemandeChefDepartement.DEMANDE_SEANCE_SUPP:

@@ -142,6 +142,7 @@
 						<h4 class="text-success">Details de la demande</h4>
 						<c:choose>
 							<c:when test="${typeDemande eq 'supp'}">					
+								<c:set var="etat" value="${demande.getSeanceSupp().getEtat_seance()}"></c:set>
 								<p>
 									Ajout d'une séance supplémentaire le <span class="font-weight-bold">${demande.getSeanceSupp().getJour().getValue(0)}</span>&nbsp;à <span class="font-weight-bold">${demande.getSeanceSupp().getHeure()}</span>.
 								</p>
@@ -160,7 +161,8 @@
 									</c:choose>
 								</p>
 							</c:when>
-							<c:when test="${typeDemande eq 'changement'}">					
+							<c:when test="${typeDemande eq 'changement'}">	
+								<c:set var="etat" value="${demande.getChangementSeance().getEtat_seance()}"></c:set>			
 								<p>
 									Changer l'horaire de cette séance vers <span class="font-weight-bold">${demande.getChangementSeance().getNouveau_jour().getValue(0)}</span>&nbsp;à <span class="font-weight-bold">${demande.getChangementSeance().getHeure()}</span>.
 								</p>
@@ -180,12 +182,24 @@
 								</p>
 							</c:when>
 						</c:choose>
-						<form method="post">
-							<div class="form-group text-center">
-								<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ValiderDemande" type="submit">Accepter</button>
-								<button class="btn btn-outline-danger ml-5" formaction="${pageContext.request.contextPath}/User/RefuserDemande" type="submit">Refuser</button>
-							</div>
-						</form>
+						<c:choose>
+							<c:when test="${typeDemande eq 'supp'}">
+								<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post">
+									<div class="form-group text-center">
+										<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ValiderDemande" type="submit">Accepter</button>
+										<button class="btn btn-outline-danger ml-5" formaction="${pageContext.request.contextPath}/User/RefuserDemande" type="submit">Refuser</button>
+									</div>
+								</form>
+							</c:when>
+							<c:when test="${typeDemande eq 'changement' and demande.getChangementSeance().getEtat_seance() eq 'nonTraite'}">
+								<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post">
+									<div class="form-group text-center">
+										<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ValiderDemande" type="submit">Accepter</button>
+										<button class="btn btn-outline-danger ml-5" formaction="${pageContext.request.contextPath}/User/RefuserDemande" type="submit">Refuser</button>
+									</div>
+								</form>
+							</c:when>
+						</c:choose>
 					</div>
 				</div>
 			</div>

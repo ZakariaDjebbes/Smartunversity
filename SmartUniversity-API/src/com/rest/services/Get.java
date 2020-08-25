@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.data.DAO_Absence;
+import com.data.DAO_Admin;
 import com.data.DAO_ChangementSeance;
 import com.data.DAO_ChefDepartement;
 import com.data.DAO_CongeAcademique;
@@ -19,6 +20,9 @@ import com.data.DAO_Enseignant;
 import com.data.DAO_Etudiant;
 import com.data.DAO_Justification;
 import com.data.DAO_Module;
+import com.data.DAO_NotificationChangementSeance;
+import com.data.DAO_NotificationSeanceSupp;
+import com.data.DAO_ReponsableFormation;
 import com.data.DAO_Seance;
 import com.data.DAO_SeanceSupp;
 import com.data.DAO_User;
@@ -29,16 +33,20 @@ import com.helpers.DemandeSeanceSuppResponse;
 import com.helpers.DemandesDepartementResponse;
 import com.helpers.EnseignantDisponibleResponse;
 import com.helpers.EtudiantResponse;
+import com.helpers.NotificationResponse;
 import com.helpers.SeanceDepartementResponse;
 import com.helpers.SeanceResponse;
 import com.modele.Absence;
 import com.modele.ChangementSeance;
 import com.modele.CongeAcademique;
+import com.modele.Enseignant;
 import com.modele.Etudiant;
 import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
 import com.modele.Justification;
 import com.modele.Module;
+import com.modele.NotificationChangementSeance;
+import com.modele.NotificationSeanceSupp;
 import com.modele.Seance;
 import com.modele.Seance.Jour;
 import com.modele.SeanceSupp;
@@ -76,6 +84,13 @@ public class Get
 			break;
 		case etudiant:
 			utilisateur = DAO_Etudiant.GetEtudiantById(id);
+			break;
+		case admin:
+			utilisateur = DAO_Admin.GetAdminById(id);
+			break;
+		case responsableFormation:
+			utilisateur = DAO_ReponsableFormation.GetReponsableFormation(utilisateur);
+			break;
 		default:
 			break;
 		}
@@ -98,6 +113,23 @@ public class Get
 		}
 
 		return Utility.Response(Status.OK, seances);
+	}
+	
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/enseignant")
+	public Response GetEnseignant(@QueryParam("code_seance") String code_seance)
+	{
+		Enseignant enseignant = DAO_Enseignant.GetEnseignantBySeance(DAO_Seance.GetSeanceByCode_Seance(code_seance));
+
+		if (enseignant == null)
+		{
+			return Utility.Response(Status.NOT_FOUND,
+					JsonReader.GetNode("session_not_exist"));
+		}
+
+		return Utility.Response(Status.OK, enseignant);
 	}
 
 	@GET
@@ -468,6 +500,98 @@ public class Get
 					JsonReader.GetNode("academic_leave_student_not_exist"));
 		}
 		
+		return Utility.Response(Status.OK, response);
+	}
+	
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/admin/etudiants")
+	public Response GetAllEtudiants()
+	{
+		ArrayList<Etudiant> response = DAO_Etudiant.GetAllEtudiants();
+		
+		if(response == null || response.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, 
+					JsonReader.GetNode("students_not_exist"));
+		}
+		
+		return Utility.Response(Status.OK, response);
+	}
+	
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/admin/enseignants")
+	public Response GetAllEnseignants()
+	{
+		ArrayList<Enseignant> enseignants = DAO_Enseignant.GetAllEnseignant();
+		
+		if(enseignants.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, 
+					JsonReader.GetNode("teachers_not_exist"));
+		}
+
+		ArrayList<Utilisateur> response = new ArrayList<Utilisateur>();
+		response.addAll(enseignants);
+		
+		return Utility.Response(Status.OK, response);
+	}
+	
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/admin/modules")
+	public Response GetAllModules()
+	{
+		ArrayList<Module> modules = DAO_Module.GetAllModules();
+		
+		if(modules.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, 
+					JsonReader.GetNode("modules_not_exist"));
+		}
+
+		
+		return Utility.Response(Status.OK, modules);
+	}
+	
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/admin/seances")
+	public Response GetAllSeances(@QueryParam("annee")Annee annee, @QueryParam("specialite")Specialite specialite)
+	{
+		ArrayList<SeanceResponse> seances = DAO_Seance.GetAllSeancesOfAnneeSpecialite(annee, specialite);
+		
+		if(seances.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, 
+					JsonReader.GetNode("seances_annee_specialite_not_exist"));
+		}
+
+		
+		return Utility.Response(Status.OK, seances);
+	}
+	
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/notification")
+	public Response GetNotificationsOfUser(@QueryParam("id_utilisateur") int id_utilisateur)
+	{
+		ArrayList<NotificationChangementSeance> notificationsChangement = DAO_NotificationChangementSeance.GetNotificationsOfUser(id_utilisateur);
+		ArrayList<NotificationSeanceSupp> notificationsSeanceSupp = DAO_NotificationSeanceSupp.GetNotificationsOfUser(id_utilisateur);
+		
+		if(notificationsChangement.size() == 0 && notificationsSeanceSupp.size() == 0)
+		{
+			throw new RequestNotValidException(Status.NOT_FOUND, JsonReader.GetNode("notifications_not_exist"));
+		}
+		
+		NotificationResponse response = new NotificationResponse(notificationsSeanceSupp, notificationsChangement);
+
 		return Utility.Response(Status.OK, response);
 	}
 }

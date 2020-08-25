@@ -64,7 +64,7 @@
 								<span>Une fois le congé valider par votre chef de département, le congé sera <b>définitif</b>.<br>Une fois sous congé académique vous serez <b>totalement exclu</b> de ce système.
 								</span>
 							</div>
-							<form method="post" action="${pageContext.request.contextPath}/User/DemanderCongeAcademique" enctype="multipart/form-data">
+							<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post" action="${pageContext.request.contextPath}/User/DemanderCongeAcademique" enctype="multipart/form-data">
 								<div class="form-group">
 									<input type="hidden" name="id-etudiant" value="${utilisateur.getId_utilisateur()}">
 									<label for="fichier-conge">Fichier justifiant le congé académique:&nbsp;</label>
@@ -98,7 +98,7 @@
 								</span>
 								<hr>
 								<span>
-									<form class="form-normal" method="post" action="${pageContext.request.contextPath}/User/AnnulerCongeAcademique">
+									<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal" method="post" action="${pageContext.request.contextPath}/User/AnnulerCongeAcademique">
 										<input type="hidden" name="numero-conge-academique" value="${demandeConge.getNumero_conge_academique()}">
 										<button type="submit" class="btn btn-warning">Annuler la demande</button>
 									</form>

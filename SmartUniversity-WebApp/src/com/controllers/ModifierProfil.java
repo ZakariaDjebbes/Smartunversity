@@ -20,8 +20,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.helpers.RequestResponse;
+import com.modele.Admin;
 import com.modele.ChefDepartement;
 import com.modele.Enseignant;
+import com.modele.Etudiant;
 import com.modele.Utilisateur;
 
 @WebServlet("/User/ModifierProfil")
@@ -37,7 +39,7 @@ public class ModifierProfil extends HttpServlet
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		request.getRequestDispatcher("/WEB-INF/espace_enseignant/modifier_profil_enseignant.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/modifier_profil.jsp").forward(request, response);
 	}
 	
 	@Override
@@ -53,7 +55,8 @@ public class ModifierProfil extends HttpServlet
 		{
 			newUtilisateur.setId_utilisateur(oldUtilisateur.getId_utilisateur());
 			Client client = ClientBuilder.newClient();
-			WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/update/updateUser");
+			WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/update/updateUser")
+					.queryParam("isAndroid", false);
 			Response apiResponse = target.request(MediaType.APPLICATION_JSON)
 					.header(HttpHeaders.AUTHORIZATION, "Bearer " + session.getAttribute("token").toString())
 					.post(Entity.json(newUtilisateur));
@@ -65,6 +68,8 @@ public class ModifierProfil extends HttpServlet
 				switch (utilisateur.getUser_type())
 				{
 				case etudiant:
+					Etudiant etudiant = apiResponse.readEntity(Etudiant.class);
+					session.setAttribute("utilisateur", etudiant);
 					break;
 				case enseignant:
 					Enseignant enseignant = apiResponse.readEntity(Enseignant.class);
@@ -73,6 +78,10 @@ public class ModifierProfil extends HttpServlet
 				case chefDepartement:
 					ChefDepartement chefDepartement = apiResponse.readEntity(ChefDepartement.class);
 					session.setAttribute("utilisateur", chefDepartement);
+					break;
+				case admin:
+					Admin admin = apiResponse.readEntity(Admin.class);
+					session.setAttribute("utilisateur", admin);
 				default:
 					break;
 				}
@@ -94,7 +103,7 @@ public class ModifierProfil extends HttpServlet
 
 		session.setAttribute("isDone", isDone);
 		session.setAttribute("message", message);
-		Redirect.SendRedirect(request, response, "/WEB-INF/espace_enseignant/modifier_profil_enseignant.jsp");
+		Redirect.SendRedirect(request, response, "/WEB-INF/modifier_profil.jsp");
 	}
 
 	private Utilisateur GetUserData(HttpServletRequest request)

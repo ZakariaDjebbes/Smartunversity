@@ -23,9 +23,6 @@ import com.helpers.RequestResponse;
 import com.helpers.SeanceResponse;
 import com.modele.Enseignant;
 
-/**
- * Servlet implementation class ConsulterSeances
- */
 @WebServlet("/User/ConsulterSeancesEnseignant")
 public class ConsulterSeancesEnseignant extends HttpServlet
 {

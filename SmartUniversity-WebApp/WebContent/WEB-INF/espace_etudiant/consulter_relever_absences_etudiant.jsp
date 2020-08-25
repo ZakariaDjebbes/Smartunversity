@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<!-- TODO faire consulter seance etudiant -->
 	<jsp:include page="/WEB-INF/espace_etudiant/shared/header_etudiant.jsp"></jsp:include>
 	<main class="page">
 	<div class="clean-block clean-info dark">
@@ -49,7 +50,7 @@
 												<c:set var="absences" value="${relever.value}"></c:set>
 												<tr>
 													<th class="text-left" style="width: 50%">${absences.get(0).getModule().getNom()}
-														<a href="">
+														<a href="${pageContext.request.contextPath}/User/ConsulterSeanceEtudiant?code-seance=${absences.get(0).getSeance().getCode_seance()}">
 															<span class="badge badge-info">Consulter</span>
 														</a>
 													</th>

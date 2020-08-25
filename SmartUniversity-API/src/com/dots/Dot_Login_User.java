@@ -12,16 +12,18 @@ public class Dot_Login_User implements IDot
 {
 	private String user = "";
 	private String pass = "";
-
+	private boolean isAndroid = false;
+	
 	public Dot_Login_User()
 	{
 
 	}
 
-	public Dot_Login_User(String user, String pass)
+	public Dot_Login_User(String user, String pass, boolean isAndroid)
 	{
 		this.user = user;
 		this.pass = pass;
+		this.isAndroid = isAndroid;
 	}
 	
 	public String getUser()
@@ -45,6 +47,16 @@ public class Dot_Login_User implements IDot
 	public void setPass(String pass)
 	{
 		this.pass = pass;
+	}
+	
+	public boolean isAndroid()
+	{
+		return isAndroid;
+	}
+
+	public void setAndroid(boolean isAndroid)
+	{
+		this.isAndroid = isAndroid;
 	}
 
 	@Override

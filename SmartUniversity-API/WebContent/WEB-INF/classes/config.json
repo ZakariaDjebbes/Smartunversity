@@ -4,5 +4,14 @@
 		"dbUser": "adminBD",
 		"dbPassword": "247365",
 		"dbConnector": "com.mysql.jdbc.Driver"
+	},
+	"mailerConfig": {
+		"user": "itachiuchiwa03@gmail.com",
+		"password": "zakaria.159",
+		"mail.smtp.auth": "true",
+		"mail.smtp.starttls.enable": "true",
+		"mail.smtp.host": "smtp.gmail.com",
+		"mail.smtp.port": "587",
+		"mailBody": "text/html; charset=utf-8"
 	}
 }

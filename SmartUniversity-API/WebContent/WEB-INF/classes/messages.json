@@ -4,8 +4,28 @@
 		"message_en": "The received teacher identifier doesn't exist",
 		"message_ar": "place_holder"
 	},
+	"teacher_created": {
+		"message_fr": "Le compte enseignant a été correctement créé",
+		"message_en": "The teacher account has been successfully created",
+		"message_ar": "place_holder"
+	},
+	"teacher_not_created": {
+		"message_fr": "Le compte enseignant n'a pas été créé",
+		"message_en": "Teacher account has not been created",
+		"message_ar": "place_holder"
+	},
+	"teacher_updated": {
+		"message_fr": "L'enseignant a été correctement mis à jour",
+		"message_en": "The teacher has been correctly updated",
+		"message_ar": "place_holder"
+	},
+	"teacher_not_updated": {
+		"message_fr": "L'enseignant n'a pas été mis à jour",
+		"message_en": "The teacher has not been updated",
+		"message_ar": "place_holder"
+	},
 	"teachers_not_exist": {
-		"message_fr": "Aucun enseignant correspondant n'a été trouvé",
+		"message_fr": "Aucun enseignant n'a été trouvé",
 		"message_en": "No matching teacher was found",
 		"message_ar": "place_holder"
 	},
@@ -54,9 +74,24 @@
 		"message_en": "The received student identifier doesn't exist",
 		"message_ar": "place_holder"
 	},
+	"student_updated": {
+		"message_fr": "L'étudiant a été correctement mis à jour",
+		"message_en": "The student has been correctly updated",
+		"message_ar": "place_holder"
+	},
+	"student_not_updated": {
+		"message_fr": "L'étudiant n'a pas été mis à jour",
+		"message_en": "The student has not been updated",
+		"message_ar": "place_holder"
+	},
 	"students_year_speciality_group_not_exist": {
 		"message_fr": "Impossible de trouver un étudiant pour cette année, spécialité et groupe",
 		"message_en": "Couldn't find any student for this year, speciality and group",
+		"message_ar": "place_holder"
+	},
+	"students_not_exist": {
+		"message_fr": "Il n'y a aucun étudiant dans le système",
+		"message_en": "There are no students in the system",
 		"message_ar": "place_holder"
 	},
 	"absence_not_exist": {
@@ -332,6 +367,131 @@
 	"internal_error": {
 		"message_fr": "Une erreur interne a empêché l'opération",
 		"message_en": "An internal error prevented the operation",
+		"message_ar": "place_holder"
+	},
+	"student_created": {
+		"message_fr": "L'étudiant a été correctement créé",
+		"message_en": "The student has been correctly created",
+		"message_ar": "place_holder"
+	},
+	"student_not_created": {
+		"message_fr": "Une erreur interne a empêché la création de l'étudiant",
+		"message_en": "An internal error prevented the creation of the student",
+		"message_ar": "place_holder"
+	},
+	"change_username": {
+		"message_fr": "Ce nom d'utilisateur existe déjà, choisissez en un autre",
+		"message_en": "This username already exists, choose another one",
+		"message_ar": "place_holder"
+	},
+	"departement_has_chef": {
+		"message_fr": "Ce département dispose déjà d'un chef de département",
+		"message_en": "This department already has a department head",
+		"message_ar": "place_holder"
+	},
+	"module_deleted": {
+		"message_fr": "Le module a été correctement supprimé",
+		"message_en": "The module was successfully deleted",
+		"message_ar": "place_holder"
+	},
+	"modules_not_exist": {
+		"message_fr": "Aucun module n'existe dans le système",
+		"message_en": "No module exists in the system",
+		"message_ar": "place_holder"
+	},
+	"module_updated": {
+		"message_fr": "Le module a été correctement mis à jour",
+		"message_en": "The module has been correctly updated",
+		"message_ar": "place_holder"
+	},
+	"module_not_updated": {
+		"message_fr": "Le module n'a pas été mis à jour",
+		"message_en": "The module has not been updated",
+		"message_ar": "place_holder"
+	},
+	"module_created": {
+		"message_fr": "Le module a été correctement créé",
+		"message_en": "The module has been correctly created",
+		"message_ar": "place_holder"
+	},
+	"module_not_created": {
+		"message_fr": "Le module n'a pas été créé",
+		"message_en": "The module has not been created",
+		"message_ar": "place_holder"
+	},
+	"module_exist": {
+		"message_fr": "Le module n'a pas été créé car un module avec le même code existe déjà",
+		"message_en": "The module was not created because a module with the same code already exists",
+		"message_ar": "place_holder"
+	},
+	"seances_annee_specialite_not_exist": {
+		"message_fr": "Aucune séance n'existe dans le système pour cette année et cette spécialité",
+		"message_en": "No session exists in the system for this year and this specialty",
+		"message_ar": "place_holder"
+	},
+	"session_occupied": {
+		"message_fr": "Une autre séance est programmé pour cet heure et ce jour pour ce groupe",
+		"message_en": "Another session is scheduled for this time and day for this group",
+		"message_ar": "place_holder"
+	},
+	"session_created": {
+		"message_fr": "La séance a été correctement créée",
+		"message_en": "The session was successfully created",
+		"message_ar": "place_holder"
+	},
+	"session_not_create": {
+		"message_fr": "En raison d'une erreur interne la séance n'a pas été créée",
+		"message_en": "Due to an internal error the session was not created",
+		"message_ar": "place_holder"
+	},
+	"session_not_deleted": {
+		"message_fr": "En raison d'une erreur interne la séance n'a pas été supprimé",
+		"message_en": "Due to an internal error the session was not deleted",
+		"message_ar": "place_holder"
+	},
+	"session_deleted": {
+		"message_fr": "La séance a été correctement supprimée",
+		"message_en": "The session was successfully deleted",
+		"message_ar": "place_holder"
+	},
+	"session_updated": {
+		"message_fr": "La séance a été correctement mise à jour",
+		"message_en": "The session was successfully updated",
+		"message_ar": "place_holder"
+	},
+	"session_not_updated": {
+		"message_fr": "La séance n'a pas été mise à jour en raison d'un problème interne",
+		"message_en": "The session was not updated due to an internal error",
+		"message_ar": "place_holder"
+	},
+	"teacher_type_not_exist": {
+		"message_fr": "Le type d'enseignant reçu n'est pas valide",
+		"message_en": "The received teacher type is not valid",
+		"message_ar": "place_holder"
+	},
+	"notifications_not_exist": {
+		"message_fr": "Aucune notification pour le moment",
+		"message_en": "No notifications yet",
+		"message_ar": "place_holder"
+	},
+	"notification_updated": {
+		"message_fr": "La notification a été correctement mise à jour",
+		"message_en": "The notification has been correctly updated",
+		"message_ar": "place_holder"
+	},
+	"notification_not_updated": {
+		"message_fr": "La notification n'a pas été mise à jour en raison d'une erreur interne",
+		"message_en": "The notification has not been updated due to an internal error",
+		"message_ar": "place_holder"
+	},
+	"notification_deleted": {
+		"message_fr": "La notification a été correctement supprimé",
+		"message_en": "The notification has been correctly deleted",
+		"message_ar": "place_holder"
+	},
+	"notification_not_deleted": {
+		"message_fr": "La notification n'a pas été supprimé en raison d'une erreur interne",
+		"message_en": "The notification has not been deleted due to an internal error",
 		"message_ar": "place_holder"
 	}
 }

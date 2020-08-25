@@ -15,6 +15,12 @@ public class Module
 		
 	}
 	
+	public Module(String code_module, String nom)
+	{
+		this.code_module = code_module;
+		this.nom = nom;
+	}
+
 	public String getCode_module()
 	{
 		return code_module;
@@ -35,6 +41,27 @@ public class Module
 		this.nom = nom;
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj == this)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+
+		Module other = (Module) obj;
+
+		if (code_module.equals(other.getCode_module()) && nom.equals(other.getNom()))
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public String toString()
 	{

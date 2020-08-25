@@ -25,7 +25,7 @@
 			<div class="row">
 				<div class="col-12 col-md-6">
 					<p class="text-center text-secondary">Formulaire de contact</p>
-					<form class="form-special">
+					<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-special">
 						<div class="form-group">
 							<label>Nom</label>
 							<input class="form-control" type="text" placeholder="Votre nom">

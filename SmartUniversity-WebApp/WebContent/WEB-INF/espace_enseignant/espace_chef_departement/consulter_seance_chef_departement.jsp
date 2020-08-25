@@ -146,7 +146,7 @@
 									      </div>
 									      <div class="modal-footer">
 									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-									        <form action="${pageContext.request.contextPath}/User/DesaffecterSeance" method="post">
+									        <form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DesaffecterSeance" method="post">
 									        	<button type="submit" class="btn btn-outline-danger">Désaffecter</button>
 									        </form>
 									      </div>
@@ -276,7 +276,7 @@
 									      </div>
 									      <div class="modal-footer">
 									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-									        <form action="${pageContext.request.contextPath}/User/AffecterSeance" method="post" id="form-affecter">
+									        <form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/AffecterSeance" method="post" id="form-affecter">
 									        	<input type="hidden" name="id-enseignant" value="">	
 									        	<button type="submit" class="btn btn-outline-success">Affecter</button>
 									      	</form>

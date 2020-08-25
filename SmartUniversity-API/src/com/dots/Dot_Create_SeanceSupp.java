@@ -111,6 +111,9 @@ public class Dot_Create_SeanceSupp implements IDot
 					JsonReader.GetNode("teacher_have_other_request"));
 		}
 		
-		//TODO check if groupe is disponible
+		if(!DAO_Seance.IsSeanceDisponible(jour, heure, seance.getGroupe(), seance.getAnnee(), seance.getSpecialite()))
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("session_occupied"));
+		}
 	}
 }

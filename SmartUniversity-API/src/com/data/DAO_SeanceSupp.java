@@ -85,6 +85,41 @@ public class DAO_SeanceSupp extends DAO_Initialize
 		}
 	}
 	
+	public static SeanceSupp GetSeanceSupp(int code_seance_supp)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{	
+			String command = "SELECT * FROM SeanceSupp WHERE code_seance_supp = ?;";
+
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setInt(1, code_seance_supp);
+
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					if(resultSet.next())
+					{
+						String code_seance = resultSet.getString(1);
+						Jour jour = Jour.valueOf(resultSet.getString(3));
+						String heure = resultSet.getString(4);
+						Etat_Demande etat_seance = Etat_Demande.valueOf(resultSet.getString(5));
+						
+						SeanceSupp seanceSupp = new SeanceSupp(code_seance, code_seance_supp, jour, heure, etat_seance);
+						
+						return seanceSupp;
+					}
+
+					return null;
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return null;
+		}
+	}
+	
 	public static ArrayList<SeanceSupp> GetValidSeancesSupp(String code_seance)
 	{
 		ArrayList<SeanceSupp> result = new ArrayList<SeanceSupp>();

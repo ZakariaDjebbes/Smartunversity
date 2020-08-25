@@ -75,36 +75,39 @@ public class ReleverAbsencesEtudiant
 				? new ArrayList<AbsenceDepartementResponse>()
 				: relever.get(code_seance);
 		int absencesNonJustifier = 0;
-
 		if (absences.size() == 0)
 		{
 			return false;
 		} else
 		{
-
 			for (AbsenceDepartementResponse absence : absences)
 			{
 				ArrayList<Justification> justifications = absence.getJustifications();
-				for (int i = 0; i < justifications.size(); i++)
+				if (justifications.size() > 0)
 				{
-					Justification justification = justifications.get(i);
-					// TODO non traiter = exlu ou nn?
-					boolean isJustifier = justification.getEtat_justification() == Etat_Demande.valide;
-
-					if (i == justifications.size() - 1 && !isJustifier)
+					for (int i = 0; i < justifications.size(); i++)
 					{
-						absencesNonJustifier++;
-						break;
-					}
-				}
+						Justification justification = justifications.get(i);
+						// TODO non traiter = exlu ou nn?
+						boolean isJustifier = justification.getEtat_justification() == Etat_Demande.valide;
 
+						if (i == justifications.size() - 1 && !isJustifier)
+						{
+							absencesNonJustifier++;
+							break;
+						}
+					}
+				} else
+				{
+					absencesNonJustifier++;
+				}
 			}
 		}
+
 		if (absencesNonJustifier >= 3 || absences.size() >= 5)
 		{
 			return true;
 		}
-
 		return false;
 	}
 }

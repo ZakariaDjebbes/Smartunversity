@@ -20,9 +20,11 @@ import javax.ws.rs.core.Response;
 import com.dots.Dot_Login;
 import com.helpers.LoginResponse;
 import com.helpers.RequestResponse;
+import com.modele.Admin;
 import com.modele.ChefDepartement;
 import com.modele.Enseignant;
 import com.modele.Etudiant;
+import com.modele.ResponsableFormation;
 import com.modele.Utilisateur;
 
 @WebServlet("/Login")
@@ -45,7 +47,7 @@ public class Login extends HttpServlet
 
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/auth");
-		Response apiResponse = target.request(MediaType.APPLICATION_JSON).post(Entity.json(new Dot_Login(user, pass)));
+		Response apiResponse = target.request(MediaType.APPLICATION_JSON).post(Entity.json(new Dot_Login(user, pass, false)));
 		apiResponse.bufferEntity();
 		RequestResponse requestResponse = RequestResponse.GetRequestResponse(apiResponse);
 		
@@ -86,6 +88,16 @@ public class Login extends HttpServlet
 					Etudiant etudiant = apiResponse.readEntity(Etudiant.class);
 					session.setAttribute("utilisateur", etudiant);
 					Redirect.SendRedirect(request, response, "/WEB-INF/espace_etudiant/index_etudiant.jsp");
+					break;
+				case admin:
+					Admin admin = apiResponse.readEntity(Admin.class);
+					session.setAttribute("utilisateur", admin);
+					Redirect.SendRedirect(request, response, "/WEB-INF/espace_admin/index_admin.jsp");
+					break;
+				case responsableFormation:
+					ResponsableFormation responsableFormation = apiResponse.readEntity(ResponsableFormation.class);
+					session.setAttribute("utilisateur", responsableFormation);
+					Redirect.SendRedirect(request, response, "/WEB-INF/espace_enseignant/index_enseignant.jsp");
 					break;
 				default:
 					break;

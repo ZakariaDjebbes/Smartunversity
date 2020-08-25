@@ -13,6 +13,9 @@ import com.data.DAO_Absence;
 import com.data.DAO_ChangementSeance;
 import com.data.DAO_CongeAcademique;
 import com.data.DAO_Enseignement;
+import com.data.DAO_Module;
+import com.data.DAO_Notification;
+import com.data.DAO_Seance;
 import com.data.DAO_SeanceSupp;
 import com.data.DAO_User;
 import com.rest.annotations.Secured;
@@ -128,5 +131,59 @@ public class Delete
 		
 		return Utility.Response(Status.OK, 
 				JsonReader.GetNode("academic_leave_request_deleted"));
+	}
+	
+	@DELETE
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/module")
+	public Response DeleteModule(@QueryParam("code_module") String code_module)
+	{
+		boolean isDone = DAO_Module.DeleteModule(code_module);
+		
+		if(!isDone)
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST,
+					JsonReader.GetNode("module_not_exist"));
+		}
+		
+		return Utility.Response(Status.OK, 
+				JsonReader.GetNode("module_deleted"));
+	}
+	
+	@DELETE
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/seance")
+	public Response DeleteSeance(@QueryParam("code_seance") String code_seance)
+	{
+		boolean isDone = DAO_Seance.DeleteSeance(code_seance);
+		
+		if(!isDone)
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST,
+					JsonReader.GetNode("session_not_deleted"));
+		}
+		
+		return Utility.Response(Status.OK, 
+				JsonReader.GetNode("session_deleted"));
+	}
+	
+	@DELETE
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/notification")
+	public Response DeleteNotification(@QueryParam("id_notification") int id_notification)
+	{
+		boolean isDone = DAO_Notification.DeleteNotification(id_notification);
+		
+		if(!isDone)
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST,
+					JsonReader.GetNode("notification_not_deleted"));
+		}
+		
+		return Utility.Response(Status.OK, 
+				JsonReader.GetNode("notification_deleted"));
 	}
 }

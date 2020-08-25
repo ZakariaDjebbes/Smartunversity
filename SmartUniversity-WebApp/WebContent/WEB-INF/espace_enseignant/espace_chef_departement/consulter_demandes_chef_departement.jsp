@@ -67,8 +67,33 @@
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane fade show" role="tabpanel" id="tab-demandes-etudiants">
-								<div class="table-responsive">
-									<table class="table table-striped table-bordered text-center table-center" id="table-absences">
+								<div class="row">
+									<div class="col-12 col-md-6 col-lg-3 mt-3">
+										<div class="dropdown">
+											<a class="btn btn-outline-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Filtrer par etat
+											</a>
+											<div class="dropdown-menu w-100" style="min-width:280px;">
+												<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="px-1">
+													<div class="custom-control custom-checkbox">
+													  <input type="checkbox" class="custom-control-input" name="etat_demande_etudiant" value="Valider" id="cb-demande-valide">
+													  <label class="custom-control-label" for="cb-demande-valide">Demandes <span class="text-success">validées</span></label>
+													</div>
+													<div class="custom-control custom-checkbox">
+													  <input type="checkbox" class="custom-control-input" name="etat_demande_etudiant" value="Refuser" id="cb-demande-refuse">
+													  <label class="custom-control-label" for="cb-demande-refuse">Demandes <span class="text-danger">refusées</span></label>
+													</div>
+													<div class="custom-control custom-checkbox">
+													  <input type="checkbox" class="custom-control-input" name="etat_demande_etudiant" value="Non traiter" id="cb-demande-non-traite">
+													  <label class="custom-control-label" for="cb-demande-non-traite">Demandes <span class="text-warning">non traitées</span></label>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="table-responsive mt-3">
+									<table class="table table-striped table-bordered text-center table-center" id="table-demandes-etudiants">
 										<thead>
 											<tr class="table-success">
 												<th>Etudiant</th>
@@ -105,8 +130,52 @@
 								</div>
 							</div>
 							<div class="tab-pane fade show active" role="tabpanel" id="tab-demandes-enseignants">
-								<div class="table-responsive">
-									<table class="table table-striped table-bordered text-center table-center" id="table-absences">
+								<div class="row">
+									<div class="col-12 col-md-6 col-lg-3 mt-3">
+										<div class="dropdown">
+											<a class="btn btn-outline-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Filtrer par type de demande
+											</a>
+											<div class="dropdown-menu w-100" style="min-width:280px;">
+												<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="px-1">
+													<div class="custom-control custom-checkbox">
+													  <input type="checkbox" class="custom-control-input" name="type_demande_enseignant" value="Séance supplémentaire" id="cb-seance-supp">
+													  <label class="custom-control-label" for="cb-seance-supp">Séance supplémentaire</label>
+													</div>
+													<div class="custom-control custom-checkbox">
+													  <input type="checkbox" class="custom-control-input" name="type_demande_enseignant" value="Changement d'horaires" id="cb-changement">
+													  <label class="custom-control-label" for="cb-changement">Changement d'horaires</label>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-md-6 col-lg-3 mt-3">
+										<div class="dropdown">
+											<a class="btn btn-outline-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												Filtrer par etat
+											</a>
+											<div class="dropdown-menu w-100" style="min-width:280px;">
+												<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="px-1">
+													<div class="custom-control custom-checkbox">
+													  <input type="checkbox" class="custom-control-input" name="etat_demande_enseignant" value="Valider" id="cb-demandes-valide">
+													  <label class="custom-control-label" for="cb-demandes-valide">Demandes <span class="text-success">validées</span></label>
+													</div>
+													<div class="custom-control custom-checkbox">
+													  <input type="checkbox" class="custom-control-input" name="etat_demande_enseignant" value="Refuser" id="cb-demandes-refuse">
+													  <label class="custom-control-label" for="cb-demandes-refuse">Demandes <span class="text-danger">refusées</span></label>
+													</div>
+													<div class="custom-control custom-checkbox">
+													  <input type="checkbox" class="custom-control-input" name="etat_demande_enseignant" value="Non traiter" id="cb-demandes-non-traite">
+													  <label class="custom-control-label" for="cb-demandes-non-traite">Demandes <span class="text-warning">non traitées</span></label>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="table-responsive mt-3">
+									<table class="table table-striped table-bordered text-center table-center" id="table-demandes-enseignants">
 										<thead>
 											<tr class="table-success">
 												<th>Enseignant</th>
@@ -178,6 +247,6 @@
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/custom-checkbox-handler.js"></script>
-	<script src="assets/js/consulter-seances-chef-departement.js"></script>
+	<script src="assets/js/consulter-demandes-chef-departement.js"></script>
 </body>
 </html>

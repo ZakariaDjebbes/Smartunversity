@@ -120,7 +120,7 @@
 								</c:when>
 							</c:choose>
 						</p>
-						<form method="post">
+						<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post">
 							<div class="form-group text-center">
 								<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ValiderDemande" type="submit">Accepter</button>
 								<button class="btn btn-outline-danger ml-5" formaction="${pageContext.request.contextPath}/User/RefuserDemande" type="submit">Refuser</button>

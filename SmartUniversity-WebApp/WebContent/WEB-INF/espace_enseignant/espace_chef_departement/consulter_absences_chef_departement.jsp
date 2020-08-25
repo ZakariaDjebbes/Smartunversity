@@ -32,23 +32,22 @@
 						<a class="btn btn-outline-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						   Filtrer par justification
 						</a>
-						<!-- TODO Ajouter les filtres dans le fichier JS -->
 						<div class="dropdown-menu w-100" style="min-width:280px;">
-							<form class="px-1">
+							<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="px-1">
 								<div class="custom-control custom-checkbox">
-								  <input type="checkbox" class="custom-control-input" id="cb-justification-valide">
+								  <input type="checkbox" class="custom-control-input" name="justification" value="Valider" id="cb-justification-valide">
 								  <label class="custom-control-label" for="cb-justification-valide">Avec jusitifcation <span class="text-success">validée</span></label>
 								</div>
 								<div class="custom-control custom-checkbox">
-								  <input type="checkbox" class="custom-control-input" id="cb-justification-refuse">
+								  <input type="checkbox" class="custom-control-input" name="justification" value="Refuser" id="cb-justification-refuse">
 								  <label class="custom-control-label" for="cb-justification-refuse">Avec jusitifcation <span class="text-danger">refusée</span></label>
 								</div>
 								<div class="custom-control custom-checkbox">
-								  <input type="checkbox" class="custom-control-input" id="cb-justification-non-traite">
+								  <input type="checkbox" class="custom-control-input" name="justification" value="Non traiter" id="cb-justification-non-traite">
 								  <label class="custom-control-label" for="cb-justification-non-traite">Avec jusitifcation <span class="text-warning">non traitée</span></label>
 								</div>
 								<div class="custom-control custom-checkbox">
-								  <input type="checkbox" class="custom-control-input" id="cb-justification-aucune">
+								  <input type="checkbox" class="custom-control-input" name="justification" value="Aucune justification" id="cb-justification-aucune">
 								  <label class="custom-control-label" for="cb-justification-aucune">Sans jusitifcation</label>
 								</div>
 							</form>
