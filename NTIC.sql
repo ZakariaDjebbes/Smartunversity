@@ -366,7 +366,7 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`id_notification`),
   KEY `fk_id_utilisateur` (`id_utilisateur`),
   CONSTRAINT `fk_id_utilisateur` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,7 +375,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (55,76,1,'2020-08-25 18:28:18','refuse');
+INSERT INTO `notification` VALUES (55,76,1,'2020-08-25 18:28:18','refuse'),(56,76,0,'2020-08-26 20:00:21','valide'),(57,76,0,'2020-08-26 20:00:45','valide');
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -428,7 +428,7 @@ CREATE TABLE `notificationseancesupp` (
 
 LOCK TABLES `notificationseancesupp` WRITE;
 /*!40000 ALTER TABLE `notificationseancesupp` DISABLE KEYS */;
-INSERT INTO `notificationseancesupp` VALUES (55,30);
+INSERT INTO `notificationseancesupp` VALUES (55,30),(56,30),(57,30);
 /*!40000 ALTER TABLE `notificationseancesupp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -442,6 +442,8 @@ DROP TABLE IF EXISTS `responsableformation`;
 CREATE TABLE `responsableformation` (
   `id_responsable_formation` int(11) NOT NULL,
   `date_nomination` date DEFAULT NULL,
+  `annee` enum('L1','L2','L3','M1','M2') NOT NULL,
+  `specialite` enum('MI','GL','SI','TI','SCI','STIC','STIW','RSD') NOT NULL,
   PRIMARY KEY (`id_responsable_formation`),
   KEY `fk_ResponsableFormation_Enseignant` (`id_responsable_formation`),
   CONSTRAINT `fk_ResponsableFormation_Enseignant` FOREIGN KEY (`id_responsable_formation`) REFERENCES `enseignant` (`id_enseignant`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -454,7 +456,7 @@ CREATE TABLE `responsableformation` (
 
 LOCK TABLES `responsableformation` WRITE;
 /*!40000 ALTER TABLE `responsableformation` DISABLE KEYS */;
-INSERT INTO `responsableformation` VALUES (123,'2020-08-24');
+INSERT INTO `responsableformation` VALUES (123,'2020-08-24','L1','MI');
 /*!40000 ALTER TABLE `responsableformation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,7 +518,7 @@ CREATE TABLE `seancesupp` (
 
 LOCK TABLES `seancesupp` WRITE;
 /*!40000 ALTER TABLE `seancesupp` DISABLE KEYS */;
-INSERT INTO `seancesupp` VALUES ('UQh1ts',30,'jeudi','13:00','refuse');
+INSERT INTO `seancesupp` VALUES ('UQh1ts',30,'jeudi','13:00','valide');
 /*!40000 ALTER TABLE `seancesupp` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -529,7 +531,7 @@ DROP TABLE IF EXISTS `token`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `token` (
   `id_utilisateur` int(11) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
   `android_token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_utilisateur`),
   CONSTRAINT `id_utilisateur` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id_utilisateur`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -542,7 +544,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (15,'39g55k14a7n857fal8h0gcg677o7zakaria',NULL),(16,'nff78kn0oj45kdi0do2hcpgklkjadmin',NULL),(51,'26bko64mj052k9anmekjbjcoidohzakaria','21jianm039hi4ejgi8lmkihak1c2zakaria'),(74,'7813346111007123730465612147630867044272benchika_zakaria_7czriz',NULL),(76,'30gjd6eif9lc7i5hg5pb2602aih6belala',NULL),(123,'9cokmmj1hhab3hj46886ndea30fhlechheb',NULL);
+INSERT INTO `token` VALUES (15,'39g55k14a7n857fal8h0gcg677o7zakaria',NULL),(16,'nff78kn0oj45kdi0do2hcpgklkjadmin',NULL),(51,'26bko64mj052k9anmekjbjcoidohzakaria','21jianm039hi4ejgi8lmkihak1c2zakaria'),(74,'7813346111007123730465612147630867044272benchika_zakaria_7czriz',NULL),(76,'44jm33ma7ghj5925d5bl4h229i62belala',NULL),(123,'6egiemf28kioocn5i6c2jg8b7gnblechheb',NULL);
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -587,4 +589,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-26 21:39:55
+-- Dump completed on 2020-08-26 23:13:34

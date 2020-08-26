@@ -29,9 +29,9 @@ public class DAO_Notification extends DAO_Initialize
 					{
 						int id_utilisateur = resultSet.getInt(2);
 						boolean is_vue = resultSet.getBoolean(3);
-						Date date_creation = resultSet.getDate(4);
+						Timestamp ts = resultSet.getTimestamp(4);
+						Date date_creation = new Date(ts.getTime());
 						Etat_Demande et_demande_notifier = Etat_Demande.valueOf(resultSet.getString(5));
-
 						Notification notification = new Notification(id_notification, id_utilisateur, is_vue,
 								date_creation, et_demande_notifier);
 						return notification;
@@ -64,7 +64,8 @@ public class DAO_Notification extends DAO_Initialize
 					{
 						int id_notification = resultSet.getInt(1);
 						boolean is_vue = resultSet.getBoolean(3);
-						Date date_creation = resultSet.getDate(4);
+						Timestamp ts = resultSet.getTimestamp(4);
+						Date date_creation = new Date(ts.getTime());
 						Etat_Demande et_demande_notifier = Etat_Demande.valueOf(resultSet.getString(5));
 
 						Notification notification = new Notification(id_notification, id_utilisateur, is_vue,

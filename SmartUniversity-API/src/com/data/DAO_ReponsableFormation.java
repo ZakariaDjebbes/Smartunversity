@@ -10,6 +10,8 @@ import java.util.Date;
 import com.modele.Enseignant;
 import com.modele.ResponsableFormation;
 import com.modele.Utilisateur;
+import com.modele.Etudiant.Annee;
+import com.modele.Etudiant.Specialite;
 
 public class DAO_ReponsableFormation extends DAO_Initialize
 {
@@ -30,7 +32,9 @@ public class DAO_ReponsableFormation extends DAO_Initialize
 					if (resultSet.next())
 					{
 						Date date_nomination = resultSet.getDate(2);
-						result = new ResponsableFormation(utilisateur, enseignant, date_nomination);
+						Annee annee = Annee.valueOf(resultSet.getString(3));
+						Specialite specialite = Specialite.valueOf(resultSet.getString(4));
+						result = new ResponsableFormation(utilisateur, enseignant, date_nomination, annee, specialite);
 						return result;
 					} else
 					{
@@ -47,7 +51,7 @@ public class DAO_ReponsableFormation extends DAO_Initialize
 		}
 	}
 
-	public static int CreateresponsableFormation(int id)
+	public static int CreateresponsableFormation(int id, Annee annee, Specialite specialite)
 	{
 		if (id == -1)
 		{
@@ -58,12 +62,14 @@ public class DAO_ReponsableFormation extends DAO_Initialize
 		{
 			try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 			{
-				String command = "INSERT INTO ResponsableFormation VALUES(?, ?);";
+				String command = "INSERT INTO ResponsableFormation VALUES(?, ?, ?, ?);";
 				try (PreparedStatement statement = connection.prepareStatement(command))
 				{
 					statement.setInt(1, id);
 					statement.setDate(2, new java.sql.Date(new Date().getTime()));
-
+					statement.setString(3, String.valueOf(annee));
+					statement.setString(4, String.valueOf(specialite));
+					
 					int addedRows = statement.executeUpdate();
 
 					if (addedRows == 1)
@@ -100,9 +106,12 @@ public class DAO_ReponsableFormation extends DAO_Initialize
 					{
 						int id_responsable_formation = resultSet.getInt(1);
 						Date date_nomination = resultSet.getDate(2);
+						Annee annee = Annee.valueOf(resultSet.getString(3));
+						Specialite specialite = Specialite.valueOf(resultSet.getString(4));
+						
 						ResponsableFormation responsableFormation = new ResponsableFormation(
 								DAO_User.GetUserByID(id_responsable_formation),
-								DAO_Enseignant.GetEnseignantById(id_responsable_formation), date_nomination);
+								DAO_Enseignant.GetEnseignantById(id_responsable_formation), date_nomination, annee, specialite);
 						result.add(responsableFormation);
 					}
 

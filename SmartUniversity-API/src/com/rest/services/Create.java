@@ -5,6 +5,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -31,6 +32,8 @@ import com.mailer.Mailer;
 import com.modele.Etudiant;
 import com.modele.Module;
 import com.modele.Utilisateur;
+import com.modele.Etudiant.Annee;
+import com.modele.Etudiant.Specialite;
 import com.rest.annotations.Secured;
 import com.rest.exceptions.RequestNotValidException;
 import com.utility.JsonReader;
@@ -54,7 +57,7 @@ public class Create
 			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("absence_not_created"));
 		}
 	}
-	
+
 	@PUT
 	@Secured
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -70,7 +73,7 @@ public class Create
 			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("session_not_created"));
 		}
 	}
-	
+
 	@PUT
 	@Secured
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -129,7 +132,8 @@ public class Create
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/enseignant")
-	public Response CreateEnseignant(Dot_Create_Enseignant dot_enseignant)
+	public Response CreateEnseignant(Dot_Create_Enseignant dot_enseignant, @QueryParam("annee") Annee annee,
+			@QueryParam("specialite") Specialite specialite)
 	{
 		int id_utilisateur = 0;
 		Utilisateur utilisateur = null;
@@ -139,14 +143,15 @@ public class Create
 		case enseignant:
 			id_utilisateur = DAO_Enseignant.CreateEnseignant(dot_enseignant);
 			utilisateur = DAO_User.GetUserByID(id_utilisateur);
-			
+
 			break;
 		case chefDepartement:
 			id_utilisateur = DAO_ChefDepartement.CreateChefDepartement(DAO_Enseignant.CreateEnseignant(dot_enseignant));
 			utilisateur = DAO_User.GetUserByID(id_utilisateur);
 			break;
 		case responsableFormation:
-			id_utilisateur = DAO_ReponsableFormation.CreateresponsableFormation(DAO_Enseignant.CreateEnseignant(dot_enseignant));
+			id_utilisateur = DAO_ReponsableFormation
+					.CreateresponsableFormation(DAO_Enseignant.CreateEnseignant(dot_enseignant), annee, specialite);
 			utilisateur = DAO_User.GetUserByID(id_utilisateur);
 			break;
 		default:
@@ -156,13 +161,12 @@ public class Create
 		if (id_utilisateur != -1)
 		{
 			String email = utilisateur.getEmail();
-			String mailBody = String.format(
-					"<h1>Bonjour %s %s</h1>"
-							+ "<p>Votre compte enseignant du système de gestion d'absences de la faculté ntic a été créé." + "<br>"
-							+ "<p><b>Votre nom d'utilisateur: </b>%s</p>" + "<p><b>Votre mot de passe: </b>%s</p>"
-							+ "<p>Nous vous souhaitons une bonne journée,</p>" + "<br>"
-							+ "<p>Cordialement, L'administration.</p>",
-							utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getUser(), utilisateur.getPass());
+			String mailBody = String.format("<h1>Bonjour %s %s</h1>"
+					+ "<p>Votre compte enseignant du système de gestion d'absences de la faculté ntic a été créé."
+					+ "<br>" + "<p><b>Votre nom d'utilisateur: </b>%s</p>" + "<p><b>Votre mot de passe: </b>%s</p>"
+					+ "<p>Nous vous souhaitons une bonne journée,</p>" + "<br>"
+					+ "<p>Cordialement, L'administration.</p>", utilisateur.getNom(), utilisateur.getPrenom(),
+					utilisateur.getUser(), utilisateur.getPass());
 
 			String mailSubject = "Votre compte pour la faculté NTIC a été créé!";
 			try

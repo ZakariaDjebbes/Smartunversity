@@ -80,12 +80,13 @@ public class Notification
 
 	public void setDate_creation(String date_creation)
 	{
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try
 		{
 			this.date_creation = formatter.parse(date_creation);
 		} catch (ParseException e)
 		{
 			e.printStackTrace();
-		}	}
+		}
+	}
 }

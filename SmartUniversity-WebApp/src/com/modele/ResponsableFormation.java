@@ -7,21 +7,48 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.modele.Etudiant.Annee;
+import com.modele.Etudiant.Specialite;
+
 @Entity
 @XmlRootElement
 public class ResponsableFormation extends Enseignant
 {
-private Date date_nomination = null;
+	private Date date_nomination = null;
+	private Annee annee;
+	private Specialite specialite;
 	
 	public ResponsableFormation()
 	{
 		
 	}
 	
-	public ResponsableFormation(Utilisateur utilisateur, Enseignant enseignant, Date date_nomination)
+	public ResponsableFormation(Utilisateur utilisateur, Enseignant enseignant, Date date_nomination, Annee annee, Specialite specialite)
 	{
 		super(utilisateur, enseignant.grade, enseignant.code_departement);
 		this.date_nomination = date_nomination;
+		this.annee = annee;
+		this.specialite = specialite;
+	}
+	
+	public Annee getAnnee()
+	{
+		return annee;
+	}
+
+	public Specialite getSpecialite()
+	{
+		return specialite;
+	}
+
+	public void setAnnee(Annee annee)
+	{
+		this.annee = annee;
+	}
+
+	public void setSpecialite(Specialite specialite)
+	{
+		this.specialite = specialite;
 	}
 
 	public Date getDate_nomination()

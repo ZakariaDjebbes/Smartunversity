@@ -1,5 +1,6 @@
 package com.modele;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,9 +64,11 @@ public class Notification
 		this.is_vue = is_vue;
 	}
 
-	public Date getDate_creation()
+	public String getDate_creation()
 	{
-		return date_creation;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		formatter.applyPattern("yyyy-MM-dd kk:mm:ss");
+		return formatter.format(date_creation);	
 	}
 	
 	public Etat_Demande getEtat_demande_notifier()
@@ -80,12 +83,26 @@ public class Notification
 
 	public void setDate_creation(String date_creation)
 	{
+		String DEFAULT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z[UTC]'";
+		Date myDate = null;
+		DateFormat _formatter = new SimpleDateFormat(DEFAULT_PATTERN);
+		try
+		{
+			myDate = _formatter.parse(date_creation);
+		} catch (ParseException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 		try
 		{
-			this.date_creation = formatter.parse(date_creation);
+			String sdf = formatter.format(myDate);
+			this.date_creation = formatter.parse(sdf);
 		} catch (ParseException e)
 		{
 			e.printStackTrace();
-		}	}
+		}	
+	}
 }
