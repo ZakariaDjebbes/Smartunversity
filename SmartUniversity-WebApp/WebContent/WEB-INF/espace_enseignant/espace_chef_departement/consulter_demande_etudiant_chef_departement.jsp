@@ -139,5 +139,6 @@
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/consulter-demande-etudiant-chef-departement.js"></script>
 	<script src="assets/js/keep-scroll.js"></script>
+	<script src="assets/js/notifications_handler.js"></script>
 </body>
 </html>

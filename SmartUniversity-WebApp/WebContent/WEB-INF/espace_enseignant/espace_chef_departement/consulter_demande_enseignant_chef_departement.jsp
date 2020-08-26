@@ -237,5 +237,6 @@
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/keep-scroll.js"></script>
+	<script src="assets/js/notifications_handler.js"></script>
 </body>
 </html>

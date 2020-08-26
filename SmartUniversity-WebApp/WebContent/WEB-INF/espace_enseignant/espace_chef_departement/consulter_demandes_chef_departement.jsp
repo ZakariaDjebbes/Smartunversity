@@ -248,5 +248,6 @@
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/custom-checkbox-handler.js"></script>
 	<script src="assets/js/consulter-demandes-chef-departement.js"></script>
+	<script src="assets/js/notifications_handler.js"></script>
 </body>
 </html>

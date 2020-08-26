@@ -679,5 +679,6 @@
 		  });
 	});
 	</script>
+	<script src="assets/js/notifications_handler.js"></script>
 </body>
 </html>
