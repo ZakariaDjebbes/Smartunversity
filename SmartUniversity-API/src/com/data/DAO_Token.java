@@ -102,10 +102,11 @@ public class DAO_Token extends DAO_Initialize
 	{
 		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
-			String command = "SELECT * FROM Token Where token = ?;";
+			String command = "SELECT * FROM Token Where token = ? OR android_token = ?;";
 			try(PreparedStatement statement = connection.prepareStatement(command))
 			{
-				statement.setString(1, token);;
+				statement.setString(1, token);
+				statement.setString(2, token);
 				try(ResultSet resultSet = statement.executeQuery())
 				{
 					if(resultSet.next())

@@ -55,8 +55,8 @@
 					</div>
 				</li>
 				<li class="nav-item dropdown">
-					<div class="dropdown nav-button notifications-button hidden-sm-down">
-						<a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" id="notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+					<div id="div-dropdown-notifications" class="dropdown nav-button notifications-button hidden-sm-down">
+						<a class="dropdown-toggle nav-link dropdown-toggle" id="notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
 							<i id="notificationsIcon" class="fa fa-bell-o fa-lg" aria-hidden="true"></i> <span id="notificationsBadge" class="badge badge-danger">2</span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right notification-dropdown-menu" aria-labelledby="notifications-dropdown">
@@ -77,8 +77,8 @@
 								<p class="notification-solo text-center">Aucune nouvelle notification</p>
 							</a>
 							 -->
-							<!-- TOUTES -->
-							<a class="dropdown-item dropdown-notification-all" href="#"> Voir toutes les notifications </a>
+							<!-- TOUTES
+							<a class="dropdown-item dropdown-notification-all" href="#"> Voir toutes les notifications </a> -->
 						</div>
 					</div>
 				</li>

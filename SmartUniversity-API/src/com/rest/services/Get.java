@@ -582,8 +582,8 @@ public class Get
 	@Path("/notification")
 	public Response GetNotificationsOfUser(@QueryParam("id_utilisateur") int id_utilisateur)
 	{
-		ArrayList<NotificationChangementSeance> notificationsChangement = DAO_NotificationChangementSeance.GetNotificationsOfUser(id_utilisateur);
-		ArrayList<NotificationSeanceSupp> notificationsSeanceSupp = DAO_NotificationSeanceSupp.GetNotificationsOfUser(id_utilisateur);
+		ArrayList<NotificationChangementSeance> notificationsChangement = DAO_NotificationChangementSeance.GetNotificationsChangementOfUser(id_utilisateur);
+		ArrayList<NotificationSeanceSupp> notificationsSeanceSupp = DAO_NotificationSeanceSupp.GetNotificationsSuppOfUser(id_utilisateur);
 		
 		if(notificationsChangement.size() == 0 && notificationsSeanceSupp.size() == 0)
 		{

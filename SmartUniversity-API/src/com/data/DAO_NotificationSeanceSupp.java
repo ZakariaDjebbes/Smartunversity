@@ -41,7 +41,7 @@ public class DAO_NotificationSeanceSupp extends DAO_Initialize
 		}
 	}
 	
-	public static ArrayList<NotificationSeanceSupp> GetNotificationsOfUser(int id_utilisateur)
+	public static ArrayList<NotificationSeanceSupp> GetNotificationsSuppOfUser(int id_utilisateur)
 	{
 		ArrayList<NotificationSeanceSupp> result = new ArrayList<NotificationSeanceSupp>();
 

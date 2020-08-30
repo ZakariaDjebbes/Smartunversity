@@ -474,6 +474,11 @@
 		"message_en": "No notifications yet",
 		"message_ar": "place_holder"
 	},
+	"notification_not_exist": {
+		"message_fr": "Aucune notification avec cet id n'existe",
+		"message_en": "No notifications with this id exist",
+		"message_ar": "place_holder"
+	},
 	"notification_updated": {
 		"message_fr": "La notification a été correctement mise à jour",
 		"message_en": "The notification has been correctly updated",

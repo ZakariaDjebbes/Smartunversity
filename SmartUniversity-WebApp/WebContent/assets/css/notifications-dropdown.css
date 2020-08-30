@@ -39,8 +39,10 @@
 }
 
 .notification-dropdown-menu {
-  padding-bottom: 0;
+  padding-bottom: 15px;
   min-width: 528px;
+  max-height: 350px;
+  overflow-y: auto;
 }
 
 .notification-img {

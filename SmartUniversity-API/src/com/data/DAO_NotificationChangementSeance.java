@@ -42,10 +42,10 @@ public class DAO_NotificationChangementSeance extends DAO_Initialize
 		}
 	}
 
-	public static ArrayList<NotificationChangementSeance> GetNotificationsOfUser(int id_utilisateur)
+	public static ArrayList<NotificationChangementSeance> GetNotificationsChangementOfUser(int id_utilisateur)
 	{
 		ArrayList<NotificationChangementSeance> result = new ArrayList<NotificationChangementSeance>();
-
+		
 		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
 			String command = "SELECT * FROM notificationChangementSeance WHERE id_notification IN (SELECT id_notification FROM notification WHERE id_utilisateur = ?);";

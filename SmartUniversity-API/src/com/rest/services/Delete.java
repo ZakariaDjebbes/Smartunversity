@@ -175,6 +175,9 @@ public class Delete
 	@Path("/notification")
 	public Response DeleteNotification(@QueryParam("id_notification") int id_notification)
 	{
+		if(DAO_Notification.GetNotification(id_notification) == null)
+			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("notification_not_exist"));
+			
 		boolean isDone = DAO_Notification.DeleteNotification(id_notification);
 		
 		if(!isDone)
