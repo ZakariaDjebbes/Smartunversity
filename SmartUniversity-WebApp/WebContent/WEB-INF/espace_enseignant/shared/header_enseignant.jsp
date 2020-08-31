@@ -29,9 +29,9 @@
 					<a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Vos séances</a>
 					<div class="dropdown-menu" role="menu">
 						<a href="${pageContext.request.contextPath}/User/ConsulterSeancesEnseignant" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter vos séances</a>
-						<a href="#" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de vos groupes</a>
+						<a href="${pageContext.request.contextPath}/User/ConsulterStatistiquesEnseignant" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de vos groupes</a>
 						<c:if test="${utilisateur.getUser_type() eq 'responsableFormation'}">
-							<a href="#" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de votre formation</a>
+							<a href="" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de votre formation</a>
 						</c:if>
 					</div>
 				</li>

@@ -153,9 +153,7 @@ $(document).ready(function(){
 		if(idsNewNotifications.length == 0)
 			badge.addClass("badge badge-primary");
 		else
-			badge.addClass("badge badge-danger");
-		
-		console.log(notificationsAll);
+			badge.addClass("badge badge-danger");		
 	}
 	
 	function getTemplate(text, date, code, id, isVue)

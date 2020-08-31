@@ -95,6 +95,51 @@ public class SeanceResponse
 		return null;
 	}
 	
+	public int GetNombreAbsences()
+	{
+		int result = 0;
+		
+		if(etudiants == null)
+			return 0;
+		
+		for (EtudiantResponse etudiantResponse : etudiants)
+		{
+			result += etudiantResponse.getNombreAbsences();
+		}
+		
+		return result;
+	}
+	
+	public int GetNombreAbsencesJustifier()
+	{
+		int result = 0;
+		
+		if(etudiants == null)
+			return 0;
+		
+		for (EtudiantResponse etudiantResponse : etudiants)
+		{
+			result += etudiantResponse.getAbsencesJusifiter();
+		}
+		
+		return result;
+	}
+	
+	public int GetNombreAbsencesNonJustifier()
+	{
+		int result = 0;
+		
+		if(etudiants == null)
+			return 0;
+		
+		for (EtudiantResponse etudiantResponse : etudiants)
+		{
+			result += etudiantResponse.getAbsencesNonJustifier();
+		}
+		
+		return result;
+	}
+	
 	public boolean hasEtudiantsExclus()
 	{
 		int result = 0;
