@@ -25,7 +25,7 @@
 						<a href="${pageContext.request.contextPath}/User/ConsulterSeancesEnseignant" class="dropdown-item btn btn-link btn-footer" role="button">Vos séances</a>
 					</li>
 					<li>
-						<a href="#" class="dropdown-item btn btn-link btn-footer" role="button">Les statistiques</a>
+						<a href="${pageContext.request.contextPath}/User/ConsulterStatistiquesEnseignant" class="dropdown-item btn btn-link btn-footer" role="button">Les statistiques</a>
 					</li>
 				</ul>
 			</div>
@@ -44,6 +44,12 @@
 						</li>
 						<li>
 							<a href="${pageContext.request.contextPath}/User/ConsulterDemandesChefDepartement" class="dropdown-item btn btn-link btn-footer" role="button">Consulter les demandes</a>
+						</li>
+						<li>
+							<a href="${pageContext.request.contextPath}/User/ConsulterStatistiquesChefDepartement" class="dropdown-item btn btn-link btn-footer" role="button">Consulter les statistiques</a>
+						</li>
+						<li>
+							<a href="${pageContext.request.contextPath}/User/ConsulterEtudiantsExclusChefDepartement" class="dropdown-item btn btn-link btn-footer" role="button">Etudiants exclus</a>
 						</li>
 					</ul>
 				</div>

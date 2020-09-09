@@ -7,7 +7,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.glassfish.jersey.message.internal.MessageBodyProviderNotFoundException;
 
-import com.utility.JsonReader;
+import com.jsonReaders.MessageReader;
 import com.utility.Utility;
 
 @Provider
@@ -16,6 +16,6 @@ public class MessageBodyProviderNotFoundExceptionHandler implements ExceptionMap
 	@Override
     public Response toResponse(MessageBodyProviderNotFoundException exception) {
         return Utility.Response(Status.BAD_REQUEST,
-        		JsonReader.GetNode("message_body_provider_not_found_exception"));
+        		MessageReader.GetNode("message_body_provider_not_found_exception"));
     }
 }

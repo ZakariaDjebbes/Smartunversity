@@ -1,11 +1,6 @@
 package com.data;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.jsonReaders.ConfigReader;
 
 public class DAO_Initialize
 {
@@ -13,20 +8,16 @@ public class DAO_Initialize
 	protected static String dbUser = null;
 	protected static String dbPassword = null;
 
+	private static final String CONFIG_ROOT = "dbConfig";
+	
 	public static void Start()
 	{
 		try
-		{
-			InputStream is =  DAO_Initialize.class.getClassLoader().getResourceAsStream("/config.json");
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			Gson gson = new Gson();
-			JsonObject body = gson.fromJson(br, JsonObject.class);
-			JsonObject dbConfig = body.getAsJsonObject("dbConfig");
-						
-			Class.forName(dbConfig.get("dbConnector").getAsString()); // init le driver ?autoReconnect=true&useSSL=false
-			dbURL = dbConfig.get("dbUrl").getAsString();
-			dbUser = dbConfig.get("dbUser").getAsString();
-			dbPassword = dbConfig.get("dbPassword").getAsString();
+		{			
+			Class.forName(ConfigReader.GetNode(CONFIG_ROOT, "dbConnector")); // init le driver ?autoReconnect=true&useSSL=false
+			dbURL = ConfigReader.GetNode(CONFIG_ROOT, "dbUrl");
+			dbUser = ConfigReader.GetNode(CONFIG_ROOT, "dbUser");
+			dbPassword = ConfigReader.GetNode(CONFIG_ROOT, "dbPassword");
 		} 
 		catch (Exception exception)
 		{

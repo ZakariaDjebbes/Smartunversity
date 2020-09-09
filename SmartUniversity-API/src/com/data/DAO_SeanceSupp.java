@@ -220,7 +220,7 @@ public class DAO_SeanceSupp extends DAO_Initialize
 						SeanceSupp seanceSupp = new SeanceSupp(code_seance, code_seance_supp, jour, heure, etat_seance);
 						Enseignant enseignant = DAO_Enseignant.GetEnseignantById(id_enseignant);
 						Seance seance = DAO_Seance.GetSeanceByCode_Seance(code_seance);
-						Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
+						Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
 						
 						result.add(new DemandeSeanceSuppResponse(enseignant, module, seance, seanceSupp));
 					}

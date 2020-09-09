@@ -45,7 +45,7 @@
 				<div class="col">
 					<div class="block-heading">
 						<h3 class="text-info">${utilisateur.getNom()} ${utilisateur.getPrenom()}</h3>
-						<p>Vous êtes connecter en tant que chef de departement</p>
+						<p>Bienvenue dans votre espace ${utilisateur.getUser_type().getValue(0)}</p>
 					</div>
 					<div>
 						<h5>Demandes en attente de traitement</h5>

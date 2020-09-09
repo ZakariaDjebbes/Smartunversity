@@ -124,7 +124,6 @@ public class Dot_Create_Utilisateur implements IDot
 	@Override
 	public void Validate()
 	{
-		// TODO Auto-generated method stub
 
 	}
 

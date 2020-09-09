@@ -10,10 +10,10 @@ import javax.ws.rs.core.Response.Status;
 
 import com.dots.Dot_Create_Utilisateur;
 import com.dots.Dot_Login_User;
+import com.jsonReaders.MessageReader;
 import com.modele.Utilisateur;
 import com.modele.Utilisateur.Type_Utilisateur;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 import com.utility.Utility;
 
 public class DAO_User extends DAO_Initialize
@@ -32,8 +32,7 @@ public class DAO_User extends DAO_Initialize
 					if (resultSet.next())
 					{
 						return true;
-					}
-					else
+					} else
 					{
 						return false;
 					}
@@ -45,10 +44,10 @@ public class DAO_User extends DAO_Initialize
 			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
 					+ " >>> " + e.getMessage());
 
-			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT, JsonReader.GetNode("server_side_error"));
+			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT, MessageReader.GetNode("server_side_error"));
 		}
 	}
-	
+
 	public static Utilisateur GetUser(Dot_Login_User userLoginDots)
 	{
 		Utilisateur resultUtilisateur = null;
@@ -88,7 +87,7 @@ public class DAO_User extends DAO_Initialize
 			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
 					+ " >>> " + e.getMessage());
 
-			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT, JsonReader.GetNode("server_side_error"));
+			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT, MessageReader.GetNode("server_side_error"));
 		}
 	}
 
@@ -191,7 +190,7 @@ public class DAO_User extends DAO_Initialize
 			return false;
 		}
 	}
-	
+
 	public static int CreateUser(Dot_Create_Utilisateur dot_Create_Utilisateur)
 	{
 		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
@@ -201,11 +200,11 @@ public class DAO_User extends DAO_Initialize
 			{
 				String username = "";
 				String password = "";
-				
-				do//prevent duplicates even if the odds are very very very small
+
+				do// prevent duplicates even if the odds are very very very small
 				{
 					username = Utility.GetUserName(dot_Create_Utilisateur);
-				}while(UsernameExists(username));
+				} while (UsernameExists(username));
 
 				password = Utility.GetRandomPassword();
 
@@ -220,12 +219,13 @@ public class DAO_User extends DAO_Initialize
 				statement.setString(9, String.valueOf(dot_Create_Utilisateur.getUser_type()));
 
 				int addedRows = statement.executeUpdate();
-				if(addedRows == 1)
+				if (addedRows == 1)
 				{
-					int id_utilisateur = DAO_User.GetUser(new Dot_Login_User(username, password, false)).getId_utilisateur();
+					int id_utilisateur = DAO_User.GetUser(new Dot_Login_User(username, password, false))
+							.getId_utilisateur();
 					return id_utilisateur;
-				}	
-				
+				}
+
 				return -1;
 			}
 		} catch (Exception e)
@@ -255,6 +255,67 @@ public class DAO_User extends DAO_Initialize
 			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
 					+ " >>> " + e.getMessage());
 
+			return false;
+		}
+	}
+
+	public static int CheckUserByEmail(String email)
+	{
+		int id = 0;
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+
+			String command = "SELECT id_utilisateur FROM utilisateur WHERE email = ?;";
+
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+
+				statement.setString(1, email);
+
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					if (resultSet.next())
+					{
+						id = resultSet.getInt(1);
+						return id;
+
+					} else
+					{
+						return 0;
+					}
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return 0;
+		}
+	}
+
+	public static boolean UpdatePassword(int id, String password)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+			String command = "UPDATE utilisateur SET pass = ? WHERE id_utilisateur = ? LIMIT 1;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setString(1, password);
+				statement.setInt(2, id);
+				int updatedRows = statement.executeUpdate();
+
+				if (updatedRows == 0)
+				{
+					return false;
+				} else
+				{
+					return true;
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
 			return false;
 		}
 	}

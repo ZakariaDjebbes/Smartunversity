@@ -9,15 +9,14 @@
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/data-tables/DataTables-1.10.20/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="assets/data-tables/custom-datatables.css">
+<link rel="stylesheet" href="assets/Datatables/datatables.min.css">
+<link rel="stylesheet" href="assets/Datatables/custom-datatables.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
 <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<!-- TODO faire consulter seance etudiant -->
 	<jsp:include page="/WEB-INF/espace_etudiant/shared/header_etudiant.jsp"></jsp:include>
 	<main class="page">
 	<div class="clean-block clean-info dark">
@@ -82,9 +81,9 @@
 															</c:otherwise>
 														</c:choose>
 														<td class="noExport text-right">
-															<a href='${pageContext.request.contextPath}/User/ConsulterAbsence?numero-absence=${absence.getAbsence().getNumero_absence()}' class='btn btn-icon-dark btn-icon' data-toggle='tooltip'
+															<a href='${pageContext.request.contextPath}/User/ConsulterAbsence?numero-absence=${absence.getAbsence().getNumero_absence()}' class='btn btn-outline-info' data-toggle='tooltip'
 																data-placement='top' title='Consulter cette absence'>
-																<i class="fa fa-eye fa-lg"></i>
+																consulter <i class="fa fa-search"></i>
 															</a>
 
 														</td>

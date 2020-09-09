@@ -20,7 +20,7 @@ public class AbsenceDepartementResponse
 	{
 		
 	}
-
+	
 	public AbsenceDepartementResponse(Absence absence, ArrayList<Justification> justifications, Etudiant etudiant,
 			Seance seance, Module module)
 	{

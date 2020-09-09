@@ -14,7 +14,6 @@ public class RequestReponse
 		
 	}
 	
-	//TODO Faire les messages des autres langues
 	public RequestReponse(String message_fr, String message_en, String message_ar)
 	{
 		this.message_en = message_en;

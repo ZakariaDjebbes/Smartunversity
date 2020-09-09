@@ -38,17 +38,20 @@
 				</c:if>
 				<div class="form-group">
 					<label for="email">Nom d'utilisateur</label>
-					<input class="form-control item" type="text" id="username" name="username">
+					<input class="form-control item" required type="text" id="username" name="username">
 				</div>
 				<div class="form-group">
 					<label for="password">Mot de passe</label>
-					<input class="form-control" type="password" id="password" name="password">
+					<input class="form-control" required type="password" id="password" name="password">
 				</div>
 				<div class="form-group">
 					<div class="form-check">
 						<input class="form-check-input" type="checkbox" name="keepLogged" id="checkbox">
 						<label class="form-check-label" for="checkbox">Rester connecter</label>
 					</div>
+				</div>
+				<div class="form-group">
+					<a href="MotDePasseOublier" class="text-success">Mot de passe oublié?</a>
 				</div>
 				<button class="btn btn-outline-success btn-block" type="submit">Se Connecter</button>
 			</form>

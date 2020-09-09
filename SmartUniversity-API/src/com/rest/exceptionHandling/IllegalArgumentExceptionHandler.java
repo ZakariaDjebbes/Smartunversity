@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import com.utility.JsonReader;
+import com.jsonReaders.MessageReader;
 import com.utility.Utility;
 
 @Provider
@@ -14,6 +14,6 @@ public class IllegalArgumentExceptionHandler implements ExceptionMapper<IllegalA
 	@Override
     public Response toResponse(IllegalArgumentException exception) {
         return Utility.Response(Status.BAD_REQUEST, 
-        		JsonReader.GetNode("illegal_argument_exception"));
+        		MessageReader.GetNode("illegal_argument_exception"));
     }
 }

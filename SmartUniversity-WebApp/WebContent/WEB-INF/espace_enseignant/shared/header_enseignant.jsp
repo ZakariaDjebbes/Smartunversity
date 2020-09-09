@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="assets/css/notifications-dropdown.css" type="text/css" rel="stylesheet" />
-<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+<nav class="navbar navbar-light navbar-expand-xl fixed-top bg-white clean-navbar">
 	<div class="container">
 		<a class="navbar-brand logo" href="index.jsp">
 			<img src="assets/img/Logo/logo.png" class="nav-brand-img" style="width: 50px;">
@@ -22,7 +22,14 @@
 							<a href="${pageContext.request.contextPath}/User/ConsulterSeancesChefDepartement" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les séances</a>
 							<a href="${pageContext.request.contextPath}/User/ConsulterAbsencesChefDepartement" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les absences</a>
 							<a href="${pageContext.request.contextPath}/User/ConsulterDemandesChefDepartement" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les demandes</a>
+							<a href="${pageContext.request.contextPath}/User/ConsulterStatistiquesChefDepartement" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les Statistiques</a>
+							<a href="${pageContext.request.contextPath}/User/ConsulterEtudiantsExclusChefDepartement" class="text-center dropdown-item btn btn-link btn-nav" role="button">Liste des étudiants exclus</a>
 						</div>
+					</li>
+				</c:if>
+				<c:if test="${utilisateur.getUser_type() eq 'responsableFormation'}">
+					<li class="nav-item">
+						<a href="${pageContext.request.contextPath}/User/ConsulterStatistiquesResponsableFormation" class="dropdown-item btn btn-link btn-nav" role="button">Statistiques de votre formation</a>
 					</li>
 				</c:if>
 				<li class="nav-item dropdown">
@@ -30,9 +37,6 @@
 					<div class="dropdown-menu" role="menu">
 						<a href="${pageContext.request.contextPath}/User/ConsulterSeancesEnseignant" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter vos séances</a>
 						<a href="${pageContext.request.contextPath}/User/ConsulterStatistiquesEnseignant" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de vos groupes</a>
-						<c:if test="${utilisateur.getUser_type() eq 'responsableFormation'}">
-							<a href="" class="text-center dropdown-item btn btn-link btn-nav" role="button">Consulter les statistiques de votre formation</a>
-						</c:if>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -51,7 +55,6 @@
 					<div class="dropdown-menu" role="menu">
 						<a class="text-center dropdown-item" href="#">Français</a>
 						<a class="text-center dropdown-item" href="#">English</a>
-						<a class="text-center dropdown-item" href="#">العربية</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">

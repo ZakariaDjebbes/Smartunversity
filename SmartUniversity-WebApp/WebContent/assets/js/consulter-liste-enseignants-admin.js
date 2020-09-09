@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	let table =  $('#table-enseignants').DataTable({
-        "sDom": '<"top"f>rt<"bottom"lp><"clear">',
+        "sDom": 'B<"top"f>rt<"bottom"lp><"clear">',
         "oLanguage": {
         	"oPaginate": {
         					"sPrevious": "Précédant", 
@@ -13,6 +13,42 @@ $(document).ready(function () {
     	"columnDefs": [
        	    { "orderable": false, "targets": 10 }
        	  ],  
+     	buttons: [
+            { 
+            	extend: 'excelHtml5', 
+            	className: 'btn-outline-success', text:'Excel <i class="fa fa-file-excel"></i>', 
+            	exportOptions : {
+            		columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
+                },
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+            { 
+            	extend: 'pdfHtml5', 
+            	className: 'btn-outline-danger', 
+            	text:'PDF <i class="fa fa-file-pdf"></i>', 
+            	exportOptions : {
+            		columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            	},
+            	orientation: 'landscape', 
+            	pageSize: 'LEGAL',
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+            { 
+            	extend: 'csvHtml5', 
+            	className: 'btn-outline-secondary', 
+            	text:'CSV <i class="fa fa-table"></i>', 
+            	exportOptions : {
+            		columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            	},
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+            ]
     });
 	
 	$('input[type="checkbox"].display-cb:not(:checked)').each(function(){

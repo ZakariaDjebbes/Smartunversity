@@ -7,11 +7,18 @@
 	},
 	"mailerConfig": {
 		"user": "itachiuchiwa03@gmail.com",
-		"password": "zakaria.159",
+		"password": "jngsytseapohjlqu",
 		"mail.smtp.auth": "true",
 		"mail.smtp.starttls.enable": "true",
 		"mail.smtp.host": "smtp.gmail.com",
 		"mail.smtp.port": "587",
 		"mailBody": "text/html; charset=utf-8"
+	},
+	"corsConfig":{
+		"allow-origin": "*",
+		"allow-headers":"origin, content-type, accept, authorization",
+		"allow-credentials":"true",
+		"allow-methods":"GET, POST, PUT, DELETE, OPTIONS, HEAD",
+		"max-age":"1209600"
 	}
 }

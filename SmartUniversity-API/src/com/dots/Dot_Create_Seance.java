@@ -4,12 +4,12 @@ import javax.ws.rs.core.Response.Status;
 
 import com.data.DAO_Module;
 import com.data.DAO_Seance;
+import com.jsonReaders.MessageReader;
 import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
 import com.modele.Seance.Jour;
 import com.modele.Seance.Type_Seance;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 
 public class Dot_Create_Seance implements IDot
 {
@@ -110,14 +110,14 @@ public class Dot_Create_Seance implements IDot
 	@Override
 	public void Validate()
 	{
-		if(DAO_Module.GetMouleByCode(code_module) == null)
+		if(DAO_Module.GetModuleByCode(code_module) == null)
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("module_not_exist"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("module_not_exist"));
 		}
 		
 		if(!DAO_Seance.IsSeanceDisponible(jour, heure, groupe, annee, specialite))
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("session_occupied"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("session_occupied"));
 		}
 	}
 }

@@ -9,10 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.data.DAO_Etudiant;
 import com.data.DAO_Seance;
+import com.jsonReaders.MessageReader;
 import com.modele.Etudiant;
 import com.modele.Etudiant.Etat_Etudiant;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 
 @XmlRootElement
 public class Dot_Create_Absence implements IDot
@@ -78,17 +78,17 @@ public class Dot_Create_Absence implements IDot
 		
 		if(DAO_Seance.GetSeanceByCode_Seance(code_seance) == null)
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("session_not_exist"));			
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("session_not_exist"));			
 		}
 		
 		if(etudiant == null)
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("student_not_exist"));			
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("student_not_exist"));			
 		}
 		
 		if(etudiant.getEtat_etudiant() == Etat_Etudiant.bloque)
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("student_blocked"));			
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("student_blocked"));			
 		}
 	}
 }

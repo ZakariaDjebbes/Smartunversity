@@ -9,8 +9,8 @@
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/data-tables/DataTables-1.10.20/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="assets/data-tables/custom-datatables.css">
+<link rel="stylesheet" href="assets/Datatables/datatables.min.css">
+<link rel="stylesheet" href="assets/Datatables/custom-datatables.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
 <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
@@ -511,12 +511,9 @@
 	<jsp:include page="/WEB-INF/espace_enseignant/shared/footer_enseignant.jsp"></jsp:include>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="assets/data-tables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
-	<script src="assets/data-tables/DataTables-1.10.20/js/dataTables.bootstrap4.min.js"></script>
+	<script src="assets/Datatables/datatables.min.js"></script>
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
-	<script src="assets/js/table2csv.min.js"></script>
-	<script src="assets/js/jquery.table2excel.min.js"></script>
 	<script src="assets/js/consulter-seance-enseignant.js"></script>
 	<script src="assets/js/keep-scroll.js"></script>
 	<script src="assets/js/custom-checkbox-handler.js"></script>

@@ -9,15 +9,14 @@
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/data-tables/DataTables-1.10.20/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="assets/data-tables/custom-datatables.css">
+<link rel="stylesheet" href="assets/Datatables/datatables.min.css">
+<link rel="stylesheet" href="assets/Datatables/custom-datatables.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
 <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-	<!-- TODO faire consulter seance etudiant -->
 	<jsp:include page="/WEB-INF/espace_etudiant/shared/header_etudiant.jsp"></jsp:include>
 	<main class="page">
 	<div class="clean-block clean-info dark">
@@ -29,37 +28,41 @@
 						<p>Détails de la séance en plus du votre relevé d'absences pour cette séance.</p>
 					</div>
 				</div>
-				<div class="table-responsive">
-					<h4 class="text-success">Détails de la séance</h4>
-					<table class="table table-sm">
-						<tbody>
-							<tr>
-								<th style="width: 30%">Module</th>
-								<td>${seanceEtudiant.getModule().getNom()}-(${seanceEtudiant.getModule().getCode_module()})</td>
-							</tr>
-							<tr>
-								<th>Type</th>
-								<td>${seanceEtudiant.getSeance().getType().getValue(0)}-(${seanceEtudiant.getSeance().getType()})</td>
-							</tr>
-							<tr>
-								<th>Année et spécialité</th>
-								<td>${seanceEtudiant.getSeance().getAnnee().getValue(0)}-(${seanceEtudiant.getSeance().getAnnee()}),${seanceEtudiant.getSeance().getSpecialite().getValue(0)}-
-									(${seanceEtudiant.getSeance().getSpecialite()})</td>
-							</tr>
-							<tr>
-								<th>Groupe</th>
-								<td>${seanceEtudiant.getSeance().getGroupe()}</td>
-							</tr>
-							<tr>
-								<th>Enseigner le:</th>
-								<td>${seanceEtudiant.getSeance().getJour().getValue(0)}à${seanceEtudiant.getSeance().getHeure()}</td>
-							</tr>
-						</tbody>
-					</table>
+			</div>
+			<div class="row">
+				<div class="col">
+					<div class="table-responsive">
+						<h4 class="text-success">Détails de la séance</h4>
+						<table class="table table-sm">
+							<tbody>
+								<tr>
+									<th style="width: 30%">Module</th>
+									<td>${seanceEtudiant.getModule().getNom()}-(${seanceEtudiant.getModule().getCode_module()})</td>
+								</tr>
+								<tr>
+									<th>Type</th>
+									<td>${seanceEtudiant.getSeance().getType().getValue(0)}-(${seanceEtudiant.getSeance().getType()})</td>
+								</tr>
+								<tr>
+									<th>Année et spécialité</th>
+									<td>${seanceEtudiant.getSeance().getAnnee().getValue(0)}-(${seanceEtudiant.getSeance().getAnnee()}),${seanceEtudiant.getSeance().getSpecialite().getValue(0)}-
+										(${seanceEtudiant.getSeance().getSpecialite()})</td>
+								</tr>
+								<tr>
+									<th>Groupe</th>
+									<td>${seanceEtudiant.getSeance().getGroupe()}</td>
+								</tr>
+								<tr>
+									<th>Enseigner le:</th>
+									<td>${seanceEtudiant.getSeance().getJour().getValue(0)}à${seanceEtudiant.getSeance().getHeure()}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col">
 					<h4 class="text-success">Enseignant chargé de la séance</h4>
 					<c:choose>
 						<c:when test="${not empty enseignant}">
@@ -126,8 +129,6 @@
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
-	<script src="assets/js/table2csv.min.js"></script>
-	<script src="assets/js/jquery.table2excel.min.js"></script>
 	<script src="assets/js/keep-scroll.js"></script>
 	<script src="assets/js/consulter-relever-absences-etudiant.js"></script>
 </body>

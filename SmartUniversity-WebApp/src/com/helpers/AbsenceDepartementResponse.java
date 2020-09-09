@@ -21,7 +21,7 @@ public class AbsenceDepartementResponse
 	{
 		
 	}
-
+	
 	public AbsenceDepartementResponse(Absence absence, ArrayList<Justification> justifications, Etudiant etudiant,
 			Seance seance, Module module)
 	{
@@ -81,7 +81,7 @@ public class AbsenceDepartementResponse
 	{
 		this.module = module;
 	}
-	
+
 	public static AbsenceDepartementResponse GetByNumeroAbsence(ArrayList<AbsenceDepartementResponse> absencesDepartementResponse, int numero_absence)
 	{
 		AbsenceDepartementResponse result = null;
@@ -113,7 +113,6 @@ public class AbsenceDepartementResponse
 		
 		if(justifications != null && justifications.size() > 0)
 		{
-			//TODO sort by ID to get the lastest instead of one of them?
 			return justifications.get(0);
 		}
 		else 

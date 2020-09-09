@@ -38,7 +38,6 @@
 					<div class="dropdown-menu" role="menu">
 						<a class="text-center dropdown-item" href="#">Français</a>
 						<a class="text-center dropdown-item" href="#">English</a>
-						<a class="text-center dropdown-item" href="#">العربية</a>
 					</div>
 				</li>
 			</ul>

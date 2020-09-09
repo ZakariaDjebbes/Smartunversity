@@ -9,12 +9,12 @@ import java.util.Date;
 
 import javax.ws.rs.core.Response.Status;
 
+import com.jsonReaders.MessageReader;
 import com.modele.ChefDepartement;
 import com.modele.Enseignant;
 import com.modele.Utilisateur;
 import com.modele.Utilisateur.Code_Departement;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 
 public class DAO_ChefDepartement extends DAO_Initialize
 {
@@ -96,7 +96,7 @@ public class DAO_ChefDepartement extends DAO_Initialize
 		
 		if(GetChefDepartementOfDepartement(enseignant.getCode_departement()) != null)
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("departement_has_chef"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("departement_has_chef"));
 		}
 		
 		if (id != -1)

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.modele.Enseignant;
-import com.modele.ResponsableFormation;
-import com.modele.Utilisateur;
 import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
+import com.modele.ResponsableFormation;
+import com.modele.Utilisateur;
 
 public class DAO_ReponsableFormation extends DAO_Initialize
 {
@@ -57,7 +57,7 @@ public class DAO_ReponsableFormation extends DAO_Initialize
 		{
 			return -1;
 		}
-		
+
 		if (id != -1)
 		{
 			try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))

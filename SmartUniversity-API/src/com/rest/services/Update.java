@@ -25,6 +25,7 @@ import com.data.DAO_Seance;
 import com.data.DAO_SeanceSupp;
 import com.data.DAO_User;
 import com.dots.Dot_Login_User;
+import com.jsonReaders.MessageReader;
 import com.modele.Enseignant;
 import com.modele.Etudiant;
 import com.modele.Module;
@@ -35,7 +36,6 @@ import com.modele.SeanceSupp;
 import com.modele.Utilisateur;
 import com.rest.annotations.Secured;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 import com.utility.Utility;
 
 @Path("/update")
@@ -50,7 +50,9 @@ public class Update
 	@Path("/updateUser")
 	public Response UpdateUser(Utilisateur utilisateur, @QueryParam("is_android") boolean isAndroid)
 	{
-		if (!DAO_User.UsernameExists(utilisateur.getUser()))
+		Utilisateur oldUtilisateur = DAO_User.GetUserByID(utilisateur.getId_utilisateur());
+		
+		if (!DAO_User.UsernameExists(utilisateur.getUser()) || oldUtilisateur.getUser().equals(utilisateur.getUser()))
 		{
 			// validation
 			Dot_Login_User dots_Login_User = new Dot_Login_User(utilisateur.getUser(), utilisateur.getPass(), isAndroid);
@@ -62,7 +64,7 @@ public class Update
 
 			if (updatedRows == 0)
 			{
-				throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("profile_not_updated"));
+				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("profile_not_updated"));
 			} else
 			{
 				Utilisateur userFromDB = DAO_User.GetUserByID(utilisateur.getId_utilisateur());
@@ -91,7 +93,7 @@ public class Update
 			}
 		} else
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("change_username"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_username"));
 		}
 	}
 
@@ -104,10 +106,10 @@ public class Update
 	{
 		if (DAO_Etudiant.UpdateEtudiant(etudiant))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("student_updated"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("student_updated"));
 		} else
 		{
-			return Utility.Response(Status.INTERNAL_SERVER_ERROR, JsonReader.GetNode("student_not_updated"));
+			return Utility.Response(Status.INTERNAL_SERVER_ERROR, MessageReader.GetNode("student_not_updated"));
 		}
 	}
 
@@ -120,10 +122,10 @@ public class Update
 	{
 		if (DAO_Module.UpdateModule(module, oldCodeModule))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("module_updated"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("module_updated"));
 		} else
 		{
-			return Utility.Response(Status.INTERNAL_SERVER_ERROR, JsonReader.GetNode("module_not_updated"));
+			return Utility.Response(Status.INTERNAL_SERVER_ERROR, MessageReader.GetNode("module_not_updated"));
 		}
 	}
 
@@ -136,10 +138,10 @@ public class Update
 	{
 		if (DAO_Enseignant.UpdateEnseignant(enseignant))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("teacher_updated"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("teacher_updated"));
 		} else
 		{
-			return Utility.Response(Status.INTERNAL_SERVER_ERROR, JsonReader.GetNode("teacher_not_updated"));
+			return Utility.Response(Status.INTERNAL_SERVER_ERROR, MessageReader.GetNode("teacher_not_updated"));
 		}
 	}
 
@@ -153,10 +155,10 @@ public class Update
 	{
 		if (DAO_Seance.UpdateSeance(code_seance, type_seance, code_module))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("session_updated"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("session_updated"));
 		} else
 		{
-			return Utility.Response(Status.INTERNAL_SERVER_ERROR, JsonReader.GetNode("session_not_updated"));
+			return Utility.Response(Status.INTERNAL_SERVER_ERROR, MessageReader.GetNode("session_not_updated"));
 		}
 	}
 
@@ -170,10 +172,10 @@ public class Update
 	{
 		if (DAO_Justification.SetJustificationState(Etat_Demande.refuse, numero_absence, numero_justification))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("justification_accepted"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("justification_denied"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("justification_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("justification_not_updated"));
 		}
 	}
 
@@ -187,10 +189,10 @@ public class Update
 	{
 		if (DAO_Justification.SetJustificationState(Etat_Demande.valide, numero_absence, numero_justification))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("justification_denied"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("justification_accepted"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("justification_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("justification_not_updated"));
 		}
 	}
 
@@ -208,10 +210,10 @@ public class Update
 			Enseignant enseignant = DAO_Enseignant.GetEnseignantBySeance(seance);
 			DAO_NotificationSeanceSupp.CreateNotificationSupp(code_seance_supp, enseignant.getId_utilisateur(),
 					Etat_Demande.valide);
-			return Utility.Response(Status.OK, JsonReader.GetNode("demand_accepted"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("demand_accepted"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("demand_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("demand_not_updated"));
 		}
 	}
 
@@ -230,10 +232,10 @@ public class Update
 			DAO_NotificationSeanceSupp.CreateNotificationSupp(code_seance_supp, enseignant.getId_utilisateur(),
 					Etat_Demande.refuse);
 
-			return Utility.Response(Status.OK, JsonReader.GetNode("demand_denied"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("demand_denied"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("demand_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("demand_not_updated"));
 		}
 	}
 
@@ -251,10 +253,10 @@ public class Update
 			Enseignant enseignant = DAO_Enseignant.GetEnseignantBySeance(seance);
 			DAO_NotificationChangementSeance.CreateNotificationChangement(code_seance, enseignant.getId_utilisateur(),
 					Etat_Demande.valide);
-			return Utility.Response(Status.OK, JsonReader.GetNode("demand_accepted"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("demand_accepted"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("demand_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("demand_not_updated"));
 		}
 	}
 
@@ -271,10 +273,10 @@ public class Update
 					.GetEnseignantBySeance(DAO_Seance.GetSeanceByCode_Seance(code_seance));
 			DAO_NotificationChangementSeance.CreateNotificationChangement(code_seance, enseignant.getId_utilisateur(),
 					Etat_Demande.refuse);
-			return Utility.Response(Status.OK, JsonReader.GetNode("demand_denied"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("demand_denied"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("demand_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("demand_not_updated"));
 		}
 	}
 
@@ -288,10 +290,10 @@ public class Update
 		if (DAO_CongeAcademique.AcceptCongeAcademique(numero_conge_academique,
 				DAO_CongeAcademique.GetCongeAcademiqueByCode(numero_conge_academique).getId_etudiant()))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("demand_accepted"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("demand_accepted"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("demand_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("demand_not_updated"));
 		}
 	}
 
@@ -305,10 +307,10 @@ public class Update
 		if (DAO_CongeAcademique.RefuserCongeAcademique(numero_conge_academique,
 				DAO_CongeAcademique.GetCongeAcademiqueByCode(numero_conge_academique).getId_etudiant()))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("demand_denied"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("demand_denied"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("demand_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("demand_not_updated"));
 		}
 	}
 
@@ -321,10 +323,10 @@ public class Update
 	{
 		if (DAO_Notification.SetVue(id_notification, true))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("notification_updated"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("notification_updated"));
 		} else
 		{
-			return Utility.Response(Status.NOT_MODIFIED, JsonReader.GetNode("notification_not_updated"));
+			return Utility.Response(Status.NOT_MODIFIED, MessageReader.GetNode("notification_not_updated"));
 		}
 	}
 }

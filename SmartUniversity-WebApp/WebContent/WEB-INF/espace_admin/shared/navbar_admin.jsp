@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
-		<div class="sidebar-brand-icon rotate-n-15">
-			<i class="fas fa-laugh-wink"></i>
+		<div class="sidebar-brand-icon">
+			<img src="assets/img/Logo/logo_dark.png" style="width: 50px; height:50px">
 		</div>
 		<div class="sidebar-brand-text mx-3">Faculté NTIC</div>
 	</a>

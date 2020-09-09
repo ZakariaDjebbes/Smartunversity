@@ -122,7 +122,7 @@ public class DAO_ChangementSeance extends DAO_Initialize
 								nouvelle_heure, etat_seance);
 						Enseignant enseignant = DAO_Enseignant.GetEnseignantById(id_enseignant);
 						Seance seance = DAO_Seance.GetSeanceByCode_Seance(code_seance);
-						Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
+						Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
 
 						result.add(new DemandeChangementSeanceResponse(enseignant, module, seance, changementSeance));
 					}

@@ -22,10 +22,12 @@ import com.data.DAO_Justification;
 import com.data.DAO_Module;
 import com.data.DAO_NotificationChangementSeance;
 import com.data.DAO_NotificationSeanceSupp;
+import com.data.DAO_QR;
 import com.data.DAO_ReponsableFormation;
 import com.data.DAO_Seance;
 import com.data.DAO_SeanceSupp;
 import com.data.DAO_User;
+import com.dots.Dot_Create_QR;
 import com.helpers.AbsenceDepartementResponse;
 import com.helpers.DemandeChangementSeanceResponse;
 import com.helpers.DemandeCongeAcademiqueResponse;
@@ -36,6 +38,8 @@ import com.helpers.EtudiantResponse;
 import com.helpers.NotificationResponse;
 import com.helpers.SeanceDepartementResponse;
 import com.helpers.SeanceResponse;
+import com.helpers.StatistiquesResponse;
+import com.jsonReaders.MessageReader;
 import com.modele.Absence;
 import com.modele.ChangementSeance;
 import com.modele.CongeAcademique;
@@ -54,7 +58,6 @@ import com.modele.Utilisateur;
 import com.modele.Utilisateur.Code_Departement;
 import com.rest.annotations.Secured;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 import com.utility.Utility;
 
 @Path("/get")
@@ -70,8 +73,7 @@ public class Get
 
 		if (utilisateur == null)
 		{
-			throw new RequestNotValidException(Status.NOT_FOUND,
-					JsonReader.GetNode("user_not_exist"));
+			throw new RequestNotValidException(Status.NOT_FOUND, MessageReader.GetNode("user_not_exist"));
 		}
 
 		switch (utilisateur.getUser_type())
@@ -108,13 +110,12 @@ public class Get
 
 		if (seances.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("sessions_teacher_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("sessions_teacher_not_exist"));
 		}
 
 		return Utility.Response(Status.OK, seances);
 	}
-	
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
@@ -125,8 +126,7 @@ public class Get
 
 		if (enseignant == null)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("session_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("session_not_exist"));
 		}
 
 		return Utility.Response(Status.OK, enseignant);
@@ -144,8 +144,7 @@ public class Get
 
 		if (seances.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("sessions_teacher_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("sessions_teacher_not_exist"));
 		}
 
 		for (Seance seance : seances)
@@ -154,12 +153,11 @@ public class Get
 			seanceResponse.setSeance(seance);
 
 			// getting the module of seance
-			Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
+			Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
 
 			if (module == null)
 			{ // if no module for this seance is found and error should be thrown
-				return Utility.Response(Status.NOT_FOUND,
-						JsonReader.GetNode("internal_error"));
+				return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("internal_error"));
 			}
 
 			seanceResponse.setModule(module);
@@ -223,12 +221,11 @@ public class Get
 	@Path("/module/{code_module}")
 	public Response GetModule(@PathParam("code_module") String code_module)
 	{
-		Module module = DAO_Module.GetMouleByCode(code_module);
+		Module module = DAO_Module.GetModuleByCode(code_module);
 
 		if (module == null)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("module_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("module_not_exist"));
 		} else
 		{
 			return Utility.Response(Status.OK, module);
@@ -246,8 +243,7 @@ public class Get
 
 		if (etudiants.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("students_year_speciality_group_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("students_year_speciality_group_not_exist"));
 		}
 
 		return Utility.Response(Status.OK, etudiants);
@@ -264,8 +260,7 @@ public class Get
 
 		if (absences.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("absences_student_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("absences_student_not_exist"));
 		}
 
 		return Utility.Response(Status.OK, absences);
@@ -281,7 +276,7 @@ public class Get
 
 		try
 		{
-			seances = DAO_Seance.GetSeancesByCode_Departement(code_departement);
+			seances = DAO_Seance.GetSeancesDepartementByCode_Departement(code_departement);
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -289,8 +284,7 @@ public class Get
 
 		if (seances.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("sessions_departement_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("sessions_departement_not_exist"));
 		}
 
 		return Utility.Response(Status.OK, seances);
@@ -307,8 +301,7 @@ public class Get
 
 		if (justification == null)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("justifcations_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("justifcations_not_exist"));
 		}
 
 		return Utility.Response(Status.OK, justification);
@@ -326,8 +319,6 @@ public class Get
 
 		try
 		{
-			// TODO UN enseignant du département X peut il enseigné une matiere du
-			// département Y
 			enseignants = DAO_Enseignant.GetEnseignantsDisponiblesForSeance(code_departement, jour, heure);
 		} catch (Exception e)
 		{
@@ -336,7 +327,7 @@ public class Get
 
 		if (enseignants.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND, JsonReader.GetNode("teachers_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("teachers_not_exist"));
 		}
 
 		return Utility.Response(Status.OK, enseignants);
@@ -357,7 +348,7 @@ public class Get
 					.GetJustificationsByAbsence(absence.getNumero_absence());
 			Etudiant etudiant = DAO_Etudiant.GetEtudiantById(absence.getId_etudiant());
 			Seance seance = DAO_Seance.GetSeanceByCode_Seance(absence.getCode_seance());
-			Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
+			Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
 			AbsenceDepartementResponse ar = new AbsenceDepartementResponse(absence, justifications, etudiant, seance,
 					module);
 			response.add(ar);
@@ -365,7 +356,7 @@ public class Get
 
 		if (response.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND, JsonReader.GetNode("absences_departement_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("absences_departement_not_exist"));
 		}
 
 		return Utility.Response(Status.OK, response);
@@ -389,7 +380,7 @@ public class Get
 						.GetJustificationsByAbsence(absence.getNumero_absence());
 				Etudiant etudiant = DAO_Etudiant.GetEtudiantById(absence.getId_etudiant());
 				Seance seance = DAO_Seance.GetSeanceByCode_Seance(absence.getCode_seance());
-				Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
+				Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
 				AbsenceDepartementResponse adr = new AbsenceDepartementResponse(absence, justifications, etudiant,
 						seance, module);
 				response = adr;
@@ -399,8 +390,80 @@ public class Get
 
 		if (response == null)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("absences_departement_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("absences_departement_not_exist"));
+		}
+
+		return Utility.Response(Status.OK, response);
+	}
+
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/data/departement")
+	public Response GetAbsenceOfDepartement(@QueryParam("code_departement") Code_Departement code_departement)
+	{
+		ArrayList<Seance> seances = null;
+
+		try
+		{
+			seances = DAO_Seance.GetSeancesByCode_Departement(code_departement);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		if (seances.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("sessions_departement_not_exist"));
+		}
+
+		ArrayList<StatistiquesResponse> response = new ArrayList<StatistiquesResponse>();
+
+		for (Seance seance : seances)
+		{
+			Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
+			Enseignant enseignant = DAO_Enseignant.GetEnseignantBySeance(seance);
+			ArrayList<Absence> absences = DAO_Absence.GetAbsencesOfSeance(seance.getCode_seance());
+			StatistiquesResponse data = new StatistiquesResponse(seance, module, enseignant, absences.size());
+
+			response.add(data);
+		}
+
+		return Utility.Response(Status.OK, response);
+	}
+
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/data/formation")
+	public Response GetAbsenceOfDepartement(@QueryParam("annee") Annee annee,
+			@QueryParam("specialite") Specialite specialite)
+	{
+		ArrayList<Seance> seances = null;
+
+		try
+		{
+			seances = DAO_Seance.GetSeancesByFormation(annee, specialite);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		if (seances.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("sessions_departement_not_exist"));
+		}
+
+		ArrayList<StatistiquesResponse> response = new ArrayList<StatistiquesResponse>();
+
+		for (Seance seance : seances)
+		{
+			Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
+			Enseignant enseignant = DAO_Enseignant.GetEnseignantBySeance(seance);
+			ArrayList<Absence> absences = DAO_Absence.GetAbsencesOfSeance(seance.getCode_seance());
+			StatistiquesResponse data = new StatistiquesResponse(seance, module, enseignant, absences.size());
+
+			response.add(data);
 		}
 
 		return Utility.Response(Status.OK, response);
@@ -416,19 +479,19 @@ public class Get
 				.GetDemandesOfEnseignants(code_departement);
 		ArrayList<DemandeChangementSeanceResponse> demandesChangement = DAO_ChangementSeance
 				.GetChangementSeanceOfEnseignants(code_departement);
-		ArrayList<DemandeCongeAcademiqueResponse> demandesEtudiant = DAO_CongeAcademique.GetDemandesCongeAcademiqueOfDepartement(code_departement);
-		
+		ArrayList<DemandeCongeAcademiqueResponse> demandesEtudiant = DAO_CongeAcademique
+				.GetDemandesCongeAcademiqueOfDepartement(code_departement);
+
 		if (demandesChangement.size() == 0 && demandesSeanceSupp.size() == 0 && demandesEtudiant.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("demands_departement_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("demands_departement_not_exist"));
 		}
 
 		DemandesDepartementResponse response = new DemandesDepartementResponse(demandesSeanceSupp, demandesChangement,
 				demandesEtudiant);
 		return Utility.Response(Status.OK, response);
 	}
-	
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
@@ -436,11 +499,10 @@ public class Get
 	public Response GetAbsencesOfEtudiant(@QueryParam("id_etudiant") int id_etudiant)
 	{
 		ArrayList<Absence> absences = DAO_Absence.GetAbsencesOfEtudiant(id_etudiant);
-		
-		if(absences.size() == 0)
+
+		if (absences.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND,
-					JsonReader.GetNode("absences_student_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("absences_student_not_exist"));
 		}
 
 		ArrayList<AbsenceDepartementResponse> response = new ArrayList<AbsenceDepartementResponse>();
@@ -449,16 +511,18 @@ public class Get
 		for (Absence absence : absences)
 		{
 			Seance seance = DAO_Seance.GetSeanceByCode_Seance(absence.getCode_seance());
-			Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
-			ArrayList<Justification> justifications = DAO_Justification.GetJustificationsByAbsence(absence.getNumero_absence());
-			
-			AbsenceDepartementResponse absenceDepartement = new AbsenceDepartementResponse(absence, justifications, etudiant, seance, module);
+			Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
+			ArrayList<Justification> justifications = DAO_Justification
+					.GetJustificationsByAbsence(absence.getNumero_absence());
+
+			AbsenceDepartementResponse absenceDepartement = new AbsenceDepartementResponse(absence, justifications,
+					etudiant, seance, module);
 			response.add(absenceDepartement);
-		}		
-		
+		}
+
 		return Utility.Response(Status.OK, response);
 	}
-	
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
@@ -466,26 +530,81 @@ public class Get
 	public Response GetSeancesOfEtudiant(@QueryParam("id_etudiant") int id_etudiant)
 	{
 		ArrayList<Seance> seances = DAO_Seance.GetSeancesByEtudiant(id_etudiant);
-		
-		if(seances.size() == 0)
+
+		if (seances.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND, JsonReader.GetNode("sessions_student_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("sessions_student_not_exist"));
 		}
-		
+
 		ArrayList<SeanceResponse> response = new ArrayList<SeanceResponse>();
-		
+
 		for (Seance seance : seances)
 		{
-			Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
+			Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
 			ArrayList<SeanceSupp> seancesSupp = DAO_SeanceSupp.GetValidSeancesSupp(seance.getCode_seance());
-			
+
 			SeanceResponse seanceResponse = new SeanceResponse(null, module, seance, null, seancesSupp);
 			response.add(seanceResponse);
 		}
-		
+
 		return Utility.Response(Status.OK, response);
 	}
-	
+
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/etudiants/exlus/departement")
+	public Response GetEtudiantsOfDepartement(@QueryParam("code_departement") Code_Departement code_departement)
+	{
+		ArrayList<SeanceDepartementResponse> seances = new ArrayList<SeanceDepartementResponse>();
+		try
+		{
+			seances = DAO_Seance.GetSeancesDepartementByCode_Departement(code_departement);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		if (seances.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("sessions_departement_not_exist"));
+		}
+
+		ArrayList<SeanceResponse> response = new ArrayList<SeanceResponse>();
+		for (SeanceDepartementResponse seance : seances)
+		{
+			ArrayList<EtudiantResponse> etudiantsResponse = new ArrayList<EtudiantResponse>();
+			SeanceResponse seanceResponse = new SeanceResponse();
+			seanceResponse.setSeancesSupp(null);
+			seanceResponse.setChangementSeance(null);
+			seanceResponse.setModule(seance.getModule());
+			seanceResponse.setSeance(seance.getSeance());
+
+			ArrayList<Etudiant> etudiants = DAO_Etudiant.GetEtudiants(seance.getSeance().getAnnee(),
+					seance.getSeance().getSpecialite(), seance.getSeance().getGroupe());
+
+			for (Etudiant etudiant : etudiants)
+			{
+				ArrayList<Absence> absences = DAO_Absence.GetAbsencesOfStudentBySeance(
+						seance.getSeance().getCode_seance(), etudiant.getId_utilisateur());
+
+				EtudiantResponse etudiantResponse = Utility.GetEtudiantResponse(absences, etudiant);
+				etudiantResponse.setAbsences(null);
+				etudiantsResponse.add(etudiantResponse);
+			}
+
+			seanceResponse.setEtudiants(etudiantsResponse);
+			response.add(seanceResponse);
+		}
+
+		if (response.size() == 0)
+		{
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("students_departement_not_exist"));
+		}
+
+		return Utility.Response(Status.OK, response);
+	}
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
@@ -493,16 +612,15 @@ public class Get
 	public Response GetDemandeOfEtudiant(@QueryParam("id_etudiant") int id_etudiant)
 	{
 		CongeAcademique response = DAO_CongeAcademique.GetCongeAcademiqueByEtudiant(id_etudiant);
-		
-		if(response == null)
+
+		if (response == null)
 		{
-			return Utility.Response(Status.NOT_FOUND, 
-					JsonReader.GetNode("academic_leave_student_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("academic_leave_student_not_exist"));
 		}
-		
+
 		return Utility.Response(Status.OK, response);
 	}
-	
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
@@ -510,16 +628,15 @@ public class Get
 	public Response GetAllEtudiants()
 	{
 		ArrayList<Etudiant> response = DAO_Etudiant.GetAllEtudiants();
-		
-		if(response == null || response.size() == 0)
+
+		if (response == null || response.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND, 
-					JsonReader.GetNode("students_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("students_not_exist"));
 		}
-		
+
 		return Utility.Response(Status.OK, response);
 	}
-	
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
@@ -527,19 +644,18 @@ public class Get
 	public Response GetAllEnseignants()
 	{
 		ArrayList<Enseignant> enseignants = DAO_Enseignant.GetAllEnseignant();
-		
-		if(enseignants.size() == 0)
+
+		if (enseignants.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND, 
-					JsonReader.GetNode("teachers_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("teachers_not_exist"));
 		}
 
 		ArrayList<Utilisateur> response = new ArrayList<Utilisateur>();
 		response.addAll(enseignants);
-		
+
 		return Utility.Response(Status.OK, response);
 	}
-	
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
@@ -547,51 +663,79 @@ public class Get
 	public Response GetAllModules()
 	{
 		ArrayList<Module> modules = DAO_Module.GetAllModules();
-		
-		if(modules.size() == 0)
+
+		if (modules.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND, 
-					JsonReader.GetNode("modules_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("modules_not_exist"));
 		}
 
-		
 		return Utility.Response(Status.OK, modules);
 	}
-	
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/admin/seances")
-	public Response GetAllSeances(@QueryParam("annee")Annee annee, @QueryParam("specialite")Specialite specialite)
+	public Response GetAllSeances(@QueryParam("annee") Annee annee, @QueryParam("specialite") Specialite specialite)
 	{
 		ArrayList<SeanceResponse> seances = DAO_Seance.GetAllSeancesOfAnneeSpecialite(annee, specialite);
-		
-		if(seances.size() == 0)
+
+		if (seances.size() == 0)
 		{
-			return Utility.Response(Status.NOT_FOUND, 
-					JsonReader.GetNode("seances_annee_specialite_not_exist"));
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("seances_annee_specialite_not_exist"));
 		}
 
-		
 		return Utility.Response(Status.OK, seances);
 	}
-	
+
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/notification")
 	public Response GetNotificationsOfUser(@QueryParam("id_utilisateur") int id_utilisateur)
 	{
-		ArrayList<NotificationChangementSeance> notificationsChangement = DAO_NotificationChangementSeance.GetNotificationsChangementOfUser(id_utilisateur);
-		ArrayList<NotificationSeanceSupp> notificationsSeanceSupp = DAO_NotificationSeanceSupp.GetNotificationsSuppOfUser(id_utilisateur);
-		
-		if(notificationsChangement.size() == 0 && notificationsSeanceSupp.size() == 0)
+		ArrayList<NotificationChangementSeance> notificationsChangement = DAO_NotificationChangementSeance
+				.GetNotificationsChangementOfUser(id_utilisateur);
+		ArrayList<NotificationSeanceSupp> notificationsSeanceSupp = DAO_NotificationSeanceSupp
+				.GetNotificationsSuppOfUser(id_utilisateur);
+
+		if (notificationsChangement.size() == 0 && notificationsSeanceSupp.size() == 0)
 		{
-			throw new RequestNotValidException(Status.NOT_FOUND, JsonReader.GetNode("notifications_not_exist"));
+			throw new RequestNotValidException(Status.NOT_FOUND, MessageReader.GetNode("notifications_not_exist"));
 		}
-		
+
 		NotificationResponse response = new NotificationResponse(notificationsSeanceSupp, notificationsChangement);
 
 		return Utility.Response(Status.OK, response);
+	}
+
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/justification/android/{numero_absence}")
+	public Response GetJustificationByNumero(@PathParam("numero_absence") int numero_absence)
+	{
+		ArrayList<Justification> liste_justifications = DAO_Justification.GetJustificationsByAbsence(numero_absence);
+		if (liste_justifications == null)
+		{
+			return Utility.Response(Status.NOT_FOUND, MessageReader.GetNode("justifcations_not_exist"));
+		}
+		return Utility.Response(Status.OK, liste_justifications);
+	}
+
+	@GET
+	@Secured
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/qr/android")
+	public Dot_Create_QR GetCodeQR(@QueryParam("code_seance") String code_seance)
+	{
+		Dot_Create_QR dot_create_qr = DAO_QR.GetCodeQR(code_seance);
+
+		if (dot_create_qr == null)
+		{
+			return null;
+		}
+
+		return dot_create_qr;
 	}
 }

@@ -106,7 +106,6 @@ public class Login extends HttpServlet
 			}
 			else
 			{
-				System.out.println(requestResponse.getMessage_fr());
 				Redirect.SendRedirect(request, response, "login.jsp");
 				return;
 			}

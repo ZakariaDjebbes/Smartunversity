@@ -8,12 +8,12 @@ import com.data.DAO_ChangementSeance;
 import com.data.DAO_Enseignant;
 import com.data.DAO_Seance;
 import com.data.DAO_SeanceSupp;
+import com.jsonReaders.MessageReader;
 import com.modele.Enseignant;
 import com.modele.Seance;
 import com.modele.Seance.Jour;
 import com.modele.SeanceSupp;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 
 public class Dot_Create_SeanceSupp implements IDot
 {
@@ -65,15 +65,13 @@ public class Dot_Create_SeanceSupp implements IDot
 	@Override
 	public void Validate()
 	{
-		//TODO ensure that the group / speciality / section exist
-
 		Seance seance = DAO_Seance.GetSeanceByCode_Seance(code_seance);
 		Enseignant enseignant = DAO_Enseignant.GetEnseignantBySeance(seance);		
 		
 		if(seance == null)
 		{			
 			throw new RequestNotValidException(Status.BAD_REQUEST,
-					JsonReader.GetNode("session_not_exist"));
+					MessageReader.GetNode("session_not_exist"));
 		}
 		
 		ArrayList<SeanceSupp> others = DAO_SeanceSupp.GetSeancesSupp(code_seance);
@@ -81,7 +79,7 @@ public class Dot_Create_SeanceSupp implements IDot
 		if(seance.getJour().equals(jour) && seance.getHeure().equals(heure))
 		{
 			throw new RequestNotValidException(Status.BAD_REQUEST,
-					JsonReader.GetNode("same_as_main"));
+					MessageReader.GetNode("same_as_main"));
 		}
 		
 		for (SeanceSupp seanceSupp : others)
@@ -89,31 +87,31 @@ public class Dot_Create_SeanceSupp implements IDot
 			if(seanceSupp.getJour().equals(jour) && seanceSupp.getHeure().equals(heure))
 			{
 				throw new RequestNotValidException(Status.BAD_REQUEST, 
-						JsonReader.GetNode("additional_already_exist"));
+						MessageReader.GetNode("additional_already_exist"));
 			}
 		}
 		
 		if(!DAO_Seance.IsEnseignantDisponible(enseignant.getId_utilisateur(), heure, jour))
 		{
 			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
-					JsonReader.GetNode("have_session"));
+					MessageReader.GetNode("have_session"));
 		}
 		
 		if(!DAO_ChangementSeance.IsEnseignantDisponible(enseignant.getId_utilisateur(), heure, jour))
 		{
 			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
-					JsonReader.GetNode("teacher_have_other_request"));
+					MessageReader.GetNode("teacher_have_other_request"));
 		}
 		
 		if(!DAO_SeanceSupp.IsEnseignantDisponible(enseignant.getId_utilisateur(), heure, jour))
 		{
 			throw new RequestNotValidException(Status.NOT_ACCEPTABLE, 
-					JsonReader.GetNode("teacher_have_other_request"));
+					MessageReader.GetNode("teacher_have_other_request"));
 		}
 		
 		if(!DAO_Seance.IsSeanceDisponible(jour, heure, seance.getGroupe(), seance.getAnnee(), seance.getSpecialite()))
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("session_occupied"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("session_occupied"));
 		}
 	}
 }

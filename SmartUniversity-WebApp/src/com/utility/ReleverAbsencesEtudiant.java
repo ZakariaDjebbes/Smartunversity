@@ -88,7 +88,6 @@ public class ReleverAbsencesEtudiant
 					for (int i = 0; i < justifications.size(); i++)
 					{
 						Justification justification = justifications.get(i);
-						// TODO non traiter = exlu ou nn?
 						boolean isJustifier = justification.getEtat_justification() == Etat_Demande.valide;
 
 						if (i == justifications.size() - 1 && !isJustifier)

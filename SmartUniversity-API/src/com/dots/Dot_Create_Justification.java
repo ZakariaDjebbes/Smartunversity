@@ -10,10 +10,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.data.DAO_Absence;
 import com.data.DAO_Justification;
+import com.jsonReaders.MessageReader;
 import com.modele.Justification;
 import com.modele.Seance.Etat_Demande;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 
 @XmlRootElement
 public class Dot_Create_Justification implements IDot
@@ -89,25 +89,25 @@ public class Dot_Create_Justification implements IDot
 			if(justification.getEtat_justification() == Etat_Demande.valide)
 			{
 				throw new RequestNotValidException(Status.BAD_REQUEST,
-						JsonReader.GetNode("already_valid_justification"));
+						MessageReader.GetNode("already_valid_justification"));
 			}
 			else if(justification.getEtat_justification() == Etat_Demande.nonTraite)
 			{
 				throw new RequestNotValidException(Status.BAD_REQUEST, 
-						JsonReader.GetNode("already_untreated_justification"));
+						MessageReader.GetNode("already_untreated_justification"));
 			}
 		}
 		
 		if(extension == null || (!extension.equals("png") && !extension.equals("jpg") && !extension.equals("jpeg") ))
 		{
 			throw new RequestNotValidException(Status.BAD_REQUEST, 
-					JsonReader.GetNode("only_image_files"));
+					MessageReader.GetNode("only_image_files"));
 		}
 		
 		if(DAO_Absence.GetAbsenceByNumero(numero_absence) == null)
 		{
 			throw new RequestNotValidException(Status.BAD_REQUEST,
-					JsonReader.GetNode("absence_not_exist"));
+					MessageReader.GetNode("absence_not_exist"));
 		}
 	}
 }

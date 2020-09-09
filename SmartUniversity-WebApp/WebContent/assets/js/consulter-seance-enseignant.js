@@ -26,11 +26,6 @@ $(document).ready(function () {
 	let tablePresence =  $('#table-presence').DataTable({
 	        "sDom": '<"top"f>rt<"bottom"p><"clear">',
 			"pageLength": tablePresencePageLength,
-			"fnDrawCallback": function(oSettings) {
-		        if ($('#table-historique tr').length < tablePresencePageLength) {
-		            $('.dataTables_paginate').hide();
-		        }
-		    },
 	        "oLanguage": {
 	        	"oPaginate": {
 	        					"sPrevious": "Précédant", 
@@ -49,13 +44,8 @@ $(document).ready(function () {
 	let tableEtudiantsExclusPageLength = 35;
 	
 	let tableEtudiantsExclus =  $('#table-etudiants-exclus').DataTable({
-        "sDom": '<"top"f>rt<"bottom"p><"clear">',
+        "sDom": 'B<"top"f>rt<"bottom"p><"clear">',
 		"pageLength": tableEtudiantsExclusPageLength,
-		"fnDrawCallback": function(oSettings) {
-	        if ($('#table-historique tr').length < tableEtudiantsExclusPageLength) {
-	            $('.dataTables_paginate').hide();
-	        }
-	    },
         "oLanguage": {
         	"oPaginate": {
         					"sPrevious": "Précédant", 
@@ -64,6 +54,11 @@ $(document).ready(function () {
 			"sSearch": "Chercher: ",
 			"sZeroRecords": "Aucun étudiant n'a été trouver.",
         	},
+            buttons: [
+                { extend: 'excelHtml5', className: 'btn btn-outline-success', text:'Excel <i class="fa fa-file-excel-o"></i>' },
+                { extend: 'pdfHtml5', className: 'btn btn-outline-danger', text:'PDF <i class="fa fa-file-pdf-o"></i>' },
+                { extend: 'csvHtml5', className: 'btn btn-outline-secondary', text:'CSV <i class="fa fa-table"></i>'},
+            ]
     });	
 	
 	//datatable table-seances-supp
@@ -73,11 +68,6 @@ $(document).ready(function () {
 	let tableSeancesSupp =  $('#table-seances-supp').DataTable({
         "sDom": '<"top">rt<"bottom"p><"clear">',
 		"pageLength": tableSeancesSuppPageLength,
-		"fnDrawCallback": function(oSettings) {
-	        if ($('#table-historique tr').length < tableSeancesSuppPageLength) {
-	            $('.dataTables_paginate').hide();
-	        }
-	    },
         "oLanguage": {
         	"oPaginate": {
         					"sPrevious": "Précédant", 

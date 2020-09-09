@@ -9,8 +9,8 @@
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/data-tables/DataTables-1.10.20/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="assets/data-tables/custom-datatables.css">
+<link rel="stylesheet" href="assets/Datatables/datatables.min.css">
+<link rel="stylesheet" href="assets/Datatables/custom-datatables.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
 <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
@@ -69,7 +69,7 @@
 									<option value="stat-jour">Absences par jour</option>
 									<option value="stat-heure">Absences par heure</option>
 									<option value="stat-module">Absences par module</option>
-									<option value="stat-groupe">Absences par groupe</option>
+									<option class="d-none" value="stat-groupe">Absences par groupe</option>
 								</select>
 							</div>
 						</div>
@@ -91,16 +91,22 @@
 	<script src="assets/js/lodash.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			let canvas = document.getElementById('chart').getContext('2d');
 			const byDay = "jour";
 			const byHour = "heure";
 			const byGroup = "groupe";
 			const byModule= "module";
+			const titleByDay = "Nombre d'absences par jours";
+			const titleByHour = "Nombre d\'absences par heures";
+			const titleByGroup = "Nombre d\'absences par groupes";
+			const titleByModule = "Nombre d\'absences par modules";
 			let moduleSelect = $("#module");
 			let groupeSelect = $("#groupe");
 			let statTypeSelect = $("#stat-type");
 			let chartTypeSelect = $("#chart-type");
-						
+			let statGroupOption = $("option[value='stat-groupe']");
+			let statModuleOption = $("option[value='stat-module']");			
+			let heures = ["8:30", "10:00", "11:30", "13:00", "14:30"];
+			
 			let jours = [
 				<c:forEach var="jour" items="${jours}">
 				"${jour.getValue(0)}",
@@ -121,58 +127,162 @@
 				},
 				</c:forEach>
 			];
+			let current_data = data;
+			let current_chart_type = byDay;
+			let current_module = "all-modules";
+
+			let ctx = document.getElementById('chart').getContext('2d');
+			Chart.defaults.global.defaultFontFamily = "arial";
 			
+			let chart_data = {
+	          datasets: [
+		        	{
+		                label: "Total d'absences",
+		                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+			            borderColor:'rgba(54, 162, 235, 1)',
+			            borderWidth: 1,
+			            barPercentage: 0.5,				        
+			            data:[]
+		        	},
+		        	{
+		                label: "Absences justifier",
+		                backgroundColor:'rgba(152, 232, 146, 0.2)',
+			            borderColor: 'rgba(152, 232, 146, 1)',
+			            borderWidth: 1,
+			            barPercentage: 0.5,
+			            data:[]
+		        	},
+		        	{
+		                label: "Absences non justifier",
+		                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+			            borderColor: 'rgba(255,99,132,1)',
+			            borderWidth: 1,
+			            barPercentage: 0.5,
+			            data:[]
+		            }   
+	        	]
+			};
+			
+			let chart = new Chart(ctx, {
+			    type: 'bar',
+			    data: chart_data,
+			    options: {
+			        title: {
+			            display: true,
+			        },
+		        	scales: {
+		                yAxes: [{
+		                    ticks: {
+		                        beginAtZero: true
+		                    }
+		                }]
+		            }
+		    	}
+			});
+			
+			updateChart(chart, getDatasetAbsences(current_data, byDay), titleByDay, jours);
 			setModules(data, moduleSelect);
 			
 			moduleSelect.on('change', function(){
 				let value = this.value;
 				let displayDiv = $("#groupes-d-div");
-				
+				statTypeSelect.prop('selectedIndex',0);
+				current_module = value;
+
 				if(value == "all-modules")
 				{
 					displayDiv.addClass("d-none");
+					statGroupOption.addClass("d-none");
+					statModuleOption.removeClass("d-none");
+					current_data = data;
 				}
 				else
 				{
 					setGroupes(data, value, groupeSelect);
 					displayDiv.removeClass("d-none");
+					statGroupOption.removeClass("d-none");
+					statModuleOption.addClass("d-none");
+					current_data = getDataOfModule(data, value);
 				}
+
+				updateChartByValue("stat-jour");		
 			});
 			
-			let byDayAllDataset = 	getDatasetAbsencesALL(data, byDay);
+			groupeSelect.on('change', function(){
+				let value = this.value;
+				
+				if(value == "all-groupes")
+				{
+					statGroupOption.removeClass("d-none");
+					current_data = getDataOfModule(data, current_module);
+				}
+				else
+				{
+					statGroupOption.addClass("d-none");
+					current_data = getDataOfGroup(data, current_module, value);
+				}
+				
+				updateChartByValue("stat-jour");		
+			});
+			
+			chartTypeSelect.on('change', function(){
+				let value = this.value;
+				changeChart(value);
+			});
 
-			let chart = new Chart(canvas, {
-			    type: 'radar',
-			    data: {
-			        labels: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi'],
-			        datasets: [
-			        	{
-			                label: "Total d'absences",
-			                backgroundColor: 'rgba(255, 206, 86, 0.2)',
-				            borderColor:'rgba(255, 206, 86, 1)',
-				            borderWidth: 1,
-				            barPercentage: 0.5,				        
-			            },
-			        	{
-			                label: "Absences justifier",
-			                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-				            borderColor: 'rgba(255,99,132,1)',
-				            borderWidth: 1,
-				            barPercentage: 0.5,
-			            },
-			        	{
-			                label: "Absences non justifier",
-			                backgroundColor:'rgba(54, 162, 235, 0.2)',
-				            borderColor: 'rgba(54, 162, 235, 1)',
-				            borderWidth: 1,
-				            barPercentage: 0.5,
-			            }   
-			        ]
-			    },
-			    options: {
+			statTypeSelect.on('change', function(){
+				let value = this.value;
+				current_chart_type = value;
+				updateChartByValue(value)
+			});
+			
+			function updateChartByValue(value)
+			{
+				switch (value) {
+				case "stat-jour":
+					updateChart(chart, getDatasetAbsences(current_data, byDay), titleByDay, jours);
+					break;
+				case "stat-heure":
+					updateChart(chart, getDatasetAbsences(current_data, byHour), titleByHour, heures);
+					break;
+				case "stat-module":
+					let modules = getModules();
+					let codes = [];
+					
+					for(module of modules)
+					{
+						codes.push(module.code);
+					}
+					updateChart(chart, getDatasetAbsences(current_data, byModule), titleByModule, codes);
+
+					break;
+				case "stat-groupe":
+					let groups = getGroupsOfModule(current_module);
+					updateChart(chart, getDatasetAbsences(current_data, byGroup), titleByGroup, groups);
+					break;
+				}
+			}
+			
+			function updateChart(chart, data, title, labels) {
+				let formated_data = getFormatedDataset(data);
+				chart.options.title.text = title;
+				chart.data.labels = labels;
+				for(let i = 0; i < chart.data.datasets.length; i++)
+				{
+					chart.data.datasets[i].data = formated_data[i];	
+				}
+			    chart.update();
+			}
+			
+			function changeChart(newType) {
+				chart.destroy();
+				chart = null;
+				chart =  new Chart(ctx, {
+				    type: newType,
+				    data: chart_data,
+				    options: {
 				        title: {
 				            display: true,
-				            text: 'Nombre d\'absences par jour'
 				        },
 			        	scales: {
 			                yAxes: [{
@@ -182,48 +292,14 @@
 			                }]
 			            }
 			    	}
-			    });
-
-			updateChart(chart, getDatasetAbsencesALL(data, byDay));
-			//changeChart(chart, "radar");
-			function updateChart(chart, data) {
-				let formated_data = getFormatedDataset(data);
-				
-				for(let i = 0; i < chart.data.datasets.length; i++)
-				{
-					chart.data.datasets[i].data = formated_data[i];	
-				}
-			    chart.update();
-			}
-			
-			function changeChart(chart, newType) {
-				let canvas = document.getElementById('chart').getContext('2d');
-
-				  if (chart) {
-					  chart.destroy();
-				  }
-
-				  let temp = jQuery.extend(true, {}, chart.config);
-				  temp.type = newType;
-				  chart = new Chart(canvas, temp);
+				});
 			};
 			
 			function setModules(data, select)
 			{	
-				let modules = [];
+				let modules = getModules();
 				
-				for(item of data)
-				{
-					let module = {
-						nom: item.module,
-						code: item.code_module
-					}
-					
-					modules.push(module);
-				}
-				
-				let uniq_modules = _.uniqBy(modules, 'nom');
-				for(module of uniq_modules)
+				for(module of modules)
 				{
 					let option = new Option(module.nom + " ("+ module.code +")", module.code);
 					select.append(option);
@@ -253,7 +329,7 @@
 				}
 			}
 						
-			function getDatasetAbsencesALL(data, by)
+			function getDatasetAbsences(data, by)
 			{
 				let dataset = [];
 				
@@ -285,6 +361,97 @@
 							dataset.push(set);
 						}
 					return dataset;
+					case byHour: 
+						for(heure of heures)
+						{
+							let nombreAbsences = 0;
+							let nombreAbsencesJustifier = 0;
+							let nombreAbsencesNonJustifier = 0;
+							
+							for(item of data)
+							{
+								if(item.heure == heure)
+								{
+									nombreAbsences += item.nombre_absences;
+									nombreAbsencesJustifier += item.nombre_absences_justifier;
+									nombreAbsencesNonJustifier += item.nombre_absences_non_justifier;		
+								}
+							}
+							
+							let set = {
+									nombreAbsences: nombreAbsences,
+									nombreAbsencesJustifier: nombreAbsencesJustifier,
+									nombreAbsencesNonJustifier: nombreAbsencesNonJustifier
+							};
+							
+							dataset.push(set);
+						}
+						
+					return dataset;
+					case byModule: 
+						let modules = getModules();
+						let codes = [];
+						
+						for(module of modules)
+						{
+							codes.push(module.code);
+						}
+						
+						for(code of codes)
+						{
+							let nombreAbsences = 0;
+							let nombreAbsencesJustifier = 0;
+							let nombreAbsencesNonJustifier = 0;
+							
+							for(item of data)
+							{
+								if(item.code_module == code)
+								{
+									nombreAbsences += item.nombre_absences;
+									nombreAbsencesJustifier += item.nombre_absences_justifier;
+									nombreAbsencesNonJustifier += item.nombre_absences_non_justifier;		
+								}
+							}
+							
+							let set = {
+									nombreAbsences: nombreAbsences,
+									nombreAbsencesJustifier: nombreAbsencesJustifier,
+									nombreAbsencesNonJustifier: nombreAbsencesNonJustifier
+							};
+							
+							dataset.push(set);
+						}
+						
+					return dataset;
+					case byGroup: 
+						let groups = getGroupsOfModule(current_module)
+						
+						for(group of groups)
+						{
+							let nombreAbsences = 0;
+							let nombreAbsencesJustifier = 0;
+							let nombreAbsencesNonJustifier = 0;
+							
+							for(item of data)
+							{
+								if(item.groupe == group)
+								{
+									nombreAbsences += item.nombre_absences;
+									nombreAbsencesJustifier += item.nombre_absences_justifier;
+									nombreAbsencesNonJustifier += item.nombre_absences_non_justifier;		
+								}
+							}
+							
+							let set = {
+									nombreAbsences: nombreAbsences,
+									nombreAbsencesJustifier: nombreAbsencesJustifier,
+									nombreAbsencesNonJustifier: nombreAbsencesNonJustifier
+							};
+							
+							dataset.push(set);
+						}
+						
+					return dataset;
 			}
 		}
 			
@@ -304,6 +471,76 @@
 			let result = [nombresAbsences, nombresAbsencesJustifier, nombresAbsencesNonJustifier];
 			
 			return result;
+		}
+		
+		function getDataOfModule(data, code)
+		{
+			let result = [];
+			
+			for(item of data)
+			{
+				if(item.code_module == code)
+				{
+					result.push(item);
+				}				
+			}
+			
+			return result;
+		}
+		
+		function getDataOfGroup(data, code, group)
+		{
+			let result = [];
+			
+			for(item of data)
+			{
+				if(item.code_module == code && item.groupe == group)
+				{
+					result.push(item);
+				}				
+			}
+			
+			return result;
+		}
+		
+		function getModules()
+		{
+			let modules = [];
+			
+			for(item of data)
+			{
+				let module = {
+					nom: item.module,
+					code: item.code_module
+				}
+				
+				modules.push(module);
+			}
+			
+			let uniq_modules = _.uniqBy(modules, 'nom');
+			
+			return uniq_modules;
+		}
+		
+		function getGroupsOfModule(code)
+		{
+			let groups = [];
+			
+			for(item of data)
+			{
+				if(item.code_module == code)
+				{
+					groups.push(item.groupe);
+				}
+			}
+			
+			let uniq_groupes = _.uniq(groups);
+			
+			uniq_groupes.sort(function(a, b) {
+				  return a - b;
+				});
+			
+			return uniq_groupes;
 		}
 	});
 	</script>

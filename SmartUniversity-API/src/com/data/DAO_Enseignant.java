@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.dots.Dot_Create_Enseignant;
 import com.helpers.EnseignantDisponibleResponse;
+import com.jsonReaders.MessageReader;
 import com.modele.Enseignant;
 import com.modele.Seance;
 import com.modele.Seance.Jour;
@@ -18,7 +19,6 @@ import com.modele.Utilisateur;
 import com.modele.Utilisateur.Code_Departement;
 import com.modele.Utilisateur.Type_Utilisateur;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 import com.utility.Utility;
 
 public class DAO_Enseignant extends DAO_Initialize
@@ -132,7 +132,7 @@ public class DAO_Enseignant extends DAO_Initialize
 				&& enseignant.getUser_type() == Type_Utilisateur.chefDepartement
 				&& baseEnseignant.getUser_type() != enseignant.getUser_type())
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("departement_has_chef"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("departement_has_chef"));
 		}
 
 		if (DAO_User.UpdateUserPasswordLess(enseignant))

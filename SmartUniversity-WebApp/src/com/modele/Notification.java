@@ -91,7 +91,6 @@ public class Notification
 			myDate = _formatter.parse(date_creation);
 		} catch (ParseException e1)
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		

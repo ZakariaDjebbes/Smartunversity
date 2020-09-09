@@ -28,6 +28,7 @@ import com.dots.Dot_Create_Enseignant;
 import com.dots.Dot_Create_Etudiant;
 import com.dots.Dot_Create_Seance;
 import com.dots.Dot_Create_SeanceSupp;
+import com.jsonReaders.MessageReader;
 import com.mailer.Mailer;
 import com.modele.Etudiant;
 import com.modele.Module;
@@ -36,7 +37,6 @@ import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
 import com.rest.annotations.Secured;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 import com.utility.Utility;
 
 @Path("/create")
@@ -51,10 +51,10 @@ public class Create
 	{
 		if (DAO_Absence.CreateAbsence(absence))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("absence_created"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("absence_created"));
 		} else
 		{
-			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("absence_not_created"));
+			return Utility.Response(Status.BAD_REQUEST, MessageReader.GetNode("absence_not_created"));
 		}
 	}
 
@@ -67,10 +67,10 @@ public class Create
 	{
 		if (DAO_Seance.CreateSeance(seance))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("session_created"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("session_created"));
 		} else
 		{
-			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("session_not_created"));
+			return Utility.Response(Status.BAD_REQUEST, MessageReader.GetNode("session_not_created"));
 		}
 	}
 
@@ -83,10 +83,10 @@ public class Create
 	{
 		if (DAO_Module.CreateMoudle(module))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("module_created"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("module_created"));
 		} else
 		{
-			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("module_not_created"));
+			return Utility.Response(Status.BAD_REQUEST, MessageReader.GetNode("module_not_created"));
 		}
 	}
 
@@ -120,10 +120,10 @@ public class Create
 				System.out.println("Erreur dans l'envoi du mail >>> " + e.getMessage());
 			}
 
-			return Utility.Response(Status.OK, JsonReader.GetNode("student_created"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("student_created"));
 		} else
 		{
-			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("student_not_created"));
+			return Utility.Response(Status.BAD_REQUEST, MessageReader.GetNode("student_not_created"));
 		}
 	}
 
@@ -155,7 +155,7 @@ public class Create
 			utilisateur = DAO_User.GetUserByID(id_utilisateur);
 			break;
 		default:
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("teacher_type_not_exist"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("teacher_type_not_exist"));
 		}
 
 		if (id_utilisateur != -1)
@@ -177,10 +177,10 @@ public class Create
 				System.out.println("Erreur dans l'envoi du mail >>> " + e.getMessage());
 			}
 
-			return Utility.Response(Status.OK, JsonReader.GetNode("teacher_created"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("teacher_created"));
 		} else
 		{
-			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("teacher_not_created"));
+			return Utility.Response(Status.BAD_REQUEST, MessageReader.GetNode("teacher_not_created"));
 		}
 	}
 
@@ -197,10 +197,10 @@ public class Create
 		// create
 		if (DAO_ChangementSeance.CreateChangementSeance(changementSeance))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("change_request_created"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("change_request_created"));
 		} else
 		{
-			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("change_request_not_created"));
+			return Utility.Response(Status.BAD_REQUEST, MessageReader.GetNode("change_request_not_created"));
 		}
 	}
 
@@ -217,10 +217,10 @@ public class Create
 		// create
 		if (DAO_SeanceSupp.CreateSeanceSupp(seanceSupp))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("additional_session_request_created"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("additional_session_request_created"));
 		} else
 		{
-			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("additional_session_request_not_created"));
+			return Utility.Response(Status.BAD_REQUEST, MessageReader.GetNode("additional_session_request_not_created"));
 		}
 	}
 
@@ -235,10 +235,10 @@ public class Create
 
 		if (DAO_Enseignement.AffecterSeance(dot_Affecter_Seance))
 		{
-			return Utility.Response(Status.OK, JsonReader.GetNode("teacher_assigned"));
+			return Utility.Response(Status.OK, MessageReader.GetNode("teacher_assigned"));
 		} else
 		{
-			return Utility.Response(Status.BAD_REQUEST, JsonReader.GetNode("teacher_not_assigned"));
+			return Utility.Response(Status.BAD_REQUEST, MessageReader.GetNode("teacher_not_assigned"));
 		}
 	}
 }

@@ -59,6 +59,16 @@
 		"message_en": "The received additional session identifier doesn't exist",
 		"message_ar": "place_holder"
 	},
+	"pass_not_updated": {
+		"message_fr": "Le mot de passe n'a pas été mis à jour en raison d'un problème interne",
+		"message_en": "The password has not been updated due to an internal problem",
+		"message_ar": "place_holder"
+	},
+	"pass_updated": {
+		"message_fr": "Le mot de passe a été correctement mis à jour",
+		"message_en": "The password has been correctly updated",
+		"message_ar": "place_holder"
+	},
 	"academic_leave_not_exist": {
 		"message_fr": "L'identifiant du congé académique reçu n'existe pas",
 		"message_en": "The received academic leave request identifier doesn't exist",
@@ -92,6 +102,11 @@
 	"students_not_exist": {
 		"message_fr": "Il n'y a aucun étudiant dans le système",
 		"message_en": "There are no students in the system",
+		"message_ar": "place_holder"
+	},
+	"students_departement_not_exist": {
+		"message_fr": "Il n'y a aucun étudiant dans le département",
+		"message_en": "There are no students in the departement",
 		"message_ar": "place_holder"
 	},
 	"absence_not_exist": {
@@ -207,6 +222,16 @@
 	"justifications_not_exist": {
 		"message_fr": "Cette absence n'a aucune justification",
 		"message_en": "This absence has no justification",
+		"message_ar": "place_holder"
+	},
+	"justification_not_deleted": {
+		"message_fr": "La justification n'a pas été annulée en raison d'un problème interne",
+		"message_en": "The justification was not canceled due to an internal problem",
+		"message_ar": "place_holder"
+	},
+	"justification_deleted": {
+		"message_fr": "La justification a été correctement annulé",
+		"message_en": "The justification has been correctly canceled",
 		"message_ar": "place_holder"
 	},
 	"empty_user_password": {
@@ -497,6 +522,11 @@
 	"notification_not_deleted": {
 		"message_fr": "La notification n'a pas été supprimé en raison d'une erreur interne",
 		"message_en": "The notification has not been deleted due to an internal error",
+		"message_ar": "place_holder"
+	},
+	"email_not_exist": {
+		"message_fr": "Cette adresse email n'existe pas",
+		"message_en": "This email adress does not exist",
 		"message_ar": "place_holder"
 	}
 }

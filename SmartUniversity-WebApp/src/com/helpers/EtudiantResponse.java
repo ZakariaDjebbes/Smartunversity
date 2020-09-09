@@ -89,6 +89,19 @@ public class EtudiantResponse
 		this.nombreAbsences = nombreAbsences;
 	}
 	
+	public static boolean ContainsEtudiant(ArrayList<EtudiantResponse> etudiants, Etudiant etudiant)
+	{
+		for (EtudiantResponse etudiantResponse : etudiants)
+		{
+			if(etudiantResponse.getEtudiant().getId_utilisateur() == etudiant.getId_utilisateur())
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public static EtudiantResponse GetEtudiantByID(ArrayList<EtudiantResponse> etudiantsResponse, int id)
 	{
 		for (EtudiantResponse etudiantResponse : etudiantsResponse)

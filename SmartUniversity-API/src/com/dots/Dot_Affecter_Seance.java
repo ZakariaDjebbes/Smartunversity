@@ -5,8 +5,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.data.DAO_Enseignant;
 import com.data.DAO_Seance;
+import com.jsonReaders.MessageReader;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 
 @XmlRootElement
 public class Dot_Affecter_Seance implements IDot
@@ -52,19 +52,19 @@ public class Dot_Affecter_Seance implements IDot
 		
 		if(DAO_Enseignant.GetEnseignantById(id_enseignant) == null)
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("teacher_not_exist"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("teacher_not_exist"));
 		}
 		
 		if(DAO_Seance.GetSeanceByCode_Seance(code_seance) == null)
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("session_not_exist"));			
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("session_not_exist"));			
 		}
 		
 		//s'assurer que l'enseignant est libre pour ce jour et cet heure
 		
 		if(!DAO_Enseignant.IsEnseignantLibre(id_enseignant, code_seance))
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("teacher_unavailable_day_hour"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("teacher_unavailable_day_hour"));
 		}
 	}
 }

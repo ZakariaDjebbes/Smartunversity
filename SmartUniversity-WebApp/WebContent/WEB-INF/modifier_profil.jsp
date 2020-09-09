@@ -178,6 +178,9 @@
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/modifier_profil_buttonHandler.js"></script>
+	<c:if test="${utilisateur.getUser_type() eq 'enseignant' or utilisateur.getUser_type() eq 'chefDepartement' or utilisateur.getUser_type() eq 'responsableFormation'}">
+		<script src="assets/js/notifications_handler.js"></script>
+	</c:if>
 </body>
 
 </html>

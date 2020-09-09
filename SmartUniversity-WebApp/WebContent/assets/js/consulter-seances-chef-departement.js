@@ -5,11 +5,6 @@ $(document).ready(function () {
 	let table =  $('#table-seances').DataTable({
 	        "sDom": '<"top"f>rt<"bottom"p><"clear">',
 			"pageLength": tablePageLength,
-			"fnDrawCallback": function(oSettings) {
-		        if ($('#table-historique tr').length < tablePageLength) {
-		            $('.dataTables_paginate').hide();
-		        }
-		    },
 	        "oLanguage": {
 	        	"oPaginate": {
 	        					"sPrevious": "Précédant", 

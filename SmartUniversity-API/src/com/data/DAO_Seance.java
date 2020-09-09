@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response.Status;
 import com.dots.Dot_Create_Seance;
 import com.helpers.SeanceDepartementResponse;
 import com.helpers.SeanceResponse;
+import com.jsonReaders.MessageReader;
 import com.modele.Etudiant;
 import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
@@ -22,7 +23,6 @@ import com.modele.Seance.Type_Seance;
 import com.modele.SeanceSupp;
 import com.modele.Utilisateur.Code_Departement;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 import com.utility.Utility;
 
 public class DAO_Seance extends DAO_Initialize
@@ -121,7 +121,7 @@ public class DAO_Seance extends DAO_Initialize
 		}
 	}
 	
-	public static ArrayList<SeanceDepartementResponse> GetSeancesByCode_Departement(Code_Departement code_departement) throws Exception
+	public static ArrayList<SeanceDepartementResponse> GetSeancesDepartementByCode_Departement(Code_Departement code_departement) throws Exception
 	{
 		ArrayList<SeanceDepartementResponse> seances = new ArrayList<SeanceDepartementResponse>();
 		ArrayList<Specialite> specialites = Utility.GetSpecialitesOfDepartement(code_departement);
@@ -160,8 +160,61 @@ public class DAO_Seance extends DAO_Initialize
 						
 						Seance seance = new Seance(code_seance, code_module, type, annee, specialite, section, groupe, jour,
 								heure);
-						Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
+						Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
 						seances.add(new SeanceDepartementResponse(module, seance, DAO_Enseignant.GetEnseignantBySeance(seance)));
+					}
+					
+					return seances;
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return null;
+		}
+	}
+	
+	public static ArrayList<Seance> GetSeancesByCode_Departement(Code_Departement code_departement) throws Exception
+	{
+		ArrayList<Seance> seances = new ArrayList<Seance>();
+		ArrayList<Specialite> specialites = Utility.GetSpecialitesOfDepartement(code_departement);
+		
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+			String command = "SELECT * FROM Seance WHERE specialite = ?";
+
+			for (int i = 0; i < specialites.size() - 1; i++)
+			{
+				command += " || specialite = ?";
+			}
+			
+			command += ";";
+						
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				for (int i = 1; i <= specialites.size(); i++)
+				{
+					statement.setString(i, String.valueOf(specialites.get(i - 1)));
+				}
+
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					while (resultSet.next())
+					{
+						String code_seance = resultSet.getString(1);
+						String code_module = resultSet.getString(2);
+						Type_Seance type = Type_Seance.valueOf(resultSet.getString(3));
+						Annee annee = Annee.valueOf(resultSet.getString(4));
+						Specialite specialite = Specialite.valueOf(resultSet.getString(5));
+						int section = resultSet.getInt(6);
+						int groupe = resultSet.getInt(7);
+						Jour jour = Jour.valueOf(resultSet.getString(8));
+						String heure = resultSet.getString(9);
+						
+						Seance seance = new Seance(code_seance, code_module, type, annee, specialite, section, groupe, jour,
+								heure);
+						seances.add(seance);
 					}
 					
 					return seances;
@@ -220,6 +273,47 @@ public class DAO_Seance extends DAO_Initialize
 		}
 	}
 	
+	public static ArrayList<Seance> GetSeancesByFormation(Annee annee, Specialite specialite)
+	{
+		ArrayList<Seance> seances = new ArrayList<Seance>();
+		
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+			String command = "SELECT * FROM Seance WHERE specialite = ? AND annee = ?;";
+		
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setString(1, String.valueOf(specialite));
+				statement.setString(2, String.valueOf(annee));
+				
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					while (resultSet.next())
+					{
+						String code_seance = resultSet.getString(1);
+						String code_module = resultSet.getString(2);
+						Type_Seance type = Type_Seance.valueOf(resultSet.getString(3));
+						int section = resultSet.getInt(6);
+						int groupe = resultSet.getInt(7);
+						Jour jour = Jour.valueOf(resultSet.getString(8));
+						String heure = resultSet.getString(9);
+						
+						Seance seance = new Seance(code_seance, code_module, type, annee, specialite, section, groupe, jour,
+								heure);
+						seances.add(seance);
+					}
+					
+					return seances;
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return null;
+		}
+	}
+	
 	public static ArrayList<SeanceResponse> GetAllSeancesOfAnneeSpecialite(Annee annee, Specialite specialite)
 	{
 		ArrayList<SeanceResponse> seances = new ArrayList<SeanceResponse>();
@@ -247,7 +341,7 @@ public class DAO_Seance extends DAO_Initialize
 						
 						Seance seance = new Seance(code_seance, code_module, type, annee, specialite, section, groupe, jour,
 								heure);
-						Module module = DAO_Module.GetMouleByCode(seance.getCode_module());
+						Module module = DAO_Module.GetModuleByCode(seance.getCode_module());
 						ArrayList<SeanceSupp> seanceSupps = DAO_SeanceSupp.GetValidSeancesSupp(code_seance);
 						seances.add(new SeanceResponse(null, module, seance, null, seanceSupps));
 					}
@@ -291,7 +385,7 @@ public class DAO_Seance extends DAO_Initialize
 			}
 		} 
 		catch (SQLIntegrityConstraintViolationException  e) {
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("module_not_exist"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("module_not_exist"));
 		}
 		catch (Exception e)
 		{

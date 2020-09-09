@@ -1,5 +1,6 @@
 package com.utility;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +26,20 @@ public class Utility
 		                  cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
 		
 		return sameDay;
+	}
+	
+	public static String generateRandomString(int length)
+	{
+		final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		SecureRandom random = new SecureRandom();
+		StringBuilder builder = new StringBuilder(length);
+
+		for (int i = 0; i < length; i++)
+		{
+			builder.append(ALPHABET.charAt(random.nextInt(ALPHABET.length())));
+		}
+
+		return builder.toString();
 	}
 	
 	public static ArrayList<Specialite> GetSpecialitesOfAnnee(Annee annee)

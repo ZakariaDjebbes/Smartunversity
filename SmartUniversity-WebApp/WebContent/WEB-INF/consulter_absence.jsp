@@ -9,8 +9,8 @@
 <link rel="icon" href="assets/img/Logo/logo.png">
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/data-tables/DataTables-1.10.20/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="assets/data-tables/custom-datatables.css">
+<link rel="stylesheet" href="assets/Datatables/datatables.min.css">
+<link rel="stylesheet" href="assets/Datatables/custom-datatables.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
 <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
 <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
@@ -178,9 +178,13 @@
 										</c:if>
 										<c:if test="${justification.getEtat_justification() eq 'nonTraite'}">
 											<li class="mt-3">
-												<button type="button" class="btn btn-outline-danger">
-													<i class="fa fa-close"> Annuler</i>
+											<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post" action="${pageContext.request.contextPath}/User/SupprimerJustification">
+												<input type="hidden" name="numero-justification" value="${justification.getNumero_justification()}">								
+												<input type="hidden" name="numero-absence" value="${absence.getAbsence().getNumero_absence()}">
+												<button type="submit" class="btn btn-outline-danger">
+													<i class="fa fa-trash"> Annuler</i>
 												</button>
+											</form>
 											</li>
 										 </c:if>
 									</ul>
@@ -299,7 +303,7 @@
 					</c:if>
 				</div>
 			</div>
-			<c:if test="${justification.getEtat_justification() eq 'nonTraite' && utilisateur.getUser_type() eq 'chefDepartement'}">
+			<c:if test="${not empty justification && utilisateur.getUser_type() eq 'chefDepartement'}">
 				<div class="row mt-3">
 					<div class="col mt-3 text-center">
 						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#refuser-justification">
@@ -365,10 +369,12 @@
 	<jsp:include page="/WEB-INF/espace_enseignant/shared/footer_enseignant.jsp"></jsp:include>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="assets/data-tables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
-	<script src="assets/data-tables/DataTables-1.10.20/js/dataTables.bootstrap4.min.js"></script>
+	<script src="assets/Datatables/datatables.min.js"></script>
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/consulter-absence-chef-departement.js"></script>
+	<c:if test="${utilisateur.getUser_type() eq 'enseignant' or utilisateur.getUser_type() eq 'chefDepartement' or utilisateur.getUser_type() eq 'responsableFormation'}">
+		<script src="assets/js/notifications_handler.js"></script>
+	</c:if>
 </body>
 </html>

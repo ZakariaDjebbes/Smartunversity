@@ -151,6 +151,58 @@ public class DAO_Etudiant extends DAO_Initialize
 		}
 	}
 
+	public static ArrayList<Etudiant> GetEtudiantsOfDepartement(Code_Departement code_departement)
+	{
+		ArrayList<Etudiant> result = new ArrayList<Etudiant>();
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+			String command = "SELECT * FROM utilisateur, etudiant WHERE id_utilisateur = id_etudiant AND code_departement = ?;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setString(1, String.valueOf(code_departement));
+				
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					while (resultSet.next())
+					{
+						// Utilisateur
+						int id_utilisateur = resultSet.getInt(1);
+						String user = resultSet.getString(2);
+						String nom = resultSet.getString(4);
+						String prenom = resultSet.getString(5);
+						String adresse = resultSet.getString(6);
+						Date date_n = (Date) resultSet.getDate(7);
+						String email = resultSet.getString(8);
+						String telephone = resultSet.getString(9);
+						Type_Utilisateur type_utilisateur = Type_Utilisateur.valueOf(resultSet.getString(10));
+
+						Utilisateur utilisateur = new Utilisateur(id_utilisateur, user, "", nom, prenom, adresse,
+								date_n, email, telephone, type_utilisateur);
+
+						// Etudiant
+						int section = resultSet.getInt(14);
+						Annee annee = Annee.valueOf(resultSet.getString(12));
+						Specialite specialite = Specialite.valueOf(resultSet.getString(13));
+						int groupe = resultSet.getInt(15);
+						Etat_Etudiant etat_etudiant = Etat_Etudiant.valueOf(resultSet.getString(16));
+
+						Etudiant etudiant = new Etudiant(utilisateur, annee, specialite, section, groupe, etat_etudiant,
+								code_departement);
+
+						result.add(etudiant);
+					}
+
+					return result;
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+			return null;
+		}
+	}
+	
 	public static Etudiant GetEtudiantById(int id_etudiant)
 	{
 		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))

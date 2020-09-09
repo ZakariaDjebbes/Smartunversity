@@ -62,7 +62,6 @@ public class Utility
 
 	public static String GetUserName(Dot_Create_Utilisateur dot)
 	{
-		//TODO improve?
 		return String.format("%s_%s_%s", dot.getNom().replaceAll(" .+$", "").toLowerCase(), dot.getPrenom().replaceAll(" .+$", "").toLowerCase(), generateRandomString(6));
 	}
 	
@@ -172,7 +171,6 @@ public class Utility
 					for (int i = 0; i < justifications.size(); i++)
 					{
 						Justification justification = justifications.get(i);
-						// TODO non traiter = exlu ou nn?
 						boolean isJustifier = justification.getEtat_justification() == Etat_Demande.valide;
 						if (isJustifier)
 						{

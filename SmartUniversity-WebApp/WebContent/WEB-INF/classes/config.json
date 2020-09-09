@@ -1,0 +1,11 @@
+{
+	"mailerConfig": {
+		"user": "itachiuchiwa03@gmail.com",
+		"password": "jngsytseapohjlqu",
+		"mail.smtp.auth": "true",
+		"mail.smtp.starttls.enable": "true",
+		"mail.smtp.host": "smtp.gmail.com",
+		"mail.smtp.port": "587",
+		"mailBody": "text/html; charset=utf-8"
+	}
+}

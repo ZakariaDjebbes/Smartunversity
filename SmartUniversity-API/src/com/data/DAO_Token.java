@@ -32,7 +32,7 @@ public class DAO_Token extends DAO_Initialize
 					} 
 					else 
 					{
-						String createCommand = "INSERT INTO Token VALUES (?, ?);";
+						String createCommand = "INSERT INTO Token VALUES (?, ?, NULL);";
 						
 						try(PreparedStatement createStatement = connection.prepareStatement(createCommand))
 						{

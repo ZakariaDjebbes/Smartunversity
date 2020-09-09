@@ -5,11 +5,6 @@ $(document).ready(function () {
 	let tableDemandesEnseignants =  $('#table-demandes-enseignants').dataTable({
         "sDom": '<"top"f>rt<"bottom"p><"clear">',
 		"pageLength": tableDemandesEnseignantsPageLength,
-		"fnDrawCallback": function(oSettings) {
-	        if ($('#table-historique tr').length < tableDemandesEnseignantsPageLength) {
-	            $('.dataTables_paginate').hide();
-	        }
-	    },
         "oLanguage": {
         	"oPaginate": {
         					"sPrevious": "Précédant", 
@@ -50,11 +45,6 @@ $(document).ready(function () {
 	let tableDemandesEtudiants =  $('#table-demandes-etudiants').dataTable({
         "sDom": '<"top"f>rt<"bottom"p><"clear">',
 		"pageLength": tableDemandesEtudiantsPageLength,
-		"fnDrawCallback": function(oSettings) {
-	        if ($('#table-historique tr').length < tableDemandesEtudiantsPageLength) {
-	            $('.dataTables_paginate').hide();
-	        }
-	    },
         "oLanguage": {
         	"oPaginate": {
         					"sPrevious": "Précédant", 

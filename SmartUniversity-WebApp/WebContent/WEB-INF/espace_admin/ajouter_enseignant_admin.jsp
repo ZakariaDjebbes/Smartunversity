@@ -98,6 +98,27 @@
 												</c:forEach>
 											</select>
 										</div>
+										<div id="formation" class="d-none">
+											<div class="form-group">
+												<label>Formation</label>
+												<select name="formation" class="form-control" required>
+														<option value="L1-MI">L1-MI</option>
+														<option value="L2-MI">L2-MI</option>
+														<option value="L3-GL">L3-GL</option>
+														<option value="L3-SI">L3-SI</option>
+														<option value="L3-SCI">L3-SCI</option>
+														<option value="L3-TI">L3-TI</option>
+														<option value="M1-GL">M1-GL</option>
+														<option value="M1-STIC">M1-STIC</option>
+														<option value="M1-STIW">M1-STIW</option>
+														<option value="M1-RSD">M1-RSD</option>
+														<option value="M2-GL">M2-GL</option>
+														<option value="M2-STIC">M2-STIC</option>
+														<option value="M2-STIW">M2-STIW</option>
+														<option value="M2-RSD">M2-RSD</option>
+												</select>
+											</div>
+										</div>
 										<div class="form-group">
 											<label>Département</label>
 											<select name="departement" class="form-control" required>
@@ -129,5 +150,22 @@
 	<script src="assets/js/jquery.easing.min.js"></script>
 	<script src="assets/js/sb-admin-2.min.js"></script>
 	<script src="assets/js/Chart.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('select[name="type"]').on('change',function(){
+			let value = this.value;
+			let formation = $("#formation");
+			
+			if(value=='responsableFormation')
+			{
+				formation.removeClass("d-none");
+			}
+			else
+			{
+				formation.addClass("d-none");
+			}
+		});
+	});
+	</script>
 </body>
 </html>

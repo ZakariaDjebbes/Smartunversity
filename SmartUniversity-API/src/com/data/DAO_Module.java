@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 import javax.ws.rs.core.Response.Status;
 
+import com.jsonReaders.MessageReader;
 import com.modele.Module;
 import com.rest.exceptions.RequestNotValidException;
-import com.utility.JsonReader;
 
 public class DAO_Module extends DAO_Initialize
 {
-	public static Module GetMouleByCode(String code_module)
+	public static Module GetModuleByCode(String code_module)
 	{
 		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
 		{
@@ -91,7 +91,7 @@ public class DAO_Module extends DAO_Initialize
 			}
 		} 
 		catch (SQLIntegrityConstraintViolationException  e) {
-			throw new RequestNotValidException(Status.BAD_REQUEST, JsonReader.GetNode("module_exist"));
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("module_exist"));
 		}
 		catch (Exception e)
 		{

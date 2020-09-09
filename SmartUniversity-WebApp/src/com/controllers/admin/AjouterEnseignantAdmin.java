@@ -26,6 +26,8 @@ import com.controllers.Redirect;
 import com.dots.Dot_Create_Enseignant;
 import com.dots.Dot_Create_Utilisateur;
 import com.helpers.RequestResponse;
+import com.modele.Etudiant.Annee;
+import com.modele.Etudiant.Specialite;
 import com.modele.Utilisateur.Code_Departement;
 import com.modele.Utilisateur.Type_Utilisateur;
 
@@ -56,15 +58,27 @@ public class AjouterEnseignantAdmin extends HttpServlet
 	{
 		HttpSession session = request.getSession(false);
 		String token = session.getAttribute("token").toString();
-		Dot_Create_Enseignant etudiant = GetEnseignantData(request);
+		Dot_Create_Enseignant enseignant = GetEnseignantData(request);
+		Annee annee = null;
+		Specialite specialite = null;
+		
+		if(enseignant.getDot_Create_Utilisateur().getUser_type().equals(Type_Utilisateur.responsableFormation))
+		{
+			String formation = request.getParameter("formation");
+			annee = Annee.valueOf(formation.split("-")[0]);
+			specialite = Specialite.valueOf(formation.split("-")[1]);
+		}
 		boolean isDone = true;
 		String message = "";
 		
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(
-				"http://localhost:8080/SmartUniversity-API/api/create/enseignant");
+				"http://localhost:8080/SmartUniversity-API/api/create/enseignant")
+				.queryParam("annee", annee)
+				.queryParam("specialite", specialite);
+		
 				Response apiResponse = target.request(MediaType.APPLICATION_JSON)
-				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token).put(Entity.json(etudiant));
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token).put(Entity.json(enseignant));
 		
 				RequestResponse requestResponse = RequestResponse.GetRequestResponse(apiResponse);
 		

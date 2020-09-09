@@ -25,9 +25,10 @@
 				<div class="col">
 					<div class="block-heading mb-5">
 						<h3 class="text-info">${utilisateur.getNom()} ${utilisateur.getPrenom()}</h3>
-						<p>Vous êtes connecter en tant qu'étudiant</p>
+						<p>Bienvenue dans votre espace ${utilisateur.getUser_type().getValue(0)}</p>
 					</div>
 					<div>
+						<h4 class="text-success pb-3">Tâches en cours de traitement:</h4>
 						<div class="alert alert-danger" role="alert">
 							<span><strong>Vous avez 3 absences non justifié</strong></span>
 						</div>

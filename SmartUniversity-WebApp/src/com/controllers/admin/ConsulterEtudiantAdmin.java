@@ -77,8 +77,6 @@ public class ConsulterEtudiantAdmin extends HttpServlet
 		Etudiant etudiant = GetEtudiantData(request);
 		String message = "";
 		boolean isDone = true;
-
-		//TODO check if something changed?
 		
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/update/admin/etudiant");
