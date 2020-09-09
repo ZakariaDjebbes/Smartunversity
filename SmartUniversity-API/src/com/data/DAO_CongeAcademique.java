@@ -121,7 +121,7 @@ public class DAO_CongeAcademique extends DAO_Initialize
 			String command = "INSERT INTO CongeAcademique VALUES(NULL, ?, ?, ?, ?);";
 			try (PreparedStatement statement = connection.prepareStatement(command))
 			{
-				statement.setInt(1, conge_academique.getNumero_absence());
+				statement.setInt(1, conge_academique.getId_etudiant());
 				statement.setBlob(2, imageStream);
 				statement.setString(3, conge_academique.getExtension());
 				statement.setString(4, String.valueOf(Etat_Demande.nonTraite));
