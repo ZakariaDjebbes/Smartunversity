@@ -12,7 +12,7 @@ public class Dot_Login_User implements IDot
 {
 	private String user = "";
 	private String pass = "";
-	private boolean isAndroid = false;
+	private boolean isAndroid = true;
 	
 	public Dot_Login_User()
 	{
