@@ -35,7 +35,7 @@
 								<span><strong>Une demande de congé académique est en attente.</strong></span>
 							</div>
 						</c:if>
-						<c:if test="${(empty absencesNonJustifier or absencesNonJustifier eq o) and (empty HasCongeAcademique or not HasCongeAcademique)}">
+						<c:if test="${(empty absencesNonJustifier or absencesNonJustifier eq 0) and (empty HasCongeAcademique or (not HasCongeAcademique))}">
 							<div class="alert alert-success" role="alert">
 								<h4 class="alert-heading">
 									Rien a signlé!
@@ -54,7 +54,7 @@
 					</div>
 					<div class="text-center">
 						Vous êtes étudiant du département <b>${utilisateur.getCode_departement().getValue(0)}-(${utilisateur.getCode_departement()})</b> en <b>${utilisateur.getAnnee()}-${utilisateur.getSpecialite()}</b>
-						dans le groupe <b>${utilisateur.getGroupe()}</b>.
+						dans le <b>groupe ${utilisateur.getGroupe()}</b>.
 						<br>
 						<hr>
 						Ce compte vous permet de gérer vos absences.

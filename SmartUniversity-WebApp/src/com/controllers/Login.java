@@ -115,7 +115,8 @@ public class Login extends HttpServlet
 				case responsableFormation:
 					ResponsableFormation responsableFormation = apiResponse.readEntity(ResponsableFormation.class);
 					session.setAttribute("utilisateur", responsableFormation);
-					Redirect.SendRedirect(request, response, "/WEB-INF/espace_enseignant/espace_responsable_formation/index_responsable_formation.jsp");
+					Redirect.SendRedirect(request, response,
+							"/WEB-INF/espace_enseignant/espace_responsable_formation/index_responsable_formation.jsp");
 					break;
 				default:
 					break;
@@ -179,80 +180,89 @@ public class Login extends HttpServlet
 
 		int result = 0;
 
-		for (DemandeChangementSeanceResponse demande : demandes.getDemandesChangementSeanceResponse())
+		if (!(demandes.getDemandesChangementSeanceResponse() == null))
 		{
-			if (demande.getChangementSeance().getEtat_seance() == Etat_Demande.nonTraite)
+			for (DemandeChangementSeanceResponse demande : demandes.getDemandesChangementSeanceResponse())
 			{
-				result++;
-			}
-		}
-
-		for (DemandeSeanceSuppResponse demande : demandes.getDemandesSeanceSuppResponse())
-		{
-			if (demande.getSeanceSupp().getEtat_seance() == Etat_Demande.nonTraite)
-			{
-				result++;
-			}
-		}
-		
-		for (DemandeCongeAcademiqueResponse demande : demandes.getDemandesCongeAcademiqueResponse())
-		{
-			if (demande.getCongeAcademique().getEtat_demande() == Etat_Demande.nonTraite)
-			{
-				result++;
-			}
-		}
-		
-		session.setAttribute("demandesNonTraite", result);
-	}
-	
-	public static void SetAbsencesNonJustifier(HttpSession session)
-	{
-		ConsulterReleverAbsencesEtudiant.UpdateReleverAbsencesFromAPI(session);
-		
-		ReleverAbsencesEtudiant relever = (ReleverAbsencesEtudiant) session.getAttribute("releverAbsences");
-
-		if(relever == null)
-		{
-			session.setAttribute("absencesNonJustifier", 0);
-			return;
-		}
-		
-		int result = 0;
-		
-		for (ArrayList<AbsenceDepartementResponse> absences : relever.getRelever().values())
-		{
-			for (AbsenceDepartementResponse absence : absences)
-			{
-				if(absence.isJustifiable() == true)
+				if (demande.getChangementSeance().getEtat_seance() == Etat_Demande.nonTraite)
 				{
 					result++;
 				}
 			}
 		}
+
+		if (!(demandes.getDemandesSeanceSuppResponse() == null))
+		{
+			for (DemandeSeanceSuppResponse demande : demandes.getDemandesSeanceSuppResponse())
+			{
+				if (demande.getSeanceSupp().getEtat_seance() == Etat_Demande.nonTraite)
+				{
+					result++;
+				}
+			}
+		}
+
+		if (!(demandes.getDemandesCongeAcademiqueResponse() == null))
+		{
+			for (DemandeCongeAcademiqueResponse demande : demandes.getDemandesCongeAcademiqueResponse())
+			{
+				if (demande.getCongeAcademique().getEtat_demande() == Etat_Demande.nonTraite)
+				{
+					result++;
+				}
+			}
+		}
+		session.setAttribute("demandesNonTraite", result);
+	}
+
+	public static void SetAbsencesNonJustifier(HttpSession session)
+	{
+		ConsulterReleverAbsencesEtudiant.UpdateReleverAbsencesFromAPI(session);
+
+		ReleverAbsencesEtudiant relever = (ReleverAbsencesEtudiant) session.getAttribute("releverAbsences");
+
+		if (relever == null)
+		{
+			session.setAttribute("absencesNonJustifier", 0);
+			return;
+		}
+
+		int result = 0;
+
 		
+		if(!(relever.getRelever() == null))
+		{
+			for (ArrayList<AbsenceDepartementResponse> absences : relever.getRelever().values())
+			{
+				for (AbsenceDepartementResponse absence : absences)
+				{
+					if (absence.isJustifiable() == true)
+					{
+						result++;
+					}
+				}
+			}
+		}
 		session.setAttribute("absencesNonJustifier", result);
 	}
-	
+
 	public static void SetHasCongeAcademique(HttpSession session)
 	{
 		String token = session.getAttribute("token").toString();
 		Etudiant etudiant = (Etudiant) session.getAttribute("utilisateur");
-		
+
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target(
-				"http://localhost:8080/SmartUniversity-API/api/get/demande/etudiant")
+		WebTarget target = client.target("http://localhost:8080/SmartUniversity-API/api/get/demande/etudiant")
 				.queryParam("id_etudiant", etudiant.getId_utilisateur());
 		Response apiResponse = target.request(MediaType.APPLICATION_JSON)
 				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token).get();
 		apiResponse.bufferEntity();
 		RequestResponse requestResponse = RequestResponse.GetRequestResponse(apiResponse);
-				
-		if(requestResponse == null)
+
+		if (requestResponse == null)
 		{
 			session.setAttribute("HasCongeAcademique", true);
-		}
-		else 
+		} else
 		{
 			session.setAttribute("HasCongeAcademique", false);
 		}
