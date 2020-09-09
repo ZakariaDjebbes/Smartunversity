@@ -253,19 +253,6 @@
 													</tbody>
 												</table>
 											</div>
-											<div class="text-center">
-												<div class="btn-group">
-													<button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown">Télécharger la liste au format</button>
-													<div class="dropdown-menu">
-														<a class="dropdown-item" id="telecharger-etudiants-exclus-excel">
-															Excel <span class="float-right"><i class="text-success fa fa-lg fa-file-excel-o"></i></span>
-														</a>
-														<a class="dropdown-item" id="telecharger-etudiants-exclus-csv">
-															CSV <span class="float-right"><i class="text-dark fa fa-lg fa-table"></i></span>
-														</a>
-													</div>
-												</div>
-											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="text-center">

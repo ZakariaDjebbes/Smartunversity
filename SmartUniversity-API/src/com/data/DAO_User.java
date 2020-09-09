@@ -48,6 +48,36 @@ public class DAO_User extends DAO_Initialize
 		}
 	}
 
+	public static boolean EmailExists(String email)
+	{
+		try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword))
+		{
+			String command = "SELECT * FROM utilisateur WHERE email = ?;";
+			try (PreparedStatement statement = connection.prepareStatement(command))
+			{
+				statement.setString(1, email);
+
+				try (ResultSet resultSet = statement.executeQuery())
+				{
+					if (resultSet.next())
+					{
+						return true;
+					} else
+					{
+						return false;
+					}
+
+				}
+			}
+		} catch (Exception e)
+		{
+			System.out.println("Connection error in " + Thread.currentThread().getStackTrace()[1].getMethodName()
+					+ " >>> " + e.getMessage());
+
+			throw new RequestNotValidException(Status.GATEWAY_TIMEOUT, MessageReader.GetNode("server_side_error"));
+		}
+	}
+	
 	public static Utilisateur GetUser(Dot_Login_User userLoginDots)
 	{
 		Utilisateur resultUtilisateur = null;

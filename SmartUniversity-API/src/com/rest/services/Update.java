@@ -52,7 +52,10 @@ public class Update
 	{
 		Utilisateur oldUtilisateur = DAO_User.GetUserByID(utilisateur.getId_utilisateur());
 		
-		if (!DAO_User.UsernameExists(utilisateur.getUser()) || oldUtilisateur.getUser().equals(utilisateur.getUser()))
+		boolean checkUser = !DAO_User.UsernameExists(utilisateur.getUser()) || oldUtilisateur.getUser().equals(utilisateur.getUser());
+		boolean checkEmail = !DAO_User.EmailExists(utilisateur.getEmail()) || oldUtilisateur.getEmail().equals(utilisateur.getEmail());
+		
+		if (checkUser && checkEmail)
 		{
 			// validation
 			Dot_Login_User dots_Login_User = new Dot_Login_User(utilisateur.getUser(), utilisateur.getPass(), isAndroid);
@@ -93,7 +96,16 @@ public class Update
 			}
 		} else
 		{
-			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_username"));
+			if(!checkEmail)
+			{
+				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_email"));
+			}
+			if(!checkUser)
+			{
+				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_username"));	
+			}
+			
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("internal_error"));	
 		}
 	}
 

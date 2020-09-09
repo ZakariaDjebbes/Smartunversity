@@ -409,6 +409,11 @@
 		"message_en": "This username already exists, choose another one",
 		"message_ar": "place_holder"
 	},
+	"change_email": {
+		"message_fr": "Cette adresse existe déjà, choisissez en une autre",
+		"message_en": "This email adress already exists, choose another one",
+		"message_ar": "place_holder"
+	},
 	"departement_has_chef": {
 		"message_fr": "Ce département dispose déjà d'un chef de département",
 		"message_en": "This department already has a department head",

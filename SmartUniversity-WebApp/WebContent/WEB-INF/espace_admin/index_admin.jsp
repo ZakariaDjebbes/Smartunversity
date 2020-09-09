@@ -27,7 +27,24 @@
 						<h1 class="h3 mb-0 text-gray-800">Acceuil</h1>
 					</div>
 				</div>
+				<div class="container-fluid">
+					<div class="card mb-4 py-3 border-bottom-success">
+						<div class="card-body">
+							<div class="text-center">
+								<h3 class="text-success">${utilisateur.getNom()} ${utilisateur.getPrenom()}</h3>
+								<p>Bienvenue l'espace ${utilisateur.getUser_type().getValue(0)}</p>
+							</div>
+							<div class="text-center">
+								Vous êtes un administrateur du système de gestion d'absences de la faculté NTIC.
+								<br>
+								<hr>
+								Ce compte vous permet de gérer les comptes des utilisateurs, les modules et les séances.
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+			
 			<jsp:include page="/WEB-INF/espace_admin/shared/footer_admin.jsp"></jsp:include>
 		</div>
 	</div>

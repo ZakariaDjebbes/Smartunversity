@@ -4,9 +4,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.data.DAO_User;
+import com.jsonReaders.MessageReader;
 import com.modele.Utilisateur.Type_Utilisateur;
+import com.rest.exceptions.RequestNotValidException;
 
 @XmlRootElement
 public class Dot_Create_Utilisateur implements IDot
@@ -124,7 +128,9 @@ public class Dot_Create_Utilisateur implements IDot
 	@Override
 	public void Validate()
 	{
-
+		if(DAO_User.EmailExists(email))
+		{
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_email"));
+		}
 	}
-
 }

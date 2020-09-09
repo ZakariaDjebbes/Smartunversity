@@ -27,13 +27,13 @@ public class Dot_CongeAcademique_Android implements IDot
 		this.image = image;
 		this.extension = extension;
 	}
-
-	public int getNumero_absence()
+	
+	public int getId_etudiant()
 	{
 		return id_etudiant;
 	}
 
-	public void setNumero_absence(int id_etudiant)
+	public void setId_etudiant(int id_etudiant)
 	{
 		this.id_etudiant = id_etudiant;
 	}
@@ -81,11 +81,11 @@ public class Dot_CongeAcademique_Android implements IDot
 					MessageReader.GetNode("student_have_other_request"));
 		}
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		return "Dot_Justification_Android [numero_absence=" + id_etudiant + ", image=" + Arrays.toString(image)
+		return "Dot_CongeAcademique_Android [id_etudiant=" + id_etudiant + ", image=" + Arrays.toString(image)
 				+ ", extension=" + extension + "]";
 	}
 }

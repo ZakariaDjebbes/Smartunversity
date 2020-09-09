@@ -97,6 +97,8 @@ public class Create
 	@Path("/etudiant")
 	public Response CreateEtudiant(Dot_Create_Etudiant dot_etudiant)
 	{
+		dot_etudiant.Validate();
+		
 		int id_etudiant = DAO_Etudiant.CreateEtudiant(dot_etudiant);
 
 		if (id_etudiant != -1)
@@ -135,9 +137,9 @@ public class Create
 	public Response CreateEnseignant(Dot_Create_Enseignant dot_enseignant, @QueryParam("annee") Annee annee,
 			@QueryParam("specialite") Specialite specialite)
 	{
+		dot_enseignant.Validate();
 		int id_utilisateur = 0;
 		Utilisateur utilisateur = null;
-		System.out.println();
 		switch (dot_enseignant.getDot_Create_Utilisateur().getUser_type())
 		{
 		case enseignant:

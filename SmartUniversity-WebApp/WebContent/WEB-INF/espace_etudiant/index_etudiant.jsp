@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -22,30 +22,42 @@
 	<section class="clean-block clean-info dark">
 		<div class="container">
 			<div class="row">
+				<div class="col col-7">
+					<div class="block-heading">
+						<h4 class="text-success pb-3">Tâches en cours de traitement:</h4>
+						<c:if test="${not empty absencesNonJustifier and absencesNonJustifier ne 0}">
+							<div class="alert alert-danger" role="alert">
+								<span><strong>Vous avez ${absencesNonJustifier} absences non justifié</strong></span>
+							</div>
+						</c:if>
+						<c:if test="${not empty HasCongeAcademique and HasCongeAcademique}">
+							<div class="alert alert-warning" role="alert">
+								<span><strong>Une demande de congé académique est en attente.</strong></span>
+							</div>
+						</c:if>
+						<c:if test="${(empty absencesNonJustifier or absencesNonJustifier eq o) and (empty HasCongeAcademique or not HasCongeAcademique)}">
+							<div class="alert alert-success" role="alert">
+								<h4 class="alert-heading">
+									Rien a signlé!
+									<br>
+								</h4>
+								<span><strong>Tout semble en ordre pour le moment!</strong>
+								<br></span>
+							</div>
+						</c:if>
+					</div>
+				</div>
 				<div class="col">
-					<div class="block-heading mb-5">
+					<div class="block-heading">
 						<h3 class="text-info">${utilisateur.getNom()} ${utilisateur.getPrenom()}</h3>
 						<p>Bienvenue dans votre espace ${utilisateur.getUser_type().getValue(0)}</p>
 					</div>
-					<div>
-						<h4 class="text-success pb-3">Tâches en cours de traitement:</h4>
-						<div class="alert alert-danger" role="alert">
-							<span><strong>Vous avez 3 absences non justifié</strong></span>
-						</div>
-						<div class="alert alert-warning" role="alert">
-							<span><strong>Une demande de congé académique est en attente.</strong></span>
-						</div>
-						<div class="alert alert-warning" role="alert">
-							<span><strong>Vous avez 3 absences avec un justificatif non traiter</strong></span>
-						</div>
-						<div class="alert alert-success" role="alert">
-							<h4 class="alert-heading">
-								Rien a signlé!
-								<br>
-							</h4>
-							<span><strong>Tout semble en ordre pour le moment!</strong>
-							<br></span>
-						</div>
+					<div class="text-center">
+						Vous êtes étudiant du département <b>${utilisateur.getCode_departement().getValue(0)}-(${utilisateur.getCode_departement()})</b> en <b>${utilisateur.getAnnee()}-${utilisateur.getSpecialite()}</b>
+						dans le groupe <b>${utilisateur.getGroupe()}</b>.
+						<br>
+						<hr>
+						Ce compte vous permet de gérer vos absences.
 					</div>
 				</div>
 			</div>

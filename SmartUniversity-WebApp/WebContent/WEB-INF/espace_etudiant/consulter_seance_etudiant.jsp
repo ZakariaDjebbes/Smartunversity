@@ -114,7 +114,7 @@
 									<h4 class="alert-heading">
 										<i class="icon-exclamation fa-lg"></i>&nbsp;Aucun enseignant n'est affecté a cette séance
 									</h4>
-									<span>Vous pourrez voir les détails de votr enseignant une fois assigné par le chef de département.<br></span>
+									<span>Vous pourrez voir les détails de votre enseignant une fois assigné par le chef de département.<br></span>
 								</div>
 							</div>
 						</c:otherwise>

@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Liste des étudiants - NTIC</title>
+<title>Liste des enseignants - NTIC</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link href="assets/fontawesome-sb/css/all.min.css" rel="stylesheet" type="text/css">

@@ -57,5 +57,6 @@ public class Dot_Create_Enseignant implements IDot
 	@Override
 	public void Validate()
 	{
+		dot_Create_Utilisateur.Validate();
 	}
 }

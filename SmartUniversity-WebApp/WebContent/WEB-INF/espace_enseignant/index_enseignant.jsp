@@ -28,24 +28,12 @@
 						<p>Bienvenue dans votre espace ${utilisateur.getUser_type().getValue(0)}</p>
 					</div>
 					<div>
-						<h5>Demandes en attente de traitement</h5>
-						<ul>
-							<li>
-								<a class="d-inline-block" href="#">
-									Changement d'horaire
-									<br>
-								</a>
-								&nbsp;pour la séance ALGO du Jeudi 13:00, Groupe 12, L2
-							</li>
-							<li>
-								<a class="d-inline-block" href="#">
-									<br>
-									Séance supplémentaire
-									<br>
-								</a>
-								&nbsp;pour la séance BD du Mardi 11:30, Groupe 12, L1
-							</li>
-						</ul>
+						<div class="text-center">
+						Vous êtes un enseignant dans le département <b>${utilisateur.getCode_departement().getValue(0)}-(${utilisateur.getCode_departement()})</b>.
+						<br>
+						<hr>
+						Ce compte vous permet de gérer les absences de vos séances.
+					</div>
 					</div>
 				</div>
 			</div>

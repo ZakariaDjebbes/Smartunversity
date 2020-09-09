@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.controllers.Login;
 import com.modele.Utilisateur;
 
 @WebFilter(urlPatterns =
@@ -41,6 +42,8 @@ public class KeepLogged implements Filter
 			switch (utilisateur.getUser_type())
 			{
 			case etudiant:
+				Login.SetAbsencesNonJustifier(session);
+				Login.SetHasCongeAcademique(session);
 				requestS.getRequestDispatcher("/WEB-INF/espace_etudiant/index_etudiant.jsp").forward(requestS,
 						responseS);
 				return;
@@ -50,12 +53,14 @@ public class KeepLogged implements Filter
 						responseS);
 				return;
 			case chefDepartement:
+				Login.SetSeancesSansEnseignant(session);
+				Login.SetDemandesNonTraite(session);
 				requestS.getRequestDispatcher(
 						"/WEB-INF/espace_enseignant/espace_chef_departement/index_chef_departement.jsp")
 						.forward(requestS, responseS);
 				return;
 			case responsableFormation:
-				requestS.getRequestDispatcher("/WEB-INF/espace_enseignant/index_enseignant.jsp").forward(requestS,
+				requestS.getRequestDispatcher("/WEB-INF/espace_enseignant/espace_responsable_formation/index_responsable_formation.jsp").forward(requestS,
 						responseS);
 				return;
 			case admin:

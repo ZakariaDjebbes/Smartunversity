@@ -76,5 +76,6 @@ public class Dot_Create_Etudiant implements IDot
 	@Override
 	public void Validate()
 	{
+		dot_create_utilisateur.Validate();
 	}
 }
