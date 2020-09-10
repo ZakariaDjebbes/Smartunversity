@@ -360,7 +360,10 @@ div.card-link.card {
 			{
 				$('#liste-groupes').prepend(li);
 			}
-				
+			
+			disabledButtons();
+			$('a[data-group="' + groupNumber + '"]').addClass('active');
+			emptyTable();
 			setSeanceOfTable(groupNumber);
 		}
 		

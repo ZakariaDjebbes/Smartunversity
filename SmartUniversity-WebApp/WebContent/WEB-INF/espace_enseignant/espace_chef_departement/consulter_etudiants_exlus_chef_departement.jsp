@@ -33,7 +33,7 @@
 							<table class="table table-striped table-bordered text-center table-center" id="table-etudiants-exclus">
 								<thead>
 									<tr class="table-success">
-										<th>Etudiant</th>
+										<th style="width: 35%;">Etudiant</th>
 										<th>Module</th>
 										<th>Total d'absences</th>
 										<th>Absences justifier</th>
@@ -45,7 +45,7 @@
 										<c:forEach var="etudiant" items="${seance.getEtudiants()}">
 											<c:if test="${etudiant.isExclus()}">
 												<tr>
-													<td>${etudiant.getEtudiant().getNom()} ${etudiant.getEtudiant().getPrenom()}</td>
+													<td>${etudiant.getEtudiant().getNom()} ${etudiant.getEtudiant().getPrenom()} <c:if test="${etudiant.getEtudiant().getEtat_etudiant() eq 'bloque'}"><span class="float-right badge badge-warning">${etudiant.getEtudiant().getEtat_etudiant().getValue(0)}</span></c:if></td>
 													<td>${seance.getModule().getNom()}-(${seance.getModule().getCode_module()})</td>
 													<td>${etudiant.getNombreAbsences()}</td>
 													<td>${etudiant.getAbsencesJusifiter()}</td>

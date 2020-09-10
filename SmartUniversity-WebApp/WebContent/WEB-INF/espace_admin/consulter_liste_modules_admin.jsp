@@ -59,11 +59,11 @@
 							<div class="row mt-3">
 								<div class="col">
 									<div class="table-responsive">
-										<table id="table-etudiants" class="table table-striped table-bordered">
+										<table id="table-modules" class="table table-striped table-bordered">
 											<thead>
 												<tr class="table-success">
-													<th>Nom d'utilisateur</th>
-													<th>Nom</th>
+													<th>Code module</th>
+													<th>Nom module</th>
 													<th>Opérations</th>
 												</tr>
 											</thead>
@@ -123,10 +123,61 @@
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/js/jquery.easing.min.js"></script>
 	<script src="assets/js/sb-admin-2.min.js"></script>
-	<script src="assets/js/Chart.min.js"></script>
 	<script src="assets/Datatables/datatables.min.js"></script>
-	
 	<script type="text/javascript">
+	$(document).ready(function(){
+		let table =  $('#table-modules').DataTable({
+	        "sDom": 'B<"top"f>rt<"bottom"lp><"clear">',
+	        "oLanguage": {
+	        	"oPaginate": {
+	        					"sPrevious": "Précédant", 
+	        					"sNext": "Suivant", 
+	        				 },
+				"sSearch": "Chercher: ",
+				"sZeroRecords": "Aucun module",
+	        	},
+	        "bAutoWidth": false,
+	    	"columnDefs": [
+	       	    { "orderable": false, "targets": 2 }
+	       	  ],  
+	     	buttons: [
+	            { 
+	            	extend: 'excelHtml5', 
+	            	className: 'btn-outline-success', text:'Excel <i class="fa fa-file-excel"></i>', 
+	            	exportOptions : {
+	            		columns: [0, 1], 
+	                },
+	                init: function(api, node, config) {
+	                    $(node).removeClass('btn-secondary')
+	                }
+	            },
+	            { 
+	            	extend: 'pdfHtml5', 
+	            	className: 'btn-outline-danger', 
+	            	text:'PDF <i class="fa fa-file-pdf"></i>', 
+	            	exportOptions : {
+	            		columns: [0, 1]
+	            	},
+	            	orientation: 'landscape', 
+	            	pageSize: 'LEGAL',
+	                init: function(api, node, config) {
+	                    $(node).removeClass('btn-secondary')
+	                }
+	            },
+	            { 
+	            	extend: 'csvHtml5', 
+	            	className: 'btn-outline-secondary', 
+	            	text:'CSV <i class="fa fa-table"></i>', 
+	            	exportOptions : {
+	            		columns: [0, 1]
+	            	},
+	                init: function(api, node, config) {
+	                    $(node).removeClass('btn-secondary')
+	                }
+	            },
+	            ]
+	    });
+
 		let modules = [
 		<c:forEach var="module" items="${modules}">
 				{
@@ -154,6 +205,7 @@
 			$("#code").html(id);
 			$("input[name='code-module']").val(id);
 		});
+	});
 	</script>
 </body>
 </html>

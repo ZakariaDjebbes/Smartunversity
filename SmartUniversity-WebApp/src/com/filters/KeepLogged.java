@@ -44,6 +44,7 @@ public class KeepLogged implements Filter
 			case etudiant:
 				Login.SetAbsencesNonJustifier(session);
 				Login.SetHasCongeAcademique(session);
+				Login.SetAbsencesNonTraite(session);
 				requestS.getRequestDispatcher("/WEB-INF/espace_etudiant/index_etudiant.jsp").forward(requestS,
 						responseS);
 				return;

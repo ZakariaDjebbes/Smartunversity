@@ -105,6 +105,7 @@ public class Login extends HttpServlet
 					session.setAttribute("utilisateur", etudiant);
 					SetAbsencesNonJustifier(session);
 					SetHasCongeAcademique(session);
+					SetAbsencesNonTraite(session);
 					Redirect.SendRedirect(request, response, "/WEB-INF/espace_etudiant/index_etudiant.jsp");
 					break;
 				case admin:
@@ -244,6 +245,37 @@ public class Login extends HttpServlet
 			}
 		}
 		session.setAttribute("absencesNonJustifier", result);
+	}
+	
+	public static void SetAbsencesNonTraite(HttpSession session)
+	{
+		ConsulterReleverAbsencesEtudiant.UpdateReleverAbsencesFromAPI(session);
+
+		ReleverAbsencesEtudiant relever = (ReleverAbsencesEtudiant) session.getAttribute("releverAbsences");
+
+		if (relever == null)
+		{
+			session.setAttribute("absencesNonTraite", 0);
+			return;
+		}
+
+		int result = 0;
+
+		
+		if(!(relever.getRelever() == null))
+		{
+			for (ArrayList<AbsenceDepartementResponse> absences : relever.getRelever().values())
+			{
+				for (AbsenceDepartementResponse absence : absences)
+				{
+					if (absence.getLatestJustification() != null && absence.getLatestJustification().getEtat_justification() == Etat_Demande.nonTraite)
+					{
+						result++;
+					}
+				}
+			}
+		}
+		session.setAttribute("absencesNonTraite", result);
 	}
 
 	public static void SetHasCongeAcademique(HttpSession session)

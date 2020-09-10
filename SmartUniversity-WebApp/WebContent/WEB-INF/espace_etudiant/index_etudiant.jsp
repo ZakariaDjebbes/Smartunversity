@@ -27,7 +27,12 @@
 						<h4 class="text-success pb-3">Tâches en cours de traitement:</h4>
 						<c:if test="${not empty absencesNonJustifier and absencesNonJustifier ne 0}">
 							<div class="alert alert-danger" role="alert">
-								<span><strong>Vous avez ${absencesNonJustifier} absences non justifié</strong></span>
+								<span><strong>Vous avez ${absencesNonJustifier} absence(s) non justifié</strong></span>
+							</div>
+						</c:if>
+						<c:if test="${not empty absencesNonTraite and absencesNonTraite ne 0}">
+							<div class="alert alert-info" role="alert">
+								<span><strong>Vous avez ${absencesNonTraite} justification(s) non traitée</strong></span>
 							</div>
 						</c:if>
 						<c:if test="${not empty HasCongeAcademique and HasCongeAcademique}">

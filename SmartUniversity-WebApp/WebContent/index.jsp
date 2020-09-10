@@ -107,6 +107,10 @@
 						<i class="icon-refresh icon text-success"></i> Synchronisation entre application web et mobile:
 					</h5>
 					<p>Les données sont totalement synchroniser entre mobile et web!.</p>
+					<h5>
+						<i class="fa fa-language icon text-success"></i> Disponible en Arabe
+					</h5>
+					<p>En plus du français et de l'anglais l'application mobile est également disponible en Arabe.</p>
 					<div class="text-center mt-5">
 						<a class="btn btn-outline-success" href="#">
 							<i class="fa fa-android"></i>Télécharger

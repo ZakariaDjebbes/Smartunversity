@@ -19,7 +19,14 @@
 </head>
 
 <body>
-	<jsp:include page="/WEB-INF/espace_enseignant/shared/header_enseignant.jsp"></jsp:include>
+	<c:choose>
+		<c:when test="${utilisateur.getUser_type() eq 'etudiant' }">
+			<jsp:include page="/WEB-INF/espace_etudiant/shared/header_etudiant.jsp"></jsp:include>
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="/WEB-INF/espace_enseignant/shared/header_enseignant.jsp"></jsp:include>
+		</c:otherwise>
+	</c:choose>
 	<main class="page landing-page">
 	<div class="clean-block clean-info dark">
 		<div class="container">
@@ -108,7 +115,7 @@
 							<c:choose>
 								<c:when test="${not empty justification}">
 									<img src="data:image/${justification.getExtension()};base64,${justification.base64EncodedFichier()}" class="justification-image" />
-									<ul>
+									<ul class="mt-4">
 										<li>
 											<b>Posté le:</b> ${justification.getFormattedDate_jusitifcation()}
 										</li>
@@ -366,7 +373,14 @@
 		</div>
 	</div>
 	</main>
-	<jsp:include page="/WEB-INF/espace_enseignant/shared/footer_enseignant.jsp"></jsp:include>
+	<c:choose>
+		<c:when test="${utilisateur.getUser_type() eq 'etudiant' }">
+			<jsp:include page="/WEB-INF/espace_etudiant/shared/footer_etudiant.jsp"></jsp:include>
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="/WEB-INF/espace_enseignant/shared/footer_enseignant.jsp"></jsp:include>
+		</c:otherwise>
+	</c:choose>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/Datatables/datatables.min.js"></script>
