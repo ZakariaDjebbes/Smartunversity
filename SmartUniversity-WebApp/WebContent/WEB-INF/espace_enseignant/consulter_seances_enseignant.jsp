@@ -38,7 +38,7 @@
 					<h4 class="alert-heading"><i class="icon-exclamation fa-lg"></i> <fmt:message key="pages.consulter_seances_enseignant.alert_header"></fmt:message></h4>
 				  <p><fmt:message key="pages.consulter_seances_enseignant.alert_text_01"></fmt:message>
 				  <br>
-				   <fmt:message key="pages.consulter_seances_enseignant.alert_02"></fmt:message>
+				   <fmt:message key="pages.consulter_seances_enseignant.alert_text_02"></fmt:message>
 				  </p>
 				</div>
 			</c:when>
