@@ -24,6 +24,7 @@ import com.dots.Dot_Create_Absence;
 import com.helpers.EtudiantResponse;
 import com.helpers.SeanceResponse;
 import com.modele.Etudiant.Etat_Etudiant;
+import com.utility.Utility;
 
 @WebServlet("/User/MarquerPresence")
 public class MarquerPresence extends HttpServlet
@@ -96,11 +97,29 @@ public class MarquerPresence extends HttpServlet
 		
 		if(isDone)
 		{
-			message = "Présence marquer avec succès.";
+			switch (Utility.GetValueOfCookieWithName(request, "lang"))
+			{
+			case "fr":
+				message = "Présence marquer avec succès.";				
+				break;
+			case "en":
+				message = "Presence mark successfully.";				
+				break;
+
+			}
 		}
 		else 
 		{
-			message= "Une erreur s'est produite, la présence n'a pas été marquer.";
+			switch (Utility.GetValueOfCookieWithName(request, "lang"))
+			{
+			case "fr":
+				message= "Une erreur s'est produite, la présence n'a pas été marqué.";
+				break;
+			case "en":
+				message = "An error has occurred, the presence has not been marked.";				
+				break;
+
+			}
 		}
 
 		ConsulterSeancesEnseignant.UpadteSeancesFromAPI(session);

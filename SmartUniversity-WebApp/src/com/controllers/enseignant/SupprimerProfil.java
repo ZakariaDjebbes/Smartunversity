@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import com.controllers.Redirect;
 import com.helpers.RequestResponse;
 import com.modele.Utilisateur;
+import com.utility.Utility;
 
 @WebServlet("/User/SupprimerProfil")
 public class SupprimerProfil extends HttpServlet 
@@ -40,8 +41,14 @@ public class SupprimerProfil extends HttpServlet
 		session.invalidate();
 		
 		session = request.getSession();
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("message", message);
 		Redirect.SendRedirect(request, response, "index.jsp");
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	{
+		doGet(req, resp);
 	}
 }

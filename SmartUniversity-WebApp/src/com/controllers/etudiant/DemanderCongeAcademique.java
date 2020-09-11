@@ -29,6 +29,7 @@ import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
 import com.controllers.Redirect;
 import com.dots.Dot_Create_CongeAcademique;
 import com.helpers.RequestResponse;
+import com.utility.Utility;
 
 @WebServlet("/User/DemanderCongeAcademique")
 @MultipartConfig
@@ -75,11 +76,11 @@ public class DemanderCongeAcademique extends HttpServlet
 
 		if (apiResponse.getStatusInfo() == Status.OK)
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		} else
 		{
 			isDone = false;
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		}
 
 		session.setAttribute("isDone", isDone);

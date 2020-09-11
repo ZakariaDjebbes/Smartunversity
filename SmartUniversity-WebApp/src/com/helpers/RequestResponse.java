@@ -49,6 +49,19 @@ public class RequestResponse
 		this.message_fr = message;
 	}
 	
+	public String getMessage(String lang)
+	{
+		switch (lang)
+		{
+		case "fr":
+			return getMessage_fr();
+		case "en":
+			return getMessage_en();
+		default : 
+			return getMessage_en();
+		}		
+	}
+	
 	public static RequestResponse GetRequestResponse(Response apiResponse)
 	{
 		RequestResponse requestResponse = null;

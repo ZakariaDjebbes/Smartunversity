@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Relevé d'absences - ${utilisateur.getNom()} ${utilisateur.getPrenom()}</title>
+<title>${seanceEtudiant.getModule().getNom()}-(${seanceEtudiant.getModule().getCode_module()})</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -24,37 +28,36 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block-heading">
-						<h2 class="text-success">Consulter une séance</h2>
-						<p>Détails de la séance en plus du votre relevé d'absences pour cette séance.</p>
+						<h2 class="text-success"><fmt:message key="pages.consulter_seance.title"></fmt:message></h2>
+						<p><fmt:message key="pages.consulter_seance.subtitle"></fmt:message></p>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
 					<div class="table-responsive">
-						<h4 class="text-success">Détails de la séance</h4>
+						<h4 class="text-success"><fmt:message key="pages.consulter_seance.detail_seance"></fmt:message></h4>
 						<table class="table table-sm">
 							<tbody>
 								<tr>
-									<th style="width: 30%">Module</th>
+									<th style="width: 30%"><fmt:message key="labels.module"></fmt:message></th>
 									<td>${seanceEtudiant.getModule().getNom()}-(${seanceEtudiant.getModule().getCode_module()})</td>
 								</tr>
 								<tr>
-									<th>Type</th>
-									<td>${seanceEtudiant.getSeance().getType().getValue(0)}-(${seanceEtudiant.getSeance().getType()})</td>
+									<th><fmt:message key="labels.type"></fmt:message></th>
+									<td>${seanceEtudiant.getSeance().getType().getValue(cookie['lang'].value)}-(${seanceEtudiant.getSeance().getType()})</td>
 								</tr>
 								<tr>
-									<th>Année et spécialité</th>
-									<td>${seanceEtudiant.getSeance().getAnnee().getValue(0)}-(${seanceEtudiant.getSeance().getAnnee()}),${seanceEtudiant.getSeance().getSpecialite().getValue(0)}-
-										(${seanceEtudiant.getSeance().getSpecialite()})</td>
+									<th><fmt:message key="labels.annee"></fmt:message>, <fmt:message key="labels.specialite"></fmt:message></th>
+									<td>${seanceEtudiant.getSeance().getAnnee().getValue(cookie['lang'].value)}-(${seanceEtudiant.getSeance().getAnnee()}), ${seanceEtudiant.getSeance().getSpecialite().getValue(cookie['lang'].value)}-(${seanceEtudiant.getSeance().getSpecialite()})</td>
 								</tr>
 								<tr>
-									<th>Groupe</th>
+									<th><fmt:message key="labels.group"></fmt:message></th>
 									<td>${seanceEtudiant.getSeance().getGroupe()}</td>
 								</tr>
 								<tr>
-									<th>Enseigner le:</th>
-									<td>${seanceEtudiant.getSeance().getJour().getValue(0)}à${seanceEtudiant.getSeance().getHeure()}</td>
+									<th><fmt:message key="labels.enseigne_le"></fmt:message></th>
+									<td>${seanceEtudiant.getSeance().getJour().getValue(cookie['lang'].value)}, ${seanceEtudiant.getSeance().getHeure()}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -63,7 +66,7 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<h4 class="text-success">Enseignant chargé de la séance</h4>
+					<h4 class="text-success"><fmt:message key="pages.consulter_seance.enseignant"></fmt:message></h4>
 					<c:choose>
 						<c:when test="${not empty enseignant}">
 							<div id="e-exists">
@@ -71,37 +74,37 @@
 									<table class="table table-sm">
 										<tbody>
 											<tr>
-												<th style="width: 30%">Nom et prénom</th>
+												<th style="width: 30%"><fmt:message key="labels.nom"></fmt:message>, <fmt:message key="labels.prenom"></fmt:message></th>
 												<td>${enseignant.getNom()}&nbsp;${enseignant.getPrenom()}</td>
 											</tr>
 											<tr>
-												<th>Né le</th>
+												<th><fmt:message key="labels.ne_le"></fmt:message></th>
 												<td>${enseignant.getDate()}</td>
 											</tr>
 											<tr>
-												<th>Adresse physique</th>
+												<th><fmt:message key="labels.adresse"></fmt:message></th>
 												<td>${enseignant.getAdresse()}</td>
 											</tr>
 											<tr>
-												<th>Contact</th>
+												<th><fmt:message key="labels.contact"></fmt:message></th>
 												<td>
 													<ul>
 														<li>
-															<b>Adresse mail</b>: ${enseignant.getEmail()}
+															<b><fmt:message key="labels.email"></fmt:message></b>: ${enseignant.getEmail()}
 														</li>
 														<li>
-															<b>Téléphone</b>: ${enseignant.getTelephone()}
+															<b><fmt:message key="labels.telephone"></fmt:message></b>: ${enseignant.getTelephone()}
 														</li>
 													</ul>
 												</td>
 											</tr>
 											<tr>
-												<th>Grade</th>
+												<th><fmt:message key="labels.grade"></fmt:message></th>
 												<td>${enseignant.getGrade()}</td>
 											</tr>
 											<tr>
-												<th>Département actuel</th>
-												<td>${enseignant.getCode_departement().getValue(0)}-(${enseignant.getCode_departement()})</td>
+												<th><fmt:message key="labels.departement"></fmt:message></th>
+												<td>${enseignant.getCode_departement().getValue(cookie['lang'].value)}-(${enseignant.getCode_departement()})</td>
 											</tr>
 										</tbody>
 									</table>
@@ -112,9 +115,9 @@
 							<div id="e-not-exists">
 								<div class="alert alert-warning" role="alert">
 									<h4 class="alert-heading">
-										<i class="icon-exclamation fa-lg"></i>&nbsp;Aucun enseignant n'est affecté a cette séance
+										<i class="icon-exclamation fa-lg"></i>&nbsp;<fmt:message key="pages.consulter_seance.alert_no_teacher_01"></fmt:message>
 									</h4>
-									<span>Vous pourrez voir les détails de votre enseignant une fois assigné par le chef de département.<br></span>
+									<span><fmt:message key="pages.consulter_seance.alert_no_teacher_02"></fmt:message><br></span>
 								</div>
 							</div>
 						</c:otherwise>

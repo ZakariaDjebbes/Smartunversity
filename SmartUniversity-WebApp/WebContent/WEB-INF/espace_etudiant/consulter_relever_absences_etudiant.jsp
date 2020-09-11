@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Relevé d'absences - ${utilisateur.getNom()} ${utilisateur.getPrenom()}</title>
+<title><fmt:message key="labels.releve"></fmt:message> - ${utilisateur.getNom()} ${utilisateur.getPrenom()}</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -24,8 +28,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block-heading">
-						<h2 class="text-success">Relevé d'absences</h2>
-						<p>Liste de vos absences pour chaque module, vous pouvez les justifier</p>
+						<h2 class="text-success"><fmt:message key="labels.releve"></fmt:message></h2>
+						<p><fmt:message key="pages.releve_etudiant.subtitle"></fmt:message></p>
 					</div>
 				</div>
 			</div>
@@ -35,10 +39,10 @@
 						<c:choose>
 							<c:when test="${releverAbsences.isEmpty()}">
 								<div class="alert alert-success" role="alert">
-								  <h4 class="alert-heading">Vous n'avez aucune absence!</h4>
-								  <p>Vous n'avez aucune absence enregistrer pour le moment!</p>
+								  <h4 class="alert-heading"><fmt:message key="pages.releve_etuiant.alert_no_absences_01"></fmt:message></h4>
+								  <p><fmt:message key="pages.releve_etuiant.alert_no_absences_02"></fmt:message></p>
 								  <hr>
-								  <p class="mb-0">Si une est absence est enregistré elle sera afficher ici.</p>
+								  <p class="mb-0"><fmt:message key="pages.releve_etuiant.alert_no_absences_03"></fmt:message></p>
 								</div>
 							</c:when>
 							<c:otherwise>
@@ -50,16 +54,16 @@
 												<tr>
 													<th class="text-left" style="width: 50%">${absences.get(0).getModule().getNom()}
 														<a href="${pageContext.request.contextPath}/User/ConsulterSeanceEtudiant?code-seance=${absences.get(0).getSeance().getCode_seance()}">
-															<span class="badge badge-info">Consulter</span>
+															<span class="badge badge-info"><fmt:message key="labels.consult"></fmt:message></span>
 														</a>
 													</th>
 													<th>${absences.size()} Absences</th>
 													<c:choose>
 														<c:when test="${releverAbsences.isExcluFrom(absences.get(0).getSeance().getCode_seance())}">
-															<th class="text-danger text-right">Exclu</th>
+															<th class="text-danger text-right"><fmt:message key="labels.exclu"></fmt:message></th>
 														</c:when>
 														<c:otherwise>
-															<th class="text-success text-right">Non exclu</th>
+															<th class="text-success text-right"><fmt:message key="labels.not_exclu"></fmt:message></th>
 														</c:otherwise>
 													</c:choose>
 												</tr>
@@ -68,22 +72,22 @@
 														<td>Le ${absence.getAbsence().getDate_absence()}</td>
 														<c:choose>
 															<c:when test="${absence.getLatestJustification().getEtat_justification() eq 'valide'}">
-																<td class="text-success">Justification ${absence.getLatestJustification().getEtat_justification().getValue(0)}</td>
+																<td class="text-success">${absence.getLatestJustification().getEtat_justification().getValue(cookie['lang'].value)}</td>
 															</c:when>
 															<c:when test="${absence.getLatestJustification().getEtat_justification() eq 'refuse'}">
-																<td class="text-danger">Justification ${absence.getLatestJustification().getEtat_justification().getValue(0)}</td>
+																<td class="text-danger">${absence.getLatestJustification().getEtat_justification().getValue(cookie['lang'].value)}</td>
 															</c:when>
 															<c:when test="${absence.getLatestJustification().getEtat_justification() eq 'nonTraite'}">
-																<td class="text-warning">Justification ${absence.getLatestJustification().getEtat_justification().getValue(0)}</td>
+																<td class="text-warning">${absence.getLatestJustification().getEtat_justification().getValue(cookie['lang'].value)}</td>
 															</c:when>
 															<c:otherwise>
-																<td>Aucune justification</td>
+																<td><fmt:message key="labels.no_justification"></fmt:message></td>
 															</c:otherwise>
 														</c:choose>
 														<td class="noExport text-right">
 															<a href='${pageContext.request.contextPath}/User/ConsulterAbsence?numero-absence=${absence.getAbsence().getNumero_absence()}' class='btn btn-outline-info' data-toggle='tooltip'
 																data-placement='top' title='Consulter cette absence'>
-																consulter <i class="fa fa-search"></i>
+																<fmt:message key="labels.consult"></fmt:message> <i class="fa fa-search"></i>
 															</a>
 
 														</td>
@@ -95,7 +99,7 @@
 								</div>
 								<div class="text-center mt-5">
 									<div class="dropdown">
-										<button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Telecharger au format</button>
+										<button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><fmt:message key="labels.download"></fmt:message></button>
 										<div class="dropdown-menu" role="menu">
 											<a class="dropdown-item" role="presentation" id="btn-download-excel">
 												Excel&nbsp;<i class="fa fa-file-excel-o float-right fa-lg text-success"></i>

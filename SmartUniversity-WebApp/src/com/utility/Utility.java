@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import com.modele.ChefDepartement;
 import com.modele.Enseignant;
 import com.modele.Etudiant;
@@ -22,12 +25,32 @@ public class Utility
 		Calendar cal2 = Calendar.getInstance();
 		cal1.setTime(date1);
 		cal2.setTime(date2);
-		boolean sameDay = cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
-		                  cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
-		
+		boolean sameDay = cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+				&& cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+
 		return sameDay;
 	}
-	
+
+	public static String GetValueOfCookieWithName(HttpServletRequest request, String name)
+	{
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null)
+		{
+			for (int i = 0; i < cookies.length; i++)
+			{
+				Cookie cookie = cookies[i];
+				String cookieName = cookie.getName();
+
+				if (cookieName.equals(name))
+				{
+					return cookie.getValue();
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public static String generateRandomString(int length)
 	{
 		final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -41,11 +64,11 @@ public class Utility
 
 		return builder.toString();
 	}
-	
+
 	public static ArrayList<Specialite> GetSpecialitesOfAnnee(Annee annee)
 	{
 		ArrayList<Specialite> specialites = new ArrayList<Specialite>();
-		
+
 		switch (annee)
 		{
 		case L1:
@@ -60,7 +83,8 @@ public class Utility
 			specialites.add(Specialite.SCI);
 			specialites.add(Specialite.TI);
 			break;
-		case M1: case M2:
+		case M1:
+		case M2:
 			specialites.add(Specialite.GL);
 			specialites.add(Specialite.RSD);
 			specialites.add(Specialite.STIW);
@@ -69,22 +93,22 @@ public class Utility
 		default:
 			return null;
 		}
-		
+
 		return specialites;
 	}
-	
+
 	public static Code_Departement GetDepartementOfUser(Utilisateur utilisateur)
 	{
 		switch (utilisateur.getUser_type())
 		{
 		case chefDepartement:
-			return ((ChefDepartement)utilisateur).getCode_departement();
+			return ((ChefDepartement) utilisateur).getCode_departement();
 		case enseignant:
-			return ((Enseignant)utilisateur).getCode_departement();
+			return ((Enseignant) utilisateur).getCode_departement();
 		case etudiant:
-			return ((Etudiant)utilisateur).getCode_departement();
+			return ((Etudiant) utilisateur).getCode_departement();
 		case responsableFormation:
-			return ((ResponsableFormation)utilisateur).getCode_departement();
+			return ((ResponsableFormation) utilisateur).getCode_departement();
 		default:
 			return null;
 		}

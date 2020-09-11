@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html>
 
@@ -29,10 +32,10 @@
 	<section class="clean-block clean-form dark">
 		<div class="container">
 			<div class="block-heading">
-				<h2 class="text-success">Votre profil</h2>
-				<p>Consultez ou Modifiez votre profil</p>
+				<h2 class="text-success"><fmt:message key="pages.update_profil.title"></fmt:message></h2>
+				<p><fmt:message key="pages.update_profil.subtitle"></fmt:message></p>
 			</div>
-			<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post" action="${pageContext.request.contextPath}/User/ModifierProfil" class="text-left form-special" id="form-profil">
+			<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post" class="text-left form-special" id="form-profil">
 				<c:if test="${not empty isDone && not empty message}">
 					<c:choose>
 						<c:when test="${isDone}">
@@ -58,97 +61,97 @@
 				<div class="form-row">
 					<div class="col">
 						<div class="text-center">
-							<h4 class="text-success">Informations de connection</h4>
+							<h4 class="text-success"><fmt:message key="pages.update_profil.header_01"></fmt:message></h4>
 						</div>
 						<div class="form-group">
-							<label>Nom d'utilisateur</label>
+							<label><fmt:message key="labels.user"></fmt:message></label>
 							<input class="form-control" autocomplete="off" type="text" value="${utilisateur.getUser()}" name="user" required>
 						</div>
 						<div class="form-group">
-							<label>Mot de passe</label>
+							<label><fmt:message key="labels.password"></fmt:message></label>
 							<input class="form-control" autocomplete="off" type="password" value="${utilisateur.getPass()}" name="pass" required minlength="6">
 						</div>
 						<div class="text-center">
-							<h4 class="text-success">Infromations personnelles</h4>
+							<h4 class="text-success"><fmt:message key="pages.update_profil.header_02"></fmt:message></h4>
 						</div>
 						<div class="form-group">
-							<label>Nom</label>
+							<label><fmt:message key="labels.nom"></fmt:message></label>
 							<input class="form-control" type="text" value="${utilisateur.getNom()}" name="nom" required>
 						</div>
 						<div class="form-group">
-							<label>Prenom</label>
+							<label><fmt:message key="labels.prenom"></fmt:message></label>
 							<input class="form-control" type="text" value="${utilisateur.getPrenom()}" name="prenom" required>
 						</div>
 						<div class="form-group">
-							<label>Adresse</label>
+							<label><fmt:message key="labels.adresse"></fmt:message></label>
 							<input class="form-control" type="text" value="${utilisateur.getAdresse()}" name="adresse" required>
 						</div>
 						<div class="form-group">
-							<label>Adresse email</label>
+							<label><fmt:message key="labels.email"></fmt:message></label>
 							<input class="form-control" type="email" value="${utilisateur.getEmail()}" name="email" required>
 						</div>
 						<div class="form-group">
-							<label>Téléphone</label>
+							<label><fmt:message key="labels.telephone"></fmt:message></label>
 							<input class="form-control" type="tel" required value="${utilisateur.getTelephone()}" name="telephone" maxlength="10">
 						</div>
 						<div class="form-group">
-							<label>Date de naissance</label>
+							<label><fmt:message key="labels.date_n"></fmt:message></label>
 							<input class="form-control" type="date" value="${utilisateur.getDate()}" name="date_n" required>
 						</div>
 					</div>
 					<div class="col">
 						<div class="text-center">
-							<h4 class="text-success">Informations de compte</h4>
+							<h4 class="text-success"><fmt:message key="pages.update_profil.header_03"></fmt:message></h4>
 						</div>
 						<div class="form-group">
-							<label>Type d'utilisateur</label>
-							<input class="form-control" type="text" value="${utilisateur.getUser_type().getValue(0)}" readonly required>
+							<label><fmt:message key="labels.user_type"></fmt:message></label>
+							<input class="form-control" type="text" value="${utilisateur.getUser_type().getValue(cookie['lang'].value)}" readonly required>
 						</div>
 						<c:if test="${utilisateur.getUser_type() eq 'enseignant' or utilisateur.getUser_type() eq 'chefDepartement'}">
 							<div class="form-group">
-								<label>Grade</label>
+								<label><fmt:message key="labels.grade"></fmt:message></label>
 								<input class="form-control" type="text" value="${utilisateur.getGrade()}" readonly required>
 							</div>
 						</c:if>
 						<c:if test="${utilisateur.getUser_type() eq 'etudiant'}">
 							<div class="form-group">
-								<label>Département</label>
-								<input class="form-control" type="text" value="${utilisateur.getCode_departement().getValue(0)} - (${utilisateur.getCode_departement()})" readonly required>
+								<label><fmt:message key="labels.departement"></fmt:message></label>
+								<input class="form-control" type="text" value="${utilisateur.getCode_departement().getValue(cookie['lang'].value)} - (${utilisateur.getCode_departement()})" readonly required>
 							</div>
 							<div class="form-group">
-								<label>Année</label>
-								<input class="form-control" type="text" value="${utilisateur.getAnnee().getValue(0)} - (${utilisateur.getAnnee()})" readonly required>
+								<label><fmt:message key="labels.annee"></fmt:message></label>
+								<input class="form-control" type="text" value="${utilisateur.getAnnee().getValue(cookie['lang'].value)} - (${utilisateur.getAnnee()})" readonly required>
 							</div>
 							<div class="form-group">
-								<label>Spécialité</label>
-								<input class="form-control" type="text" value="${utilisateur.getSpecialite().getValue(0)} - (${utilisateur.getSpecialite()})" readonly required>
+								<label><fmt:message key="labels.specialite"></fmt:message></label>
+								<input class="form-control" type="text" value="${utilisateur.getSpecialite().getValue(cookie['lang'].value)} - (${utilisateur.getSpecialite()})" readonly required>
 							</div>
 							<div class="form-group">
-								<label>Groupe</label>
+								<label><fmt:message key="labels.group"></fmt:message></label>
 								<input class="form-control" type="text" value="${utilisateur.getGroupe()}" readonly required>
 							</div>
 						</c:if>
 						<c:if test="${utilisateur.getUser_type() eq 'enseignant' or utilisateur.getUser_type() eq 'chefDepartement'}">
 							<div class="text-center">
-								<h4 class="text-danger">Supprimer votre compte</h4>
-								<small class="d-block">La suppréssion du compte est&nbsp;<span class="text-danger">définitive</span>&nbsp;.
+								<h4 class="text-danger"><fmt:message key="pages.update_profil.delete_account"></fmt:message></h4>
+								<small class="d-block"><fmt:message key="pages.update_profil.small_delete_account"></fmt:message>
 								</small>
-								<button class="btn btn-outline-danger mt-3" type="button" type="button" data-toggle="modal" data-target="#supprimer-profil-modal">Supprimer mon compte</button>
+								<button class="btn btn-outline-danger mt-3" type="button" type="button" data-toggle="modal" data-target="#supprimer-profil-modal"><fmt:message key="labels.delete"></fmt:message></button>
 								<div class="modal fade" id="supprimer-profil-modal" tabindex="-1" role="dialog" aria-hidden="true">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title">Attention!</h5>
+												<h5 class="modal-title"><fmt:message key="labels.warning"></fmt:message>!</h5>
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
 											<div class="modal-body">
-												Vous allez supprimer votre compte <span class="text-danger">définitivement</span>.
+												<fmt:message key="pages.update_profil.small_delete_account"></fmt:message>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-												<button type="submit" formaction="${pageContext.request.contextPath}/User/SupprimerProfil" class="btn btn-outline-danger">Supprimer mon profil</button>
+												<button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
+												<button type="submit" formaction="${pageContext.request.contextPath}/User/SupprimerProfil" class="btn btn-outline-danger"><fmt:message key="labels.delete"></fmt:message></button>
 											</div>
 										</div>
 									</div>
@@ -159,7 +162,7 @@
 				</div>
 				<div class="form-row">
 					<div class="col text-center mt-3">
-						<button class="btn btn-outline-success" type="submit">Appliquer les modifications</button>
+						<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ModifierProfil" type="submit"><fmt:message key="labels.edit"></fmt:message></button>
 					</div>
 				</div>
 			</form>

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,11 +65,11 @@ div.card-link.card {
 								<c:remove var="message" />
 							</c:if>
 							<div class="text-center">
-								<h2 class="text-success">Gérer les séances de la faculté</h2>
-								<p>Sélectionnez un groupe puis modifiez, supprimez ou ajouter une séance.</p>
+								<h2 class="text-success"><fmt:message key="pages.index_admin.gerer_seance_title"></fmt:message></h2>
+								<p><fmt:message key="pages.index_admin.gerer_seance_subtitle_02"></fmt:message></p>
 							</div>
 							<div class="row">
-								<h5>Liste des groupes ${annee} - ${specialite}:</h5>
+								<h5><fmt:message key="pages.index_admin.liste_groupes"></fmt:message> ${annee} - ${specialite}:</h5>
 							</div>
 							<div class="row mt-3">
 								<ul class="list-inline" id="liste-groupes">
@@ -79,23 +82,23 @@ div.card-link.card {
 							</div>
 							<div class="row mt-3">
 								<h5>
-									Emploi du temps du groupe <span class="group-number"></span>:
+									<fmt:message key="pages.index_admin.emploi_temp"></fmt:message> <span class="group-number"></span>:
 								</h5>
 							</div>
 							<div class="row mt-3">
 								<div class="table-responsive">
 									<table class="table table-bordered" id="table-emploi">
 										<caption class="text-center font-weight-bold">
-											Emploi du temps - ${annee}, ${specialite} Groupe <span class="group-number"></span>
+											<fmt:message key="labels.emploi"></fmt:message> - ${annee}, ${specialite} Groupe <span class="group-number"></span>
 										</caption>
 										<thead>
 											<tr class="text-center">
 												<th></th>
-												<th>Dimanche</th>
-												<th>Lundi</th>
-												<th>Mardi</th>
-												<th>Mercredi</th>
-												<th>Jedui</th>
+												<th><fmt:message key="labels.sunday"></fmt:message></th>
+												<th><fmt:message key="labels.monday"></fmt:message></th>
+												<th><fmt:message key="labels.tuesday"></fmt:message></th>
+												<th><fmt:message key="labels.wednesday"></fmt:message></th>
+												<th><fmt:message key="labels.thursday"></fmt:message></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -179,7 +182,7 @@ div.card-link.card {
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title">Ajouter une séance</h5>
+	        <h5 class="modal-title"><fmt:message key="pages.index_admin.add_session"></fmt:message></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -188,7 +191,7 @@ div.card-link.card {
 		      <div class="modal-body">
 		        <div class="form-row">
 		        	<div class="form-group">
-		        		<label for="type">Type de la séance</label>
+		        		<label for="type"><fmt:message key="labels.type"></fmt:message></label>
 		        		<select class="form-control" name="type" id="type">
 		        			<option value="TP">TP</option>
 		        			<option value="TD">TD</option>
@@ -197,7 +200,7 @@ div.card-link.card {
 		        </div>
 		        <div class="form-row">
     		        <div class="form-group">
-		        		<label for="module">Module</label>
+		        		<label for="module"><fmt:message key="labels.module"></fmt:message></label>
 		        		<select class="form-control" name="module" id="module">
 		        		</select>
 		        	</div>
@@ -209,8 +212,8 @@ div.card-link.card {
 		        <input name="annee" value="${annee}" type="hidden">
 		        <input name="specialite" value="${specialite}" type="hidden">
 		        <input name="groupe" value="" type="hidden">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-		        <button type="submit" class="btn btn-outline-success">Ajouter</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
+		        <button type="submit" class="btn btn-outline-success"><fmt:message key="labels.add"></fmt:message></button>
 		      </div>
 	      </form>
 	    </div>
@@ -220,21 +223,21 @@ div.card-link.card {
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title">Supprimer cette séance?</h5>
+	        <h5 class="modal-title"><fmt:message key="pages.index_admin.delete_session"></fmt:message></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        Voulez vous supprimer cette séance?
+	        <fmt:message key="pages.index_admin.delete_session_text"></fmt:message>
 	      </div>
 	      <div class="modal-footer">
 	      	<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/SupprimerSeanceAdmin" method="post">
 	      		<input type="hidden" name="code_seance" value="">
       			<input name="annee" value="${annee}" type="hidden">
 		        <input name="specialite" value="${specialite}" type="hidden">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-		        <button type="submit" class="btn btn-outline-danger">Supprimer</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
+		        <button type="submit" class="btn btn-outline-danger"><fmt:message key="labels.delete"></fmt:message></button>
 	        </form>
 	      </div>
 	    </div>
@@ -244,7 +247,7 @@ div.card-link.card {
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title">Modifier une séance</h5>
+	        <h5 class="modal-title"><fmt:message key="pages.index_admin.update_session"></fmt:message></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -253,7 +256,7 @@ div.card-link.card {
 		      <div class="modal-body">
 		        <div class="form-row">
 		        	<div class="form-group">
-		        		<label for="type">Type de la séance</label>
+		        		<label for="type"><fmt:message key="labels.type"></fmt:message></label>
 		        		<select class="form-control" name="type" id="type">
 		        			<option value="TP">TP</option>
 		        			<option value="TD">TD</option>
@@ -262,7 +265,7 @@ div.card-link.card {
 		        </div>
 		        <div class="form-row">
     		        <div class="form-group">
-		        		<label for="module">Module</label>
+		        		<label for="module"><fmt:message key="labels.module"></fmt:message></label>
 		        		<select class="form-control" name="code_module" id="module">
 		        		</select>
 		        	</div>
@@ -272,8 +275,8 @@ div.card-link.card {
 		        <input name="code_seance" value="" type="hidden">
 		        <input name="annee" value="${annee}" type="hidden">
 		        <input name="specialite" value="${specialite}" type="hidden">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-		        <button type="submit" class="btn btn-outline-primary">Modifier</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
+		        <button type="submit" class="btn btn-outline-primary"><fmt:message key="labels.valide"></fmt:message></button>
 		      </div>
 	      </form>
 	    </div>
@@ -458,7 +461,7 @@ div.card-link.card {
 					let date = getDate($(this));
 					let day = date[0];
 					let hour = date[1];
-					let addSession = '<a href="" data-day="' + day + '" data-hour="' + hour + '" data-toggle="modal" class="add-session" data-target="#modal-add-session"><span class="badge badge-secondary">Ajouter une séance</span></a>'
+					let addSession = '<a href="" data-day="' + day + '" data-hour="' + hour + '" data-toggle="modal" class="add-session" data-target="#modal-add-session"><span class="badge badge-secondary"><fmt:message key="pages.index_admin.add_session"></fmt:message></span></a>'
 					$(this).html(addSession);
 				}	
 			});
@@ -490,8 +493,8 @@ div.card-link.card {
 				+'<hr>'
 				+'<b>' + nom + '</b>'
 				+'<br>'
-				+'<a href="" data-code="' + code_seance + '" data-toggle="modal" data-target="#modal-update-session" class="update-session"><span class="badge badge-primary">Consulter</span></a>'
-				+'<a href="" data-code="' + code_seance + '" data-toggle="modal" data-target="#modal-delete-session" class="delete-session"><span class="badge badge-danger ml-1">Supprimer</span></a>'
+				+'<a href="" data-code="' + code_seance + '" data-toggle="modal" data-target="#modal-update-session" class="update-session"><span class="badge badge-primary"><fmt:message key="labels.consult"></fmt:message></span></a>'
+				+'<a href="" data-code="' + code_seance + '" data-toggle="modal" data-target="#modal-delete-session" class="delete-session"><span class="badge badge-danger ml-1"><fmt:message key="labels.delete"></fmt:message></span></a>'
 			}
 			else
 			{

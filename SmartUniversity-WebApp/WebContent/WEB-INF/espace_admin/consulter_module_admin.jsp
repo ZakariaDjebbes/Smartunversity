@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,8 +30,8 @@
 					<div class="card mb-4 py-3 border-bottom-success">
 						<div class="card-body">
 							<div class="text-center">
-								<h2 class="text-success">Modification d'un module</h2>
-								<p>Modifier les données de ce module</p>
+								<h2 class="text-success"><fmt:message key="pages.index_admin.update_module_title"></fmt:message></h2>
+								<p><fmt:message key="pages.index_admin.update_module_subtitle"></fmt:message></p>
 							</div>
 							<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/ConsulterModuleAdmin" method="post" class="form-special form-sidebar">
 								<c:if test="${not empty isDone && not empty message}">
@@ -60,11 +63,11 @@
 								<div class="form-row">
 									<div class="col-12">
 										<div class="form-group">
-											<label>Code du module</label>
+											<label><fmt:message key="pages.index_admin.code_module"></fmt:message></label>
 											<input class="form-control" name="code-module" value="${module.getCode_module()}" type="text" required>
 										</div>
 										<div class="form-group">
-											<label>Nom complet du module</label>
+											<label><fmt:message key="pages.index_admin.nom_module"></fmt:message></label>
 											<input class="form-control" name="nom" value="${module.getNom()}" type="text" required>
 										</div>
 									</div>
@@ -72,12 +75,12 @@
 								<div class="form-row">
 									<div class="col text-center">
 										<button type="button" data-id="${module.getCode_module()}" class="deleteModule btn btn-outline-danger" data-toggle="modal" data-target="#delete-modal">
-											Supprimer ce module
+											<fmt:message key="pages.index_admin.delete_module"></fmt:message>
 										</button>								
 									</div>
 									<div class="col text-center">
 										<input type="hidden" value="${module.getCode_module()}" name="code-module">
-										<button class="btn btn-outline-success" type="submit">Enregistrer les modifications</button>
+										<button class="btn btn-outline-success" type="submit"><fmt:message key="labels.valide"></fmt:message></button>
 									</div>
 								</div>
 								<input type="hidden" name="old-code-module" value="${module.getCode_module()}">
@@ -91,19 +94,19 @@
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Supprimer ce module?</h5>
+			        <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="pages.index_admin.delete_module"></fmt:message>?</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
-			        Voulez vous supprimer le module <span class="text-info" id="nom"></span> - (<span id="code" class="text-info"></span>)?
+			       <fmt:message key="pages.index_admin.delete_module_text"></fmt:message> <span class="text-info" id="nom"></span> - (<span id="code" class="text-info"></span>)?
 			      </div>
 			      <div class="modal-footer">
 			      	<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post">
 			      		<input type="hidden" name="code-module">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-				        <button type="submit" formaction="${pageContext.request.contextPath}/User/SupprimerModuleAdmin"  type="submit" class="btn btn-outline-danger">Supprimer le module</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
+				        <button type="submit" formaction="${pageContext.request.contextPath}/User/SupprimerModuleAdmin"  type="submit" class="btn btn-outline-danger"><fmt:message key="labels.delete"></fmt:message></button>
 			        </form>
 			      </div>
 			    </div>

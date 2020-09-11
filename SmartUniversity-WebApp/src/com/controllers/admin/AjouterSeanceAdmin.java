@@ -24,6 +24,7 @@ import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
 import com.modele.Seance.Jour;
 import com.modele.Seance.Type_Seance;
+import com.utility.Utility;
 
 @WebServlet("/User/AjouterSeanceAdmin")
 public class AjouterSeanceAdmin extends HttpServlet
@@ -55,7 +56,7 @@ public class AjouterSeanceAdmin extends HttpServlet
 			isDone = false;
 		}
 
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("isDone", isDone);
 		session.setAttribute("message", message);
 		Redirect.SendRedirect(request, response, "/User/ConsulterSeancesAdmin?annee=" + seance.getAnnee() + "&specialite=" + seance.getSpecialite());

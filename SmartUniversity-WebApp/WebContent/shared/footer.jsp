@@ -1,23 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
 <footer class="page-footer dark">
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h5>Accès rapide</h5>
+				<h5><fmt:message key="footers.quick_access"></fmt:message></h5>
 				<ul>
 					<li>
-						<a href="index.jsp">Acceuil</a>
+						<a href="index.jsp"><fmt:message key="footers.index"></fmt:message></a>
 					</li>
 					<li>
-						<a href="nous-contacter">Nous contacter</a>
+						<a href="nous-contacter"><fmt:message key="footers.contact"></fmt:message></a>
 					</li>
 					<li>
-						<a href="login.jsp">Se connecter</a>
+						<a href="login.jsp"><fmt:message key="footers.login"></fmt:message></a>
 					</li>
 				</ul>
 			</div>
 			<div class="col">
-				<h5>Nos coordonnées</h5>
+				<h5><fmt:message key="footers.contact_details"></fmt:message></h5>
 				<ul class="no-ul">
 					<li>
 						<p class="text-white">
@@ -39,6 +44,6 @@
 		</div>
 	</div>
 	<div class="footer-copyright">
-		<p>© 2020 Djebbes Zakaria &amp; Ouaden Aymen - All rights reserved.</p>
+		<p><fmt:message key="footers.copyrights"></fmt:message></p>
 	</div>
 </footer>

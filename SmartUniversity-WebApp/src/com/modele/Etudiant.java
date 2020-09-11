@@ -11,11 +11,11 @@ public class Etudiant extends Utilisateur
 	 */
 	public enum Annee
 	{
-		L1("1ere année licence", "PLACE HOLDER", "PLACE HOLDER"),
-		L2("2ème année licence", "PLACE HOLDER", "PLACE HOLDER"),
-		L3("3ème année licence", "PLACE HOLDER", "PLACE HOLDER"),
-		M1("1ere année master", "PLACE HOLDER", "PLACE HOLDER"),
-		M2("2ème année master", "PLACE HOLDER", "PLACE HOLDER");
+		L1("1ère  année licence", "1st year license", "PLACE HOLDER"),
+		L2("2ème année licence", "2nd year license", "PLACE HOLDER"),
+		L3("3ème année licence", "3rd year license", "PLACE HOLDER"),
+		M1("1ere année master", "1st year master", "PLACE HOLDER"),
+		M2("2ème année master", "2nd year master", "PLACE HOLDER");
 		
 		private final List<String> values;
 		
@@ -33,6 +33,21 @@ public class Etudiant extends Utilisateur
 		{
 			return values.get(index);
 		}
+		
+		public String getValue(String lang)
+		{
+			switch (lang)
+			{
+			case "fr":
+				return values.get(0);
+
+			case "en":
+				return values.get(1);
+				
+			default:
+				return values.get(1);
+			}
+		}
 	}
 	
 	/***
@@ -41,14 +56,14 @@ public class Etudiant extends Utilisateur
 	 */
 	public enum Specialite
 	{
-		MI("Mathématiques et informatique", "PLACE HOLDER", "PLACE HOLDER"),
-		GL("Génie logiciel", "PLACE HOLDER", "PLACE HOLDER"),
-		SI("Systèmes d'information", "PLACE HOLDER", "PLACE HOLDER"),
-		SCI("Sciences de l’informatique", "PLACE HOLDER", "PLACE HOLDER"),
-		TI("Technologies de l'information", "PLACE HOLDER", "PLACE HOLDER"),
-		STIC("Sciences et technologies de l'information et de la communication", "PLACE HOLDER", "PLACE HOLDER"),
-		STIW("Systèmes d’information et technologies web", "PLACE HOLDER", "PLACE HOLDER"),
-		RSD("Réseaux et systèmes distribués", "PLACE HOLDER", "PLACE HOLDER");
+		MI("Mathématiques et informatique", "Mathematics and Computer Science", "PLACE HOLDER"),
+		GL("Génie logiciel", "Software engineering", "PLACE HOLDER"),
+		SI("Systèmes d'information", "Information systems", "PLACE HOLDER"),
+		SCI("Sciences de l'informatique", "Computer sciences", "PLACE HOLDER"),
+		TI("Technologies de l'information", "Information technology", "PLACE HOLDER"),
+		STIC("Sciences et technologies de l'information et de la communication", "Information and Communication Sciences and Technologies", "PLACE HOLDER"),
+		STIW("Systèmes d’information et technologies web", "Information systems and web technologies", "PLACE HOLDER"),
+		RSD("Réseaux et systèmes distribués", "Networks and Distributed Systems", "PLACE HOLDER");
 		
 		private final List<String> values;
 		
@@ -66,6 +81,21 @@ public class Etudiant extends Utilisateur
 		{
 			return values.get(index);
 		}
+		
+		public String getValue(String lang)
+		{
+			switch (lang)
+			{
+			case "fr":
+				return values.get(0);
+
+			case "en":
+				return values.get(1);
+				
+			default:
+				return values.get(1);
+			}
+		}
 	}
 	
 	/***
@@ -74,8 +104,8 @@ public class Etudiant extends Utilisateur
 	 */
 	public enum Etat_Etudiant
 	{
-		actif("Actif","",""),
-		bloque("En Congé Académique","","");
+		actif("Actif","Active",""),
+		bloque("En Congé Académique","On Academic Leave","");
 		
 		private final List<String> values;
 		
@@ -92,6 +122,21 @@ public class Etudiant extends Utilisateur
 		public String getValue(int index)
 		{
 			return values.get(index);
+		}
+		
+		public String getValue(String lang)
+		{
+			switch (lang)
+			{
+			case "fr":
+				return values.get(0);
+
+			case "en":
+				return values.get(1);
+				
+			default:
+				return values.get(1);
+			}
 		}
 	}
 	

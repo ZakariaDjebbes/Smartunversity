@@ -25,6 +25,7 @@ import com.helpers.SeanceResponse;
 import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
 import com.modele.Seance.Type_Seance;
+import com.utility.Utility;
 
 @WebServlet("/User/ConsulterSeancesAdmin")
 public class ConsulterSeancesAdmin extends HttpServlet
@@ -76,7 +77,7 @@ public class ConsulterSeancesAdmin extends HttpServlet
 		
 		RequestResponse requestResponse = apiResponse.readEntity(RequestResponse.class);		
 		apiResponse.close();
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("message", message);
 		session.setAttribute("isDone", isDone);
 		

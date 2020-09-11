@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Statistiques du département - NTIC</title>
+<title><fmt:message key="pages.stats.title_chef"></fmt:message> - NTIC</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -27,8 +30,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block-heading">
-						<h2 class="text-success">Statistiques de votre département</h2>
-						<p>Consulter les statistiques du département par enseignant, jour, heure et module</p>
+						<h2 class="text-success"><fmt:message key="pages.stats.title_chef"></fmt:message></h2>
+						<p><fmt:message key="pages.stats.subtitle"></fmt:message></p>
 					</div>
 				</div>
 			</div>
@@ -37,19 +40,19 @@
 					<form>
 						<div class="row">
 							<div class="form-group col">
-								<label for="chart-type">Type de graphique</label>
+								<label for="chart-type"><fmt:message key="pages.stats.chart_type"></fmt:message></label>
 								<select class="form-control" id="chart-type">
-									<option value="bar">Barres</option>
-									<option value="line">Graphe</option>
+									<option value="bar"><fmt:message key="pages.stats.bar"></fmt:message></option>
+									<option value="line"><fmt:message key="pages.stats.graph"></fmt:message></option>
 								</select>
 							</div>
 							<div class="form-group col">
-								<label for="stat-type">Type de statistiques</label>
+								<label for="stat-type"><fmt:message key="pages.stats.stat_type"></fmt:message></label>
 								<select class="form-control" id="stat-type">
-									<option value="stat-jour">Absences par jour</option>
-									<option value="stat-heure">Absences par heure</option>
-									<option value="stat-module">Absences par module</option>
-									<option value="stat-enseignant">Absences par enseignant</option>
+									<option value="stat-jour"><fmt:message key="pages.stats.per_day"></fmt:message></option>
+									<option value="stat-heure"><fmt:message key="pages.stats.per_hour"></fmt:message></option>
+									<option value="stat-module"><fmt:message key="pages.stats.per_module"></fmt:message></option>
+									<option value="stat-enseignant"><fmt:message key="pages.stats.per_enseignant"></fmt:message></option>
 								</select>
 							</div>
 						</div>
@@ -76,10 +79,10 @@
 			const byHour = "heure";
 			const byModule= "module";
 			const byEnseignant = "enseignant";
-			const titleByDay = "Nombre d'absences par jours " + departement;
-			const titleByHour = "Nombre d\'absences par heures " + departement;
-			const titleByModule = "Nombre d\'absences par modules " + departement;
-			const titleByEnseignant = "Nombre d\'absences par enseignant " + departement;
+			const titleByDay = '<fmt:message key="pages.stats.per_day_title"></fmt:message>' + departement;
+			const titleByHour = '<fmt:message key="pages.stats.per_hour_title"></fmt:message>' + departement;
+			const titleByGroup = '<fmt:message key="pages.stats.per_group_title"></fmt:message>' + departement;
+			const titleByEnseignant = '<fmt:message key="pages.stats.per_enseignant_title"></fmt:message>' + departement;
 			let statTypeSelect = $("#stat-type");
 			let chartTypeSelect = $("#chart-type");
 			let statModuleOption = $("option[value='stat-module']");			
@@ -88,7 +91,7 @@
 			
 			let jours = [
 				<c:forEach var="jour" items="${jours}">
-				"${jour.getValue(0)}",
+				"${jour.getValue(cookie['lang'].value)}",
 				</c:forEach>
 			];
 
@@ -98,7 +101,7 @@
 					enseignant: "${item.getEnseignant().getNom()} ${item.getEnseignant().getPrenom()}",
 					module: "${item.getModule().getNom()}",
 					code_module: "${item.getModule().getCode_module()}",
-					jour: "${item.getSeance().getJour().getValue(0)}",
+					jour: "${item.getSeance().getJour().getValue(cookie['lang'].value)}",
 					heure: "${item.getSeance().getHeure()}",
 					groupe: ${item.getSeance().getGroupe()},
 					nombre_absences: ${item.getNombreAbsences()},
@@ -112,7 +115,7 @@
 			let chart_data = {
 	          datasets: [
 		        	{
-		                label: "Total d'absences",
+		                label: '<fmt:message key="labels.nombre_absence"></fmt:message>',
 		                backgroundColor: 'rgba(54, 162, 235, 0.2)',
 			            borderColor:'rgba(54, 162, 235, 1)',
 			            borderWidth: 1,
@@ -359,7 +362,7 @@
 			let index = uniq_enseignants.indexOf(" ");
 
 			if (index !== -1) {
-				uniq_enseignants[index] = "Séances sans enseignant";
+				uniq_enseignants.splice(index, 1)
 			}
 			
 			return uniq_enseignants;

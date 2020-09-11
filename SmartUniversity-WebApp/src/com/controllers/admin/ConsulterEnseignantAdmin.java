@@ -28,6 +28,7 @@ import com.modele.Enseignant;
 import com.modele.Utilisateur;
 import com.modele.Utilisateur.Code_Departement;
 import com.modele.Utilisateur.Type_Utilisateur;
+import com.utility.Utility;
 
 @WebServlet("/User/ConsulterEnseignantAdmin")
 public class ConsulterEnseignantAdmin extends HttpServlet
@@ -93,7 +94,7 @@ public class ConsulterEnseignantAdmin extends HttpServlet
 		
 		RequestResponse requestResponse = apiResponse.readEntity(RequestResponse.class);		
 		apiResponse.close();
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("message", message);
 		session.setAttribute("isDone", isDone);
 		Redirect.SendRedirect(request, response, "/User/ConsulterEnseignantAdmin?id_enseignant=" + enseignant.getId_utilisateur());

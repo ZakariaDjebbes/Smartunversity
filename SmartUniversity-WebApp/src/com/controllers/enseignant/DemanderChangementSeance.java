@@ -23,6 +23,7 @@ import com.dots.Dot_Create_ChangementSeance;
 import com.helpers.RequestResponse;
 import com.helpers.SeanceResponse;
 import com.modele.Seance.Jour;
+import com.utility.Utility;
 
 @WebServlet("/User/DemanderChangementSeance")
 public class DemanderChangementSeance extends HttpServlet
@@ -61,11 +62,11 @@ public class DemanderChangementSeance extends HttpServlet
 
 		if (apiResponse.getStatusInfo() == Status.OK)
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		} else
 		{
 			isDone = false;
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		}
 
 		ConsulterSeancesEnseignant.UpadteSeancesFromAPI(session);

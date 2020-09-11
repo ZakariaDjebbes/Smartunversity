@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html>
 
@@ -25,8 +27,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block-heading">
-						<h2 class="text-success">Demander un congé académique</h2>
-						<p>Faites un demande de congé académique au chef de departement</p>
+						<h2 class="text-success"><fmt:message key="pages.conge_etudiant.title"></fmt:message></h2>
+						<p><fmt:message key="pages.conge_etudiant.subtitle"></fmt:message></p>
 					</div>
 				</div>
 			</div>
@@ -58,21 +60,21 @@
 						<div class="col">
 							<div role="alert" class="alert alert-danger">
 								<h4 class="alert-heading">
-									<i class="icon-exclamation"></i> Vous allez demander un congé académique.
+									<i class="icon-exclamation"></i> <fmt:message key="pages.conge_etudiant.alert_header_01"></fmt:message>
 								</h4>
 								<hr>
-								<span>Une fois le congé valider par votre chef de département, le congé sera <b>définitif</b>.<br>Une fois sous congé académique vous serez <b>totalement exclu</b> de ce système.
+								<span><fmt:message key="pages.conge_etudiant.alert_text_01"></fmt:message><br><fmt:message key="pages.conge_etudiant.alert_text_02"></fmt:message>
 								</span>
 							</div>
 							<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post" action="${pageContext.request.contextPath}/User/DemanderCongeAcademique" enctype="multipart/form-data">
 								<div class="form-group">
 									<input type="hidden" name="id-etudiant" value="${utilisateur.getId_utilisateur()}">
-									<label for="fichier-conge">Fichier justifiant le congé académique:&nbsp;</label>
+									<label for="fichier-conge"><fmt:message key="pages.conge_etudiant.choose_file"></fmt:message>&nbsp;</label>
 									<input type="file" accept="image/*" required name="fichier-congeAcademique" id="fichier-conge">
-									<small class="d-block">*.png, *.jpg, *.jpeg seulement</small>
+									<small class="d-block">*.png, *.jpg, *.jpeg <fmt:message key="labels.only"></fmt:message></small>
 								</div>
 								<div class="form-group">
-									<button class="btn btn-outline-danger" type="submit">Envoyer une demande</button>
+									<button class="btn btn-outline-danger" type="submit"><fmt:message key="labels.send"></fmt:message></button>
 								</div>
 							</form>
 						</div>
@@ -83,16 +85,15 @@
 						<div class="col">
 							<div role="alert" class="alert alert-warning">
 								<h4 class="alert-heading">
-									<i class="icon-exclamation"></i> Annuler votre demande de congé?
+									<i class="icon-exclamation"></i> <fmt:message key="pages.conge_etudiant.alert_header_02"></fmt:message>
 								</h4>
 								<hr>
-								<span>Pour le moment vous pouvez encore annuler votre demande de congé mais une fois le congé valider par votre chef de département, le congé sera <b>définitif</b>.<br>Une fois
-									sous congé académique vous serez <b>totalement exclu</b> de ce système. <br> <b>Etat actuel: </b> <c:choose>
+								<span><fmt:message key="pages.conge_etudiant.alert_text_03"></fmt:message><br><fmt:message key="pages.conge_etudiant.alert_text_04"></fmt:message><br> <b><fmt:message key="pages.conge_etudiant.alert_etat"></fmt:message> </b> <c:choose>
 										<c:when test="${demandeConge.getEtat_demande() eq 'refuse'}">
-											<span class="text-danger font-weight-bold"> ${demandeConge.getEtat_demande().getValue(0)} </span>
+											<span class="text-danger font-weight-bold"> ${demandeConge.getEtat_demande().getValue(cookie['lang'].value)} </span>
 										</c:when>
 										<c:otherwise>
-											<span class="text-warning font-weight-bold"> ${demandeConge.getEtat_demande().getValue(0)} </span>
+											<span class="text-warning font-weight-bold"> ${demandeConge.getEtat_demande().getValue(cookie['lang'].value)} </span>
 										</c:otherwise>
 									</c:choose>
 								</span>
@@ -100,7 +101,7 @@
 								<span>
 									<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal" method="post" action="${pageContext.request.contextPath}/User/AnnulerCongeAcademique">
 										<input type="hidden" name="numero-conge-academique" value="${demandeConge.getNumero_conge_academique()}">
-										<button type="submit" class="btn btn-warning">Annuler la demande</button>
+										<button type="submit" class="btn btn-warning"><fmt:message key="labels.cancel"></fmt:message></button>
 									</form>
 								</span>
 							</div>

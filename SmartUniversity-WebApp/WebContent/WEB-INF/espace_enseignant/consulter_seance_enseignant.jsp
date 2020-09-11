@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +31,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block-heading">
-						<h2 class="text-success">Consultation de séance</h2>
-						<p>Marquez la présence, consulter les absences et faites vos demandes au chef de département pour cette séance.</p>
+						<h2 class="text-success"><fmt:message key="pages.consulter_seance_enseignant.title"></fmt:message></h2>
+						<p><fmt:message key="pages.consulter_seance_enseignant.subtitle"></fmt:message></p>
 					</div>
 				</div>
 			</div>
@@ -37,54 +41,54 @@
 					<div id="tabs-seance">
 						<ul class="nav nav-pills nav-fill">
 							<li class="nav-item btn-outline" id="marquer-presence">
-								<a role="tab" data-toggle="pill" href="#tab-marquer-presence" class="nav-link">Marquer la présence</a>
+								<a role="tab" data-toggle="pill" href="#tab-marquer-presence" class="nav-link"><fmt:message key="pages.consulter_seance_enseignant.marquer"></fmt:message></a>
 							</li>
 							<li class="nav-item" id="relever-absences">
-								<a role="tab" data-toggle="pill" href="#tab-relever-absences" class="nav-link">Relever d&#39;absences</a>
+								<a role="tab" data-toggle="pill" href="#tab-relever-absences" class="nav-link"><fmt:message key="pages.consulter_seance_enseignant.releve"></fmt:message></a>
 							</li>
 							<li class="nav-item" id="etudiants-exclus">
-								<a role="tab" data-toggle="pill" href="#tab-etudiants-exclus" class="nav-link">Etudiants exclus</a>
+								<a role="tab" data-toggle="pill" href="#tab-etudiants-exclus" class="nav-link"><fmt:message key="pages.consulter_seance_enseignant.exclus"></fmt:message></a>
 							</li>
 							<li class="nav-item" id="demande-changement">
-								<a role="tab" data-toggle="pill" href="#tab-demande-changement" class="nav-link">Demande de changement</a>
+								<a role="tab" data-toggle="pill" href="#tab-demande-changement" class="nav-link"><fmt:message key="pages.consulter_seance_enseignant.changement"></fmt:message></a>
 							</li>
 							<li class="nav-item" id="seances-supp">
-								<a role="tab" data-toggle="pill" href="#tab-seances-supp" class="nav-link">Séances supplémentaires</a>
+								<a role="tab" data-toggle="pill" href="#tab-seances-supp" class="nav-link"><fmt:message key="pages.consulter_seance_enseignant.supp"></fmt:message></a>
 							</li>
 						</ul>
 						<div class="mt-4">
 					    	<div class="text-left">    
-					    		<h4 style="display:inline-block" class="text-success">Détails de la séance</h4>
+					    		<h4 style="display:inline-block" class="text-success"><fmt:message key="pages.consulter_seance.detail_seance"></fmt:message></h4>
 					    		<c:if test="${utilisateur.getUser_type() eq 'chefDepartement'}">
-					    			<a href="${pageContext.request.contextPath}/User/ConsulterSeanceChefDepartement?code-seance=${seance.getSeance().getCode_seance()}" style="float:right" class="badge badge-info">Consulter</a>
+					    			<a href="${pageContext.request.contextPath}/User/ConsulterSeanceChefDepartement?code-seance=${seance.getSeance().getCode_seance()}" style="float:right" class="badge badge-info"><fmt:message key="labels.consult"></fmt:message></a>
 					    		</c:if> 
 					    	</div>
 							<table class="table table-sm">
 								<tbody>
 									<tr>
-										<th style="width: 30%">Module</th>
+										<th style="width: 30%"><fmt:message key="labels.module"></fmt:message></th>
 										<td>${seance.getModule().getNom()} - (${seance.getModule().getCode_module()})</td>
 									</tr>
 									<tr>
-										<th>Type</th>
-										<td>${seance.getSeance().getType().getValue(0)} - (${seance.getSeance().getType()})</td>
+										<th><fmt:message key="labels.type"></fmt:message></th>
+										<td>${seance.getSeance().getType().getValue(cookie['lang'].value)} - (${seance.getSeance().getType()})</td>
 									</tr>
 									<tr>
-										<th>Année et spécialité</th>
-										<td>${seance.getSeance().getAnnee().getValue(0)} - (${seance.getSeance().getAnnee()}),${seance.getSeance().getSpecialite().getValue(0)} - (${seance.getSeance().getSpecialite()})</td>
+										<th><fmt:message key="labels.annee"></fmt:message>, <fmt:message key="labels.specialite"></fmt:message></th>
+										<td>${seance.getSeance().getAnnee().getValue(cookie['lang'].value)} - (${seance.getSeance().getAnnee()}),${seance.getSeance().getSpecialite().getValue(cookie['lang'].value)} - (${seance.getSeance().getSpecialite()})</td>
 									</tr>
 									<tr>
-										<th>Groupe</th>
+										<th><fmt:message key="labels.group"></fmt:message></th>
 										<td>${seance.getSeance().getGroupe()}</td>
 									</tr>
 									<tr>
-										<th>Enseigner le:</th>
-										<td>${seance.getSeance().getJour().getValue(0)} à ${seance.getSeance().getHeure()}</td>
+										<th><fmt:message key="labels.enseigne_le"></fmt:message></th>
+										<td>${seance.getSeance().getJour().getValue(cookie['lang'].value)} à ${seance.getSeance().getHeure()}</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<h4 class="text-success">Gestion de la séance</h4>
+						<h4 class="text-success"><fmt:message key="pages.consulter_seance_enseignant.gestion"></fmt:message></h4>
 						<c:if test="${not empty isDone && not empty message}">
 							<c:choose>
 								<c:when test="${isDone}">
@@ -119,10 +123,10 @@
 														<table class="table table-sm table-striped table-bordered text-center table-center" id="table-presence">
 															<thead>
 																<tr class="table-primary">
-																	<th style="width: 30%">Nom</th>
-																	<th style="width: 30%">Prenom</th>
-																	<th style="width: 30%">Etat actuel</th>
-																	<th style="width: 10%">Présence</th>
+																	<th style="width: 30%"><fmt:message key="labels.nom"></fmt:message></th>
+																	<th style="width: 30%"><fmt:message key="labels.prenom"></fmt:message></th>
+																	<th style="width: 30%"><fmt:message key="labels.etat"></fmt:message></th>
+																	<th style="width: 10%"><fmt:message key="labels.presence"></fmt:message></th>
 																</tr>
 															</thead>
 															<tbody>
@@ -130,7 +134,7 @@
 																	<tr>
 																		<td>${responseEtudiant.getEtudiant().getNom()}</td>
 																		<td>${responseEtudiant.getEtudiant().getPrenom()}</td>
-																		<td>${responseEtudiant.getEtudiant().getEtat_etudiant().getValue(0)}</td>
+																		<td>${responseEtudiant.getEtudiant().getEtat_etudiant().getValue(cookie['lang'].value)}</td>
 																		<td>
 																			<c:if test="${responseEtudiant.getEtudiant().getEtat_etudiant() eq 'actif'}">
 																				<label class="checkbox-label" for="${responseEtudiant.getEtudiant().getId_utilisateur()}">
@@ -144,13 +148,13 @@
 															</tbody>
 														</table>
 													</div>
-													<input type="submit" value="Valider" class="mt-3 form-control mr-auto btn btn-outline-primary">
+													<input type="submit" value="<fmt:message key="labels.valide"></fmt:message>" class="mt-3 form-control mr-auto btn btn-outline-primary">
 												</form>
 											</c:when>
 											<c:otherwise>
 												<div class="text-center">
 													<h6 class="text-bold">
-														<i class="icon-exclamation fa-lg text-primary"></i><span class="text-primary"> Aucun</span> étudiant n'est enregistré pour ce groupe
+														<i class="icon-exclamation fa-lg text-primary"></i><fmt:message key="pages.consulter_seance_enseignant.no_students"></fmt:message>
 													</h6>
 												</div>
 											</c:otherwise>
@@ -164,7 +168,7 @@
 										<div class="row">
 											<div class="col col-12 col-md-4" style="margin-bottom: 10px;">
 												<div class="text-center border rounded-0 text-center" style="background-color: rgb(195, 230, 203); padding: 13px 0px;">
-													<p class="d-inline font-weight-bold">Etudiants</p>
+													<p class="d-inline font-weight-bold"><fmt:message key="labels.etudiants"></fmt:message></p>
 												</div>
 												<div class="select-list list-group d-block" id="list-etudiants-relever">
 													<c:forEach var="etudiant" items="${seance.getEtudiants()}" varStatus="stat">
@@ -172,7 +176,7 @@
 															<a class="list-group-item list-group-item-action active" id="${etudiant.getEtudiant().getId_utilisateur()}" data-toggle="list" role="tab" aria-controls="home">
 																<span>${etudiant.getEtudiant().getNom()} ${etudiant.getEtudiant().getPrenom()} 
 																<c:if test="${etudiant.getEtudiant().getEtat_etudiant() eq 'bloque'}">
-																	<span class="badge badge-warning" style="float:right">${etudiant.getEtudiant().getEtat_etudiant().getValue(0)}</span>
+																	<span class="badge badge-warning" style="float:right">${etudiant.getEtudiant().getEtat_etudiant().getValue(cookie['lang'].value)}</span>
 																</c:if>
 																</span>
 															</a>											    
@@ -181,7 +185,7 @@
 															<a class="list-group-item list-group-item-action" id="${etudiant.getEtudiant().getId_utilisateur()}" data-toggle="list" role="tab" aria-controls="home">
 																<span>${etudiant.getEtudiant().getNom()} ${etudiant.getEtudiant().getPrenom()}
 																<c:if test="${etudiant.getEtudiant().getEtat_etudiant() eq 'bloque'}">
-																	<span class="badge badge-warning" style="float:right">${etudiant.getEtudiant().getEtat_etudiant().getValue(0)}</span>
+																	<span class="badge badge-warning" style="float:right">${etudiant.getEtudiant().getEtat_etudiant().getValue(cookie['lang'].value)}</span>
 																</c:if>
 																</span>
 															</a>
@@ -190,7 +194,7 @@
 												</div>
 												<div>
 													<div class="input-group">
-														<input class="form-control" type="text" id="filter-etudiants" placeholder="Cherchez un etudiant...">
+														<input class="form-control" type="text" id="filter-etudiants" placeholder="<fmt:message key="pages.consulter_seance_enseignant.search_student"></fmt:message>...">
 														<div class="input-group-append">
 															<span class="input-group-text"><i class="fa fa-search fa-lg"></i></span>
 														</div>
@@ -202,9 +206,9 @@
 													<table class="table table-striped table-bordered table-sm" id="table-absences">
 														<thead>
 															<tr>
-																<th class="table-success">Date</th>
-																<th class="table-success">Etat</th>
-																<th class="table-success">Operation</th>
+																<th class="table-success"><fmt:message key="labels.date"></fmt:message></th>
+																<th class="table-success"><fmt:message key="labels.etat"></fmt:message></th>
+																<th class="table-success"><fmt:message key="labels.gestion"></fmt:message></th>
 															</tr>
 														</thead>
 														<tbody>
@@ -217,7 +221,7 @@
 									<c:otherwise>
 										<div class="text-center">
 											<h6 class="text-bold">
-												<i class="icon-exclamation fa-lg text-success"></i><span class="text-success"> Aucun</span> étudiant n'est enregistré pour ce groupe
+												<i class="icon-exclamation fa-lg text-success"></i><fmt:message key="pages.consulter_seance_enseignant.no_releve"></fmt:message>
 											</h6>
 										</div>
 									</c:otherwise>
@@ -231,10 +235,10 @@
 												<table id="table-etudiants-exclus" class="table table-bordered text-center table-sm table-center">
 													<thead>
 														<tr class="table-warning">
-															<th>Etudiant</th>
-															<th>Nombre d'absenes</th>
-															<th>Nombre d'absenes justifier</th>
-															<th>Nombre d'absenes non justifier</th>
+															<th><fmt:message key="labels.nom"></fmt:message></th>
+															<th><fmt:message key="labels.nombre_absence"></fmt:message></th>
+															<th><fmt:message key="labels.nombre_justifier"></fmt:message></th>
+															<th><fmt:message key="labels.nombre_non_justifier"></fmt:message></th>
 														</tr>
 													</thead>
 													<tbody>
@@ -243,7 +247,7 @@
 																<tr>
 																	<td>${responseEtudiant.getEtudiant().getNom()} ${responseEtudiant.getEtudiant().getPrenom()} 
 																	<c:if test="${responseEtudiant.getEtudiant().getEtat_etudiant() eq 'bloque'}"> 
-																	<b>(${responseEtudiant.getEtudiant().getEtat_etudiant().getValue(0)})</b></c:if></td>
+																	<b>(${responseEtudiant.getEtudiant().getEtat_etudiant().getValue(cookie['lang'].value)})</b></c:if></td>
 																	<td>${responseEtudiant.getNombreAbsences()}</td>
 																	<td>${responseEtudiant.getAbsencesJusifiter()}</td>
 																	<td>${responseEtudiant.getAbsencesNonJustifier()}</td>
@@ -257,7 +261,7 @@
 										<c:otherwise>
 											<div class="text-center">
 												<h6 class="text-bold">
-													<i class="icon-exclamation fa-lg text-warning"></i> <span class="text-warning">Aucun</span> étudiant n'est exclu pour ce groupe
+													<i class="icon-exclamation fa-lg text-warning"></i> <fmt:message key="pages.consulter_seance_enseignant.no_exclus"></fmt:message>
 												</h6>
 											</div>
 										</c:otherwise>
@@ -271,40 +275,40 @@
 											<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 											<div class="row">
 												<div class="col text-center text-info">
-													<label>Jour</label>
+													<label><fmt:message key="labels.day"></fmt:message></label>
 												</div>
 											</div>
 											<div class="row">
 												<div class="form-group col">
-													<label>Ancien jour</label>
-													<input class="form-control" type="text" placeholder="${seance.getSeance().getJour().getValue(0)}" readonly>
+													<label><fmt:message key="labels.old"></fmt:message> <fmt:message key="labels.day"></fmt:message></label>
+													<input class="form-control" type="text" placeholder="${seance.getSeance().getJour().getValue(cookie['lang'].value)}" readonly>
 												</div>
 												<div class="form-group col">
-													<label for="nouveau-jour-${seance.getSeance().getCode_seance()}">Nouveau jour</label>
+													<label for="nouveau-jour-${seance.getSeance().getCode_seance()}"><fmt:message key="labels.new"></fmt:message> <fmt:message key="labels.day"></fmt:message></label>
 													<select class="custom-select" id="nouveau-jour-${seance.getSeance().getCode_seance()}" required name="nouveau-jour">
-														<option disabled selected>Choisissez un jour</option>
-														<option value="dimanche">Dimanche</option>
-														<option value="lundi">Lundi</option>
-														<option value="mardi">Mardi</option>
-														<option value="mercredi">Mercredi</option>
-														<option value="jeudi">Jeudi</option>
+														<option disabled selected><fmt:message key="labels.day"></fmt:message></option>
+														<option value="dimanche"><fmt:message key="labels.sunday"></fmt:message></option>
+														<option value="lundi"><fmt:message key="labels.monday"></fmt:message></option>
+														<option value="mardi"><fmt:message key="labels.tuesday"></fmt:message></option>
+														<option value="mercredi"><fmt:message key="labels.wednesday"></fmt:message></option>
+														<option value="jeudi"><fmt:message key="labels.thursday"></fmt:message></option>
 													</select>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col form-group text-center text-info">
-													<label>Heure de début</label>
+													<label><fmt:message key="labels.hour"></fmt:message></label>
 												</div>
 											</div>
 											<div class="row">
 												<div class="form-group col">
-													<label>Ancienne heure</label>
+													<label><fmt:message key="labels.old_f"></fmt:message> <fmt:message key="labels.hour"></fmt:message></label>
 													<input class="form-control" type="text" placeholder="${seance.getSeance().getHeure()}" readonly>
 												</div>
 												<div class="form-group col">
 													<label for="nouvelle-heure-${seance.getSeance().getCode_seance()}">Nouvelle heure</label>
 													<select class="custom-select" id="nouvelle-heure-${seance.getSeance().getCode_seance()}" required name="nouvelle-heure">
-														<option disabled selected>Choisissez une heure</option>
+														<option disabled selected><fmt:message key="labels.hour"></fmt:message></option>
 														<option value="8:30">8:30</option>
 														<option value="10:00">10:00</option>
 														<option value="11:30">11:30</option>
@@ -313,59 +317,59 @@
 													</select>
 												</div>
 											</div>
-											<input type="submit" value="Valider" class="form-control mr-auto btn btn-outline-info">
+											<input type="submit" value="<fmt:message key="labels.valide"></fmt:message>" class="form-control mr-auto btn btn-outline-info">
 										</form>
 									</c:when>
 									<c:otherwise>
 										<div class="text-center">
 											<h6 class="text-bold">
-												<i class="icon-exclamation fa-lg text-info"></i> Une demande de changement pour cette séance <span class="text-info">existe déjâ</span>
+												<i class="icon-exclamation fa-lg text-info"></i><fmt:message key="pages.consulter_seance_enseignant.already_changement"></fmt:message>
 											</h6>
 										</div>
 										<div class="row">
 											<div class="col text-center text-info">
-												<label>Jour</label>
+												<label><fmt:message key="labels.day"></fmt:message></label>
 											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col">
-												<label>Ancien jour</label>
-												<input class="form-control" type="text" placeholder="${seance.getSeance().getJour().getValue(0)}" readonly>
+												<label><fmt:message key="labels.old"></fmt:message> <fmt:message key="labels.day"></fmt:message></label>
+												<input class="form-control" type="text" placeholder="${seance.getSeance().getJour().getValue(cookie['lang'].value)}" readonly>
 											</div>
 											<div class="form-group col">
-												<label>Nouveau jour</label>
-												<input class="form-control" type="text" placeholder="${seance.getChangementSeance().getNouveau_jour().getValue(0)}" readonly>
+												<label><fmt:message key="new.valide"></fmt:message> <fmt:message key="labels.day"></fmt:message></label>
+												<input class="form-control" type="text" placeholder="${seance.getChangementSeance().getNouveau_jour().getValue(cookie['lang'].value)}" readonly>
 											</div>
 										</div>
 										<hr>
 										<div class="row">
 											<div class="col form-group text-center text-info">
-												<label>Heure de début</label>
+												<label><fmt:message key="labels.hour"></fmt:message></label>
 											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col">
-												<label>Ancienne heure</label>
+												<label><fmt:message key="labels.old_f"></fmt:message> <fmt:message key="labels.hour"></fmt:message></label>
 												<input class="form-control" type="text" placeholder="${seance.getSeance().getHeure()}" readonly>
 											</div>
 											<div class="form-group col">
-												<label>Nouvelle heure</label>
+												<label><fmt:message key="labels.new_f"></fmt:message> <fmt:message key="labels.hour"></fmt:message></label>
 												<input class="form-control" type="text" placeholder="${seance.getChangementSeance().getHeure()}" readonly>
 											</div>
 										</div>
 										<hr>
 										<div class="row">
 											<div class="text-center form-group col">
-												<label>Etat de la demande:
+												<label>E<fmt:message key="labels.etat"></fmt:message> :
 													<c:choose>
 														<c:when test="${seance.getChangementSeance().getEtat_seance() eq 'valide'}">
-															<span class="text-success">${seance.getChangementSeance().getEtat_seance().getValue(0)}</span>
+															<span class="text-success">${seance.getChangementSeance().getEtat_seance().getValue(cookie['lang'].value)}</span>
 														</c:when>
 														<c:when test="${seance.getChangementSeance().getEtat_seance() eq 'refuse'}">
-															<span class="text-danger">${seance.getChangementSeance().getEtat_seance().getValue(0)}</span>
+															<span class="text-danger">${seance.getChangementSeance().getEtat_seance().getValue(cookie['lang'].value)}</span>
 														</c:when>
 														<c:when test="${seance.getChangementSeance().getEtat_seance() eq 'nonTraite'}">
-															<span class="text-warning">${seance.getChangementSeance().getEtat_seance().getValue(0)}</span>
+															<span class="text-warning">${seance.getChangementSeance().getEtat_seance().getValue(cookie['lang'].value)}</span>
 														</c:when>
 													</c:choose>	
 												</label>
@@ -373,7 +377,7 @@
 										</div>
 										<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="form-normal mt-3" method="post" action="${pageContext.request.contextPath}/User/SupprimerDemandeChangement">
 											<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
-											<input type="submit" value="Annuler la demande" class="form-control mr-auto btn btn-outline-danger">
+											<input type="submit" value="<fmt:message key="labels.cancel"></fmt:message>" class="form-control mr-auto btn btn-outline-danger">
 										</form>
 									</c:otherwise>
 								</c:choose>
@@ -385,33 +389,33 @@
 											<table id="table-seances-supp" class="table table-bordered text-center table-sm table-center">
 												<thead>
 													<tr class="table-secondary">
-														<th>Jour</th>
-														<th>Heure</th>
-														<th>Etat</th>
-														<th>Opération</th>
+														<th><fmt:message key="labels.day"></fmt:message></th>
+														<th><fmt:message key="labels.hour"></fmt:message></th>
+														<th><fmt:message key="labels.etat"></fmt:message></th>
+														<th><fmt:message key="labels.gestion"></fmt:message></th>
 													</tr>
 												</thead>
 												<tbody>
 													<c:forEach var="seanceSupp" items="${seance.getSeancesSupp()}">
 														<tr>
-															<td>${seanceSupp.getJour().getValue(0)}</td>
+															<td>${seanceSupp.getJour().getValue(cookie['lang'].value)}</td>
 															<td>${seanceSupp.getHeure()}</td>
 															<c:choose>
 																<c:when test="${seanceSupp.getEtat_seance() eq 'valide'}">
-																	<td class="text-success">${seanceSupp.getEtat_seance().getValue(0)}</td>
+																	<td class="text-success">${seanceSupp.getEtat_seance().getValue(cookie['lang'].value)}</td>
 																</c:when>
 																<c:when test="${seanceSupp.getEtat_seance() eq 'refuse'}">
-																	<td class="text-danger">${seanceSupp.getEtat_seance().getValue(0)}</td>
+																	<td class="text-danger">${seanceSupp.getEtat_seance().getValue(cookie['lang'].value)}</td>
 																</c:when>
 																<c:when test="${seanceSupp.getEtat_seance() eq 'nonTraite'}">
-																	<td class="text-warning">${seanceSupp.getEtat_seance().getValue(0)}</td>
+																	<td class="text-warning">${seanceSupp.getEtat_seance().getValue(cookie['lang'].value)}</td>
 																</c:when>
 															</c:choose>	
 															<td>
 																<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/AnnulerSeanceSupp" method="post" class="form-normal">
 																	<input type="hidden" name="code-seance" value="${seanceSupp.getCode_seance()}">
 																	<input type="hidden" name="code-seance-supp" value="${seanceSupp.getCode_seance_supp()}">
-																	<input type="submit" value="Annuler" class="form-control mr-auto btn btn-outline-danger">
+																	<input type="submit" value="<fmt:message key="labels.cancel"></fmt:message>" class="form-control mr-auto btn btn-outline-danger">
 																</form>
 															</td>
 														</tr>
@@ -419,24 +423,24 @@
 												</tbody>
 											</table>
 											<div class="text-center mb-4 mt-4">
-												<h6 class="text-dark">Demander une autre seance supplémentaire</h6>
+												<h6 class="text-dark"><fmt:message key="pages.consulter_seance_enseignant.other_supp"></fmt:message></h6>
 											</div>
 											<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
 												<input type="hidden" name="code-seance" value="${seance.getSeance().getCode_seance()}">
 												<div class="row">
 													<div class="col">
 														<select class="custom-select" required name="jour-supp">
-															<option disabled selected>Jour</option>
-															<option value="dimanche">Dimanche</option>
-															<option value="lundi">Lundi</option>
-															<option value="mardi">Mardi</option>
-															<option value="mercredi">Mercredi</option>
-															<option value="jeudi">Jeudi</option>
+															<option disabled selected><fmt:message key="labels.day"></fmt:message></option>
+															<option value="dimanche"><fmt:message key="labels.sunday"></fmt:message></option>
+															<option value="lundi"><fmt:message key="labels.monday"></fmt:message></option>
+															<option value="mardi"><fmt:message key="labels.tuesday"></fmt:message></option>
+															<option value="mercredi"><fmt:message key="labels.wednesday"></fmt:message></option>
+															<option value="jeudi"><fmt:message key="labels.thursday"></fmt:message></option>
 														</select>
 													</div>
 													<div class="col">
 														<select class="custom-select" required name="heure-supp">
-															<option disabled selected>Heure</option>
+															<option disabled selected><fmt:message key="labels.hour"></fmt:message></option>
 															<option value="8:30">8:30</option>
 															<option value="10:00">10:00</option>
 															<option value="11:30">11:30</option>
@@ -445,7 +449,7 @@
 														</select>
 													</div>
 													<div class="col">
-														<input type="submit" value="Demander" class="form-control mr-auto btn btn-outline-secondary">
+														<input type="submit" value="<fmt:message key="labels.demande"></fmt:message>" class="form-control mr-auto btn btn-outline-secondary">
 													</div>
 												</div>
 											</form>
@@ -454,7 +458,7 @@
 									<c:otherwise>
 										<div class="text-center">
 											<h6 class="text-bold">
-												<i class="icon-exclamation fa-lg text-secondary"></i> <span class="text-secondary">Aucune </span>Seance supplémentaire n'est programmé
+												<i class="icon-exclamation fa-lg text-secondary"></i> <fmt:message key="pages.consulter_seance_enseignant.no_supp"></fmt:message>
 											</h6>
 										</div>
 										<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DemanderSeanceSupp" method="post" class="form-normal">
@@ -462,19 +466,19 @@
 											<div class="row">
 												<div class="form-group col">
 													<select class="custom-select" required name="jour-supp">
-														<option disabled>Choisissez un jour</option>
-														<option value="dimanche">Dimanche</option>
-														<option value="lundi">Lundi</option>
-														<option value="mardi">Mardi</option>
-														<option value="mercredi">Mercredi</option>
-														<option value="jeudi">Jeudi</option>
+														<option disabled><fmt:message key="labels.day"></fmt:message></option>
+														<option value="dimanche"><fmt:message key="labels.sunday"></fmt:message></option>
+														<option value="lundi"><fmt:message key="labels.monday"></fmt:message></option>
+														<option value="mardi"><fmt:message key="labels.tuesday"></fmt:message></option>
+														<option value="mercredi"><fmt:message key="labels.wednesday"></fmt:message></option>
+														<option value="jeudi"><fmt:message key="labels.thursday"></fmt:message></option>
 													</select>
 												</div>
 											</div>
 											<div class="row">
 												<div class="form-group col">
 													<select class="custom-select" required name="heure-supp">
-														<option disabled>Choisissez une heure</option>
+														<option disabled><fmt:message key="labels.hour"></fmt:message></option>
 														<option value="8:30">8:30</option>
 														<option value="10:00">10:00</option>
 														<option value="11:30">11:30</option>
@@ -483,7 +487,7 @@
 													</select>
 												</div>
 											</div>
-											<input type="submit" value="Demander" class="form-control mr-auto btn btn-outline-secondary">
+											<input type="submit" value="<fmt:message key="labels.demande"></fmt:message>" class="form-control mr-auto btn btn-outline-secondary">
 										</form>
 									</c:otherwise>
 								</c:choose>
@@ -514,7 +518,7 @@
 				{
 					<c:if test="${absence.hasJustification()}">
 					numero_justification:"${absence.GetLastJustificationByEtat().getNumero_justification()}",
-					etat_absence:"${absence.GetLastJustificationByEtat().getEtat_justification().getValue(0)}",
+					etat_absence:"${absence.GetLastJustificationByEtat().getEtat_justification().getValue(cookie['lang'].value)}",
 					</c:if>
 					id_etudiant:"${etudiant.getEtudiant().getId_utilisateur()}",
 					numero_absence:"${absence.getAbsence().getNumero_absence()}",

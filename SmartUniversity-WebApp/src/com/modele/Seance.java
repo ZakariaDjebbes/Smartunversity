@@ -19,8 +19,8 @@ public class Seance
 	 */
 	public enum Type_Seance
 	{
-		TD("Travail dirigé", "PLACE HOLDER", "PLACE HOLDER"),
-		TP("Travail pratique", "PLACE HOLDER", "PLACE HOLDER");
+		TD("Travaux dirigés", "Directed Work", "PLACE HOLDER"),
+		TP("Travaux pratiques", "Practical work", "PLACE HOLDER");
 				
 		private final List<String> values;
 		
@@ -38,6 +38,21 @@ public class Seance
 		{
 			return values.get(index);
 		}
+		
+		public String getValue(String lang)
+		{
+			switch (lang)
+			{
+			case "fr":
+				return values.get(0);
+
+			case "en":
+				return values.get(1);
+				
+			default:
+				return values.get(1);
+			}
+		}
 	}
 	
 	/***
@@ -46,11 +61,11 @@ public class Seance
 	 */
 	public enum Jour
 	{
-		dimanche("Dimanche", "PLACE HOLDER", "PLACE HOLDER"),
-		lundi("Lundi", "PLACE HOLDER", "PLACE HOLDER"),
-		mardi("Mardi", "PLACE HOLDER", "PLACE HOLDER"),
-		mercredi("Mercredi", "PLACE HOLDER", "PLACE HOLDER"),
-		jeudi("Jeudi", "PLACE HOLDER", "PLACE HOLDER");
+		dimanche("Dimanche", "Sunday", "PLACE HOLDER"),
+		lundi("Lundi", "Monday", "PLACE HOLDER"),
+		mardi("Mardi", "Tuesday", "PLACE HOLDER"),
+		mercredi("Mercredi", "Wednesday", "PLACE HOLDER"),
+		jeudi("Jeudi", "Thursday", "PLACE HOLDER");
 		
 		private final List<String> values;
 		
@@ -68,6 +83,21 @@ public class Seance
 		{
 			return values.get(index);
 		}
+		
+		public String getValue(String lang)
+		{
+			switch (lang)
+			{
+			case "fr":
+				return values.get(0);
+
+			case "en":
+				return values.get(1);
+				
+			default:
+				return values.get(1);
+			}
+		}
 	}
 	
 	/***
@@ -76,9 +106,9 @@ public class Seance
 	 */
 	public enum Etat_Demande
 	{
-		valide("Valider", "PLACE HOLDER", "PLACE HOLDER"),
-		refuse("Refuser", "PLACE HOLDER", "PLACE HOLDER"),
-		nonTraite("Non traiter", "PLACE HOLDER", "PLACE HOLDER");
+		valide("Validé", "Valid", "PLACE HOLDER"),
+		refuse("Refusé", "Denied", "PLACE HOLDER"),
+		nonTraite("Non traité", "Untreated", "PLACE HOLDER");
 
 		private final List<String> values;
 		
@@ -95,6 +125,21 @@ public class Seance
 		public String getValue(int index)
 		{
 			return values.get(index);
+		}
+		
+		public String getValue(String lang)
+		{
+			switch (lang)
+			{
+			case "fr":
+				return values.get(0);
+
+			case "en":
+				return values.get(1);
+				
+			default:
+				return values.get(1);
+			}
 		}
 	}
 	

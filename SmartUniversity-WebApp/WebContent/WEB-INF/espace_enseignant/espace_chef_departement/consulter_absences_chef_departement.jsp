@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Gérer les justifications du département</title>
+<title><fmt:message key="pages.consulter_absences.title"></fmt:message></title>
 <link rel="icon" href="assets/img/Logo/logo.png">
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -23,32 +27,32 @@
 	<section class="clean-block clean-info dark">
 		<div class="container">
 			<div class="block-heading">
-				<h2 class="text-success">Liste des absences du département</h2>
-				<p>Liste des toutes les absences des étudiants du département.</p>
+				<h2 class="text-success"><fmt:message key="pages.consulter_absences.title"></fmt:message></h2>
+				<p><fmt:message key="pages.consulter_absences.subtitle"></fmt:message></p>
 			</div>
 			<div class="row">
 				<div class="col-12 col-md-6 col-lg-3">
 					<div class="dropdown">
 						<a class="btn btn-outline-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						   Filtrer par justification
+						   <fmt:message key="pages.consulter_absences.by_justification"></fmt:message>
 						</a>
 						<div class="dropdown-menu w-100" style="min-width:280px;">
 							<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="px-1">
 								<div class="custom-control custom-checkbox">
-								  <input type="checkbox" class="custom-control-input" name="justification" value="Valider" id="cb-justification-valide">
-								  <label class="custom-control-label" for="cb-justification-valide">Avec jusitifcation <span class="text-success">validée</span></label>
+								  <input type="checkbox" class="custom-control-input" name="justification" value="Validé" id="cb-justification-valide">
+								  <label class="custom-control-label" for="cb-justification-valide"><fmt:message key="pages.consulter_absences.valid"></fmt:message></label>
 								</div>
 								<div class="custom-control custom-checkbox">
-								  <input type="checkbox" class="custom-control-input" name="justification" value="Refuser" id="cb-justification-refuse">
-								  <label class="custom-control-label" for="cb-justification-refuse">Avec jusitifcation <span class="text-danger">refusée</span></label>
+								  <input type="checkbox" class="custom-control-input" name="justification" value="Refusé" id="cb-justification-refuse">
+								  <label class="custom-control-label" for="cb-justification-refuse"><fmt:message key="pages.consulter_absences.denied"></fmt:message></label>
 								</div>
 								<div class="custom-control custom-checkbox">
-								  <input type="checkbox" class="custom-control-input" name="justification" value="Non traiter" id="cb-justification-non-traite">
-								  <label class="custom-control-label" for="cb-justification-non-traite">Avec jusitifcation <span class="text-warning">non traitée</span></label>
+								  <input type="checkbox" class="custom-control-input" name="justification" value="Non traité" id="cb-justification-non-traite">
+								  <label class="custom-control-label" for="cb-justification-non-traite"><fmt:message key="pages.consulter_absences.untreated"></fmt:message></label>
 								</div>
 								<div class="custom-control custom-checkbox">
 								  <input type="checkbox" class="custom-control-input" name="justification" value="Aucune justification" id="cb-justification-aucune">
-								  <label class="custom-control-label" for="cb-justification-aucune">Sans jusitifcation</label>
+								  <label class="custom-control-label" for="cb-justification-aucune"><fmt:message key="pages.consulter_absences.without"></fmt:message></label>
 								</div>
 							</form>
 						</div>
@@ -60,12 +64,12 @@
 					<table class="table table-striped table-bordered text-center table-center" id="table-absences">
 						<thead>
 							<tr class="table-success">
-								<th>Etudiant</th>
-								<th>Module</th>
+								<th><fmt:message key="labels.etudiant"></fmt:message></th>
+								<th><fmt:message key="labels.module"></fmt:message></th>
 								<th>Justification</th>
-								<th>Date</th>
-								<th>Heure</th>
-								<th>Traiter</th>
+								<th><fmt:message key="labels.date"></fmt:message></th>
+								<th><fmt:message key="labels.hour"></fmt:message></th>
+								<th><fmt:message key="labels.gestion"></fmt:message></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -78,17 +82,17 @@
 										</td>
 										<c:choose>
 											<c:when test="${absence.getLatestJustification().getEtat_justification() eq 'valide'}">
-												<td class="text-success">${absence.getLatestJustification().getEtat_justification().getValue(0)}</td>
+												<td class="text-success">${absence.getLatestJustification().getEtat_justification().getValue(cookie['lang'].value)}</td>
 											</c:when>
 											<c:when test="${absence.getLatestJustification().getEtat_justification() eq 'refuse'}">
-												<td class="text-danger">${absence.getLatestJustification().getEtat_justification().getValue(0)}</td>
+												<td class="text-danger">${absence.getLatestJustification().getEtat_justification().getValue(cookie['lang'].value)}</td>
 											</c:when>
 											<c:when test="${absence.getLatestJustification().getEtat_justification() eq 'nonTraite'}">
-												<td class="text-warning">${absence.getLatestJustification().getEtat_justification().getValue(0)}</td>
+												<td class="text-warning">${absence.getLatestJustification().getEtat_justification().getValue(cookie['lang'].value)}</td>
 											</c:when>
 											<c:otherwise>
 												<td>
-													Aucune justification
+													<fmt:message key="labels.no_justification"></fmt:message>
 												</td>
 											</c:otherwise>
 										</c:choose>
@@ -97,7 +101,7 @@
 										<td>
 											<a 
 												href="${pageContext.request.contextPath}/User/ConsulterAbsence?numero-absence=${absence.getAbsence().getNumero_absence()}"
-												class="btn btn-outline-success" role="button">Traiter</a>
+												class="btn btn-outline-success" role="button"><fmt:message key="labels.consult"></fmt:message></a>
 										</td>
 									</tr>
 								</c:if>
@@ -113,7 +117,6 @@
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/Datatables/datatables.min.js"></script>
-	
 	<script src="assets/js/smoothproducts.min.js"></script>
 	<script src="assets/js/theme.js"></script>
 	<script src="assets/js/consulter-absences-chef-departement.js"></script>

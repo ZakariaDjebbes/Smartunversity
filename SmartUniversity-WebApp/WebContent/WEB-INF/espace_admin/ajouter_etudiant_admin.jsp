@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +13,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Ajouter un etudiant - NTIC</title>
+<title><fmt:message key="labels.add_a"></fmt:message> <fmt:message key="labels.etudiant"></fmt:message> - NTIC</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link href="assets/fontawesome-sb/css/all.min.css" rel="stylesheet" type="text/css">
@@ -27,8 +32,8 @@
 					<div class="card mb-4 py-3 border-bottom-success">
 						<div class="card-body">
 							<div class="text-center">
-								<h2 class="text-success">Ajouter un étudiant</h2>
-								<p>Ajouter un étudiant dans le système</p>
+								<h2 class="text-success"><fmt:message key="labels.add_a"></fmt:message> <fmt:message key="labels.etudiant"></fmt:message></h2>
+								<p><fmt:message key="pages.index_admin.add_student_subtitle"></fmt:message></p>
 							</div>
 							<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/AjouterEtudiantAdmin" method="post" class="form-special form-sidebar">
 								<c:if test="${not empty isDone && not empty message}">
@@ -54,60 +59,59 @@
 									<c:remove var="message" />
 								</c:if>
 								<div class="text-center">
-									<i class="fa fa-user-plus text-success" style="font-size: 80px"></i><small class="d-block">Un email contenant le nom d'utilisateur et le mot de passe sera automatiquement envoyé a
-										l'étudiant concerné.</small>
+									<i class="fa fa-user-plus text-success" style="font-size: 80px"></i><small class="d-block"><fmt:message key="pages.index_admin.user_admin"></fmt:message></small>
 									<hr>
 								</div>
 								<div class="form-row">
 									<div class="col-12 col-lg-6">
 										<div class="form-group">
-											<label>Nom</label>
+											<label><fmt:message key="labels.nom"></fmt:message></label>
 											<input class="form-control" name="nom" placeholder="Djebbes" type="text" required>
 										</div>
 										<div class="form-group">
-											<label>Prenom</label>
+											<label><fmt:message key="labels.prenom"></fmt:message></label>
 											<input class="form-control" name="prenom" placeholder="Zakaria" type="text" required>
 										</div>
 										<div class="form-group">
-											<label>Date de naissance</label>
+											<label><fmt:message key="labels.date_n"></fmt:message></label>
 											<input class="form-control" name="date_n" type="date" required>
 										</div>
 										<div class="form-group">
-											<label>Adresse</label>
+											<label><fmt:message key="labels.adresse"></fmt:message></label>
 											<input class="form-control" name="adresse" placeholder="Rue x ville y batiment z" type="text" required>
 										</div>
 										<div class="form-group">
-											<label>Telephone</label>
+											<label><fmt:message key="labels.telephone"></fmt:message></label>
 											<input class="form-control" name="telephone" type="tel" placeholder="0123456789" required maxlength="10" minlength="10">
 										</div>
 									</div>
 									<div class="col">
 										<div class="form-group">
-											<label>Email</label>
+											<label><fmt:message key="labels.email"></fmt:message></label>
 											<input class="form-control" name="email" placeholder="exemple@exml.com" type="email" required>
 										</div>
 										<div class="form-group">
-											<label>Année</label>
+											<label><fmt:message key="labels.annee"></fmt:message></label>
 											<select name="annee" class="form-control" required>
 												<c:forEach var="annee" items="${annees}">
-													<option value="${annee}">${annee.getValue(0)}-(${annee})</option>
+													<option value="${annee}">${annee.getValue(cookie['lang'].value)}-(${annee})</option>
 												</c:forEach>
 											</select>
 										</div>
 										<div class="form-group">
-											<label>Spécialite</label>
+											<label><fmt:message key="labels.specialite"></fmt:message></label>
 											<select class="form-control" name="specialite" required>
 											</select>
 										</div>
 										<div class="form-group">
-											<label>Groupe</label>
+											<label><fmt:message key="labels.group"></fmt:message></label>
 											<input class="form-control" name="groupe" type="number" value="1" required max="20" min="1" step="1">
 										</div>
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="col text-center">
-										<button class="btn btn-outline-success" type="submit">Ajouter l'étudiant</button>
+										<button class="btn btn-outline-success" type="submit"><fmt:message key="labels.add"></fmt:message></button>
 									</div>
 								</div>
 							</form>
@@ -131,7 +135,7 @@
 			let specialites = [
 				<c:forEach var="specialite" items="${specialites}">
 					{
-						value:"${specialite.getValue(0)}",
+						value:"${specialite.getValue(cookie['lang'].value)}",
 						id:"${specialite}"
 					},
 				</c:forEach>

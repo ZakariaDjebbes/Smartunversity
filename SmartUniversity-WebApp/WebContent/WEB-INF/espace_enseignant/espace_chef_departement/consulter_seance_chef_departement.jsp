@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,32 +26,32 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block-heading">
-						<h2 class="text-success">Gestion de la séance</h2>
-						<p>Affectez ou désaffectez l'enseignant de cette séance</p>
+						<h2 class="text-success"><fmt:message key="pages.consulter_seance_chef.title"></fmt:message></h2>
+						<p><fmt:message key="pages.consulter_seance_chef.subtitle"></fmt:message></p>
 					</div>
 					<div class="table-responsive">
-						<h4 class="text-success">Détails de la séance</h4>					
+						<h4 class="text-success"><fmt:message key="pages.consulter_seance.detail_seance"></fmt:message></h4>					
 						<table class="table table-sm">
 							<tbody>
 								<tr>
-									<th style="width: 30%">Module</th>
+									<th style="width: 30%"><fmt:message key="labels.module"></fmt:message></th>
 									<td>${seanceDepartement.getModule().getNom()} - (${seanceDepartement.getModule().getCode_module()})</td>
 								</tr>
 								<tr>
-									<th>Type</th>
-									<td>${seanceDepartement.getSeance().getType().getValue(0)} - (${seanceDepartement.getSeance().getType()})</td>
+									<th><fmt:message key="labels.type"></fmt:message></th>
+									<td>${seanceDepartement.getSeance().getType().getValue(cookie['lang'].value)} - (${seanceDepartement.getSeance().getType()})</td>
 								</tr>
 								<tr>
-									<th>Année et spécialité</th>
-									<td>${seanceDepartement.getSeance().getAnnee().getValue(0)} - (${seanceDepartement.getSeance().getAnnee()}), ${seanceDepartement.getSeance().getSpecialite().getValue(0)} - (${seanceDepartement.getSeance().getSpecialite()})</td>
+									<th><fmt:message key="labels.annee"></fmt:message>, <fmt:message key="labels.specialite"></fmt:message></th>
+									<td>${seanceDepartement.getSeance().getAnnee().getValue(cookie['lang'].value)} - (${seanceDepartement.getSeance().getAnnee()}), ${seanceDepartement.getSeance().getSpecialite().getValue(cookie['lang'].value)} - (${seanceDepartement.getSeance().getSpecialite()})</td>
 								</tr>
 								<tr>
-									<th>Groupe</th>
+									<th><fmt:message key="labels.group"></fmt:message></th>
 									<td>${seanceDepartement.getSeance().getGroupe()}</td>
 								</tr>
 								<tr>
-									<th>Enseigner le:</th>
-									<td>${seanceDepartement.getSeance().getJour().getValue(0)} à ${seanceDepartement.getSeance().getHeure()}</td>
+									<th><fmt:message key="labels.enseigne_le"></fmt:message></th>
+									<td>${seanceDepartement.getSeance().getJour().getValue(cookie['lang'].value)} à ${seanceDepartement.getSeance().getHeure()}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -57,7 +60,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<h4 class="text-success">Enseignant chargé de la séance</h4>
+					<h4 class="text-success"><fmt:message key="pages.consulter_seance.enseignant"></fmt:message></h4>
 					<!-- 
 					<div class="block-heading">
 						<h2 class="text-success">Enseignant chargé de la séance</h2>
@@ -93,61 +96,61 @@
 									<table class="table table-sm">
 										<tbody>
 											<tr>
-												<th style="width: 30%">Nom et prénom</th>
+												<th style="width: 30%"><fmt:message key="labels.nom"></fmt:message>, <fmt:message key="labels.prenom"></fmt:message></th>
 												<td>${seanceDepartement.getEnseignant().getNom()}&nbsp;${seanceDepartement.getEnseignant().getPrenom()}</td>
 											</tr>
 											<tr>
-												<th>Né le</th>
+												<th><fmt:message key="labels.ne_le"></fmt:message></th>
 												<td>${seanceDepartement.getEnseignant().getDate()}</td>
 											</tr>
 											<tr>
-												<th>Adresse physique</th>
+												<th><fmt:message key="labels.adresse"></fmt:message></th>
 												<td>${seanceDepartement.getEnseignant().getAdresse()}</td>
 											</tr>
 											<tr>
-												<th>Contact</th>
+												<th><fmt:message key="labels.contact"></fmt:message></th>
 												<td>
 													<ul>
 														<li>
-															<b>Adresse mail</b>: ${seanceDepartement.getEnseignant().getEmail()}
+															<b><fmt:message key="labels.email"></fmt:message></b>: ${seanceDepartement.getEnseignant().getEmail()}
 														</li>
 														<li>
-															<b>Téléphone</b>: ${seanceDepartement.getEnseignant().getTelephone()}
+															<b><fmt:message key="labels.telephone"></fmt:message></b>: ${seanceDepartement.getEnseignant().getTelephone()}
 														</li>
 													</ul>
 												</td>
 											</tr>
 											<tr>
-												<th>Grade</th>
+												<th><fmt:message key="labels.grade"></fmt:message></th>
 												<td>${seanceDepartement.getEnseignant().getGrade()}</td>
 											</tr>
 											<tr>
-												<th>Département actuel</th>
-												<td>${seanceDepartement.getEnseignant().getCode_departement().getValue(0)} - (${seanceDepartement.getEnseignant().getCode_departement()})</td>
+												<th><fmt:message key="labels.departement"></fmt:message></th>
+												<td>${seanceDepartement.getEnseignant().getCode_departement().getValue(cookie['lang'].value)} - (${seanceDepartement.getEnseignant().getCode_departement()})</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 								<div class="text-center" style="padding-top: 25px;">
 									<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-affecter">
-									  	Désaffecter l'enseignant
+									  	<fmt:message key="pages.consulter_seance_chef.unassign_teacher"></fmt:message>
 									</button>
 									<div class="modal fade" id="confirm-affecter" tabindex="-1" role="dialog" aria-hidden="true">
 									  <div class="modal-dialog" role="document">
 									    <div class="modal-content">
 									      <div class="modal-header">
-									        <h5 class="modal-title">Désaffecter l'enseignant</h5>
+									        <h5 class="modal-title"><fmt:message key="pages.consulter_seance_chef.unassign_teacher"></fmt:message></h5>
 									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									          <span aria-hidden="true">&times;</span>
 									        </button>
 									      </div>
 									      <div class="modal-body">
-									      	Êtes-vous sur de vouloir <span class="text-danger">désaffecter</span> l'enseignant <span id="confirm-nom-prenom" class="text-info">${seanceDepartement.getEnseignant().getNom()}&nbsp;${seanceDepartement.getEnseignant().getPrenom()}</span> de cette séance?
+									      	<fmt:message key="pages.consulter_seance_chef.unassign_modal"></fmt:message> <span id="confirm-nom-prenom" class="text-info">${seanceDepartement.getEnseignant().getNom()}&nbsp;${seanceDepartement.getEnseignant().getPrenom()}</span>.
 									      </div>
 									      <div class="modal-footer">
-									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
 									        <form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/DesaffecterSeance" method="post">
-									        	<button type="submit" class="btn btn-outline-danger">Désaffecter</button>
+									        	<button type="submit" class="btn btn-outline-danger"><fmt:message key="pages.consulter_seance_chef.unassign_teacher"></fmt:message></button>
 									        </form>
 									      </div>
 									    </div>
@@ -158,17 +161,11 @@
 						</c:when>
 						<c:otherwise>
 							<div id="e-not-exists">
-								<div class="alert alert-warning" role="alert">
-									<h4 class="alert-heading">
-										<i class="icon-exclamation fa-lg"></i>&nbsp;Aucun enseignant n'est affecté a cette séance
-									</h4>
-										<span>Veuillez remplir le formulaire suivant afin d'affecter un enseigant a cette séance.<br></span>
-								</div>
 								<c:if test="${not empty enseignants}">
 								<div class="row justify-content-center">
 									<div class="col col-md-4 col-xs-12 mb-3">
 										<div class="text-center border rounded-0 text-center" style="background-color: #C3E6CB; padding: 13px 0px;">
-											<p class="d-inline font-weight-bold">Enseignants</p>
+											<p class="d-inline font-weight-bold"><fmt:message key="labels.enseignants"></fmt:message></p>
 										</div>
 										<div class="list-group d-block select-list" role="tablist" id="list-enseignants">
 											<c:forEach var="enseignant" items="${enseignants}" varStatus="stat">
@@ -214,43 +211,43 @@
 											<table class="table table-sm">
 												<tbody>
 													<tr class="table-success">
-														<th style="width: 30%" colspan="2" class="text-center">Détails de l'enseignant</th>
+														<th style="width: 30%" colspan="2" class="text-center"><fmt:message key="pages.consulter_seance.detail_enseignant"></fmt:message></th>
 													</tr>
 													<tr>
-														<th style="width: 30%">Nom et prénom</th>
+														<th style="width: 30%"><fmt:message key="labels.nom">, </fmt:message> <fmt:message key="labels.prenom"></fmt:message></th>
 														<td id="nom-prenom"></td>
 													</tr>
 													<tr>
-														<th>Né le</th>
+														<th><fmt:message key="labels.ne_le"></fmt:message></th>
 														<td id="date"></td>
 													</tr>
 													<tr>
-														<th>Adresse physique</th>
+														<th><fmt:message key="labels.adresse"></fmt:message></th>
 														<td id="adresse"></td>
 													</tr>
 													<tr>
-														<th>Contact</th>
+														<th><fmt:message key="labels.contact"></fmt:message></th>
 														<td>
 															<ul>
 																<li>
-																	<b>Adresse mail</b>: <span id="mail"></span>
+																	<b><fmt:message key="labels.email"></fmt:message></b>: <span id="mail"></span>
 																</li>
 																<li>
-																	<b>Téléphone</b>: <span id="telephone"></span> 
+																	<b><fmt:message key="labels.telephone"></fmt:message></b>: <span id="telephone"></span> 
 																</li>
 															</ul>
 														</td>
 													</tr>
 													<tr>
-														<th>Grade</th>
+														<th><fmt:message key="labels.grade"></fmt:message></th>
 														<td id="grade"></td>
 													</tr>
 													<tr>
-														<th>Département actuel</th>
+														<th><fmt:message key="labels.departement"></fmt:message></th>
 														<td id="departement"></td>
 													</tr>
 													<tr>
-														<th>Disponobilité</th>
+														<th><fmt:message key="labels.dispo"></fmt:message></th>
 														<td id="disponibilite"></td>
 													</tr>
 												</tbody>
@@ -260,25 +257,25 @@
 								</div>
 								<div class="text-center" style="padding-top: 25px;">
 									<button type="button" class="btn btn-success" data-toggle="modal" id="btn-affecter" data-target="#confirm-affecter">
-									  	Affecter l'enseignant
+									  	<fmt:message key="pages.consulter_seance_chef.assign_teacher"></fmt:message>
 									</button>
 									<div class="modal fade" id="confirm-affecter" tabindex="-1" role="dialog" aria-hidden="true">
 									  <div class="modal-dialog" role="document">
 									    <div class="modal-content">
 									      <div class="modal-header">
-									        <h5 class="modal-title">Affecter l'enseignant</h5>
+									        <h5 class="modal-title"><fmt:message key="pages.consulter_seance_chef.assign_teacher"></fmt:message></h5>
 									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									          <span aria-hidden="true">&times;</span>
 									        </button>
 									      </div>
 									      <div class="modal-body">
-									      	Êtes-vous sur de vouloir <span class="text-success">affecter</span> l'enseignant <span id="confirm-nom-prenom" class="text-info">PLACE HOLDER</span> a cette séance?
+									      		<fmt:message key="pages.consulter_seance_chef.assign_modal"></fmt:message> <span id="confirm-nom-prenom" class="text-info">PLACE HOLDER</span>
 									      </div>
 									      <div class="modal-footer">
-									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
 									        <form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/AffecterSeance" method="post" id="form-affecter">
 									        	<input type="hidden" name="id-enseignant" value="">	
-									        	<button type="submit" class="btn btn-outline-success">Affecter</button>
+									        	<button type="submit" class="btn btn-outline-success"><fmt:message key="pages.consulter_seance_chef.assign_teacher"></fmt:message></button>
 									      	</form>
 									      </div>
 									    </div>
@@ -312,7 +309,7 @@
 					date: "${enseignant.getEnseignant().getDate()}",
 					telephone: "${enseignant.getEnseignant().getTelephone()}",
 					grade: "${enseignant.getEnseignant().getGrade()}",
-					departement: "${enseignant.getEnseignant().getCode_departement().getValue(0)} - (${enseignant.getEnseignant().getCode_departement()})",
+					departement: "${enseignant.getEnseignant().getCode_departement().getValue(cookie['lang'].value)} - (${enseignant.getEnseignant().getCode_departement()})",
 					disponibilite: ${enseignant.isDisponible()},
 					mail: "${enseignant.getEnseignant().getEmail()}",
 				},

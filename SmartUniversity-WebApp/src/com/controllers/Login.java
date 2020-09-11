@@ -38,6 +38,7 @@ import com.modele.ResponsableFormation;
 import com.modele.Seance.Etat_Demande;
 import com.modele.Utilisateur;
 import com.utility.ReleverAbsencesEtudiant;
+import com.utility.Utility;
 
 @WebServlet("/Login")
 public class Login extends HttpServlet
@@ -132,7 +133,7 @@ public class Login extends HttpServlet
 			apiResponse.close();
 		} else
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 			session.setAttribute("message", message);
 			Redirect.SendRedirect(request, response, "login.jsp");
 			return;

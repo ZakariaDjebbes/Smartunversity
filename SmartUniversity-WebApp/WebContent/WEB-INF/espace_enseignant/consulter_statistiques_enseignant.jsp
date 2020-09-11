@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Statistiques - NTIC</title>
+<title><fmt:message key="pages.stats.title_enseignant"></fmt:message> - NTIC</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -27,8 +30,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block-heading">
-						<h2 class="text-success">Statistiques de vos groupes</h2>
-						<p>Consulter les statistiques des absences de vos groupes par groupe, module, jour ou heure</p>
+						<h2 class="text-success"><fmt:message key="pages.stats.title_enseignant"></fmt:message></h2>
+						<p><fmt:message key="pages.stats.subtitle"></fmt:message></p>
 					</div>
 				</div>
 			</div>
@@ -36,16 +39,16 @@
 				<div class="col">
 					<form>
 						<div class="form-group">
-							<label for="module">Module</label>
+							<label for="module"><fmt:message key="labels.module"></fmt:message></label>
 							<select class="form-control" id="module">
-								<option value="all-modules">Tous les modules</option>
+								<option value="all-modules"><fmt:message key="pages.stats.all_modules"></fmt:message></option>
 							</select>
 						</div>
 						<div class="d-none" id="groupes-d-div">
 							<div class="form-group">
-								<label for="groupe">Groupe</label>
+								<label for="groupe"><fmt:message key="labels.group"></fmt:message></label>
 								<select class="form-control" id="groupe">
-									<option value="all-groupes">Tous les groupes</option>
+									<option value="all-groupes"><fmt:message key="pages.stats.all_groups"></fmt:message></option>
 								</select>
 							</div>
 						</div>
@@ -57,19 +60,19 @@
 					<form>
 						<div class="row">
 							<div class="form-group col">
-								<label for="chart-type">Type de graphique</label>
+								<label for="chart-type"><fmt:message key="pages.stats.chart_type"></fmt:message></label>
 								<select class="form-control" id="chart-type">
-									<option value="bar">Barres</option>
-									<option value="line">Graphe</option>
+									<option value="bar"><fmt:message key="pages.stats.bar"></fmt:message></option>
+									<option value="line"><fmt:message key="pages.stats.graph"></fmt:message></option>
 								</select>
 							</div>
 							<div class="form-group col">
-								<label for="stat-type">Type de statistiques</label>
+								<label for="stat-type"><fmt:message key="pages.stats.stat_type"></fmt:message></label>
 								<select class="form-control" id="stat-type">
-									<option value="stat-jour">Absences par jour</option>
-									<option value="stat-heure">Absences par heure</option>
-									<option value="stat-module">Absences par module</option>
-									<option class="d-none" value="stat-groupe">Absences par groupe</option>
+									<option value="stat-jour"><fmt:message key="pages.stats.per_day"></fmt:message></option>
+									<option value="stat-heure"><fmt:message key="pages.stats.per_hour"></fmt:message></option>
+									<option value="stat-module"><fmt:message key="pages.stats.per_module"></fmt:message></option>
+									<option class="d-none" value="stat-groupe"><fmt:message key="pages.stats.per_group"></fmt:message></option>
 								</select>
 							</div>
 						</div>
@@ -95,10 +98,10 @@
 			const byHour = "heure";
 			const byGroup = "groupe";
 			const byModule= "module";
-			const titleByDay = "Nombre d'absences par jours";
-			const titleByHour = "Nombre d\'absences par heures";
-			const titleByGroup = "Nombre d\'absences par groupes";
-			const titleByModule = "Nombre d\'absences par modules";
+			const titleByDay = '<fmt:message key="pages.stats.per_day_title"></fmt:message>';
+			const titleByHour = '<fmt:message key="pages.stats.per_hour_title"></fmt:message>';
+			const titleByGroup = '<fmt:message key="pages.stats.per_group_title"></fmt:message>';
+			const titleByModule = '<fmt:message key="pages.stats.per_module_title"></fmt:message>';
 			let moduleSelect = $("#module");
 			let groupeSelect = $("#groupe");
 			let statTypeSelect = $("#stat-type");
@@ -109,7 +112,7 @@
 			
 			let jours = [
 				<c:forEach var="jour" items="${jours}">
-				"${jour.getValue(0)}",
+				"${jour.getValue(cookie['lang'].value)}",
 				</c:forEach>
 			];
 			
@@ -118,7 +121,7 @@
 				{
 					module: "${seance.getModule().getNom()}",
 					code_module: "${seance.getModule().getCode_module()}",
-					jour: "${seance.getSeance().getJour().getValue(0)}",
+					jour: "${seance.getSeance().getJour().getValue(cookie['lang'].value)}",
 					heure: "${seance.getSeance().getHeure()}",
 					groupe: ${seance.getSeance().getGroupe()},
 					nombre_absences: ${seance.GetNombreAbsences()},
@@ -137,7 +140,7 @@
 			let chart_data = {
 	          datasets: [
 		        	{
-		                label: "Total d'absences",
+		                label: '<fmt:message key="labels.nombre_absence"></fmt:message>',
 		                backgroundColor: 'rgba(54, 162, 235, 0.2)',
 			            borderColor:'rgba(54, 162, 235, 1)',
 			            borderWidth: 1,
@@ -145,7 +148,7 @@
 			            data:[]
 		        	},
 		        	{
-		                label: "Absences justifier",
+		                label: '<fmt:message key="labels.nombre_justifier"></fmt:message>',
 		                backgroundColor:'rgba(152, 232, 146, 0.2)',
 			            borderColor: 'rgba(152, 232, 146, 1)',
 			            borderWidth: 1,
@@ -153,7 +156,7 @@
 			            data:[]
 		        	},
 		        	{
-		                label: "Absences non justifier",
+		                label: '<fmt:message key="labels.nombre_non_justifier"></fmt:message>',
 		                backgroundColor: 'rgba(255, 99, 132, 0.2)',
 			            borderColor: 'rgba(255,99,132,1)',
 			            borderWidth: 1,

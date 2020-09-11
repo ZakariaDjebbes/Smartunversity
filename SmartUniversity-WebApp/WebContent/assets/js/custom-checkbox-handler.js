@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	let checkedText = "Présent";
+	let checkedText = "Present";
 	let uncheckedText = "Absent";
 	
 	$(".checkbox-input").change(function()

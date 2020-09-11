@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.controllers.Redirect;
 import com.helpers.RequestResponse;
+import com.utility.Utility;
 @WebServlet("/User/AnnulerCongeAcademique")
 public class AnnulerCongeAcademique extends HttpServlet
 {
@@ -45,11 +46,11 @@ public class AnnulerCongeAcademique extends HttpServlet
 		
 		if (apiResponse.getStatusInfo() == Status.OK)
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		}
 		else 
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 			isDone = false;
 		}	
 		

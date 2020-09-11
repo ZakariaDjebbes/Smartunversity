@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,8 +30,8 @@
 					<div class="card mb-4 py-3 border-bottom-success">
 						<div class="card-body">
 							<div class="text-center">
-								<h2 class="text-success">Modification d'un étudiant</h2>
-								<p>Modifier les données d'un étudiant</p>
+								<h2 class="text-success"><fmt:message key="pages.index_admin.modify_student"></fmt:message></h2>
+								<p><fmt:message key="pages.index_admin.modify_student_subtitle"></fmt:message></p>
 							</div>
 							<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/ConsulterEtudiantAdmin" method="post" class="form-special form-sidebar">
 								<c:if test="${not empty isDone && not empty message}">
@@ -60,57 +63,57 @@
 								<div class="form-row">
 									<div class="col-12 col-lg-6">
 										<div class="form-group">
-											<label>Nom d'utilisateur</label>
+											<label><fmt:message key="labels.user"></fmt:message></label>
 											<input class="form-control" name="user" type="text" value="${etudiant.getUser()}" required>
 										</div>
 										<div class="form-group">
-											<label>Nom</label>
+											<label><fmt:message key="labels.nom"></fmt:message></label>
 											<input class="form-control" name="nom" type="text" value="${etudiant.getNom()}" required>
 										</div>
 										<div class="form-group">
-											<label>Prenom</label>
+											<label><fmt:message key="labels.prenom"></fmt:message></label>
 											<input class="form-control" name="prenom" type="text" value="${etudiant.getPrenom()}" required>
 										</div>
 										<div class="form-group">
-											<label>Date de naissance</label>
+											<label><fmt:message key="labels.date_n"></fmt:message></label>
 											<input class="form-control" name="date_n" type="date" value="${etudiant.getDate()}" required>
 										</div>
 										<div class="form-group">
-											<label>Adresse</label>
+											<label><fmt:message key="labels.adresse"></fmt:message></label>
 											<input class="form-control" name="adresse" type="text" value="${etudiant.getAdresse()}" required>
 										</div>
 										<div class="form-group">
-											<label>Telephone</label>
+											<label><fmt:message key="labels.telephone"></fmt:message></label>
 											<input class="form-control" name="telephone" type="tel" required value="${etudiant.getTelephone()}" maxlength="10" minlength="10">
 										</div>
 									</div>
 									<div class="col">
 										<div class="form-group">
-											<label>Email</label>
+											<label><fmt:message key="labels.email"></fmt:message></label>
 											<input class="form-control" name="email" type="email" value="${etudiant.getEmail()}" required>
 										</div>
 										<div class="form-group">
-											<label>Année</label>
+											<label><fmt:message key="labels.annee"></fmt:message></label>
 											<select name="annee" class="form-control" required>
 												<c:forEach var="annee" items="${annees}">
-													<option value="${annee}" <c:if test="${etudiant.getAnnee() eq annee}">selected</c:if>>${annee.getValue(0)}-(${annee})</option>
+													<option value="${annee}" <c:if test="${etudiant.getAnnee() eq annee}">selected</c:if>>${annee.getValue(cookie['lang'].value)}-(${annee})</option>
 												</c:forEach>
 											</select>
 										</div>
 										<div class="form-group">
-											<label>Spécialite</label>
+											<label><fmt:message key="labels.specialite"></fmt:message></label>
 											<select class="form-control" name="specialite" required>
 											</select>
 										</div>
 										<div class="form-group">
-											<label>Groupe</label>
+											<label><fmt:message key="labels.group"></fmt:message></label>
 											<input class="form-control" name="groupe" type="number" value="${etudiant.getGroupe()}" required max="20" min="1" step="1">
 										</div>
 										<div class="form-group">
-											<label>Etat</label>
+											<label><fmt:message key="labels.etat"></fmt:message></label>
 											<select name="etat" class="form-control" required>
 												<c:forEach var="etat" items="${etats}">
-													<option value="${etat}" <c:if test="${etudiant.getEtat_etudiant() eq etat}">selected</c:if>>${etat.getValue(0)}</option>
+													<option value="${etat}" <c:if test="${etudiant.getEtat_etudiant() eq etat}">selected</c:if>>${etat.getValue(cookie['lang'].value)}</option>
 												</c:forEach>
 											</select>
 										</div>
@@ -119,12 +122,12 @@
 								<div class="form-row">
 									<div class="col text-center">
 										<button type="button" data-id="${etudiant.getId_utilisateur()}" class="deleteUser btn btn-outline-danger" data-toggle="modal" data-target="#delete-modal">
-											Supprimer cet étudiant
+											<fmt:message key="labels.delete"></fmt:message> <fmt:message key="labels.etudiant"></fmt:message>
 										</button>
 									</div>
 									<div class="col text-center">
 										<input type="hidden" value="${etudiant.getId_utilisateur()}" name="id_etudiant">
-										<button class="btn btn-outline-success" type="submit">Enregistrer les modifications</button>
+										<button class="btn btn-outline-success" type="submit"><fmt:message key="labels.valide"></fmt:message></button>
 									</div>
 								</div>
 							</form>
@@ -136,20 +139,20 @@
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Supprimer l'étudiant?</h5>
+			        <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="pages.index_admin.delete_user"></fmt:message>?</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
-			        Voulez vous supprimer l'étudiant <span class="text-info" id="nom"></span> <span id="prenom" class="text-info"></span>
+			       <fmt:message key="pages.index_admin.delete_user"></fmt:message> <span class="text-info" id="nom"></span> <span id="prenom" class="text-info"></span>
 			      </div>
 			      <div class="modal-footer">
 			      	<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post">
 			      		<input type="hidden" name="delete" value="etudiant">
 			      		<input type="hidden" name="id_utilisateur">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-				        <button type="submit" formaction="${pageContext.request.contextPath}/User/SupprimerCompteAdmin"  type="submit" class="btn btn-outline-danger">Supprimer l'étudiant</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
+				        <button type="submit" formaction="${pageContext.request.contextPath}/User/SupprimerCompteAdmin"  type="submit" class="btn btn-outline-danger"><fmt:message key="labels.delete"></fmt:message></button>
 			        </form>
 			      </div>
 			    </div>
@@ -184,7 +187,7 @@
 			let specialites = [
 				<c:forEach var="specialite" items="${specialites}">
 					{
-						value:"${specialite.getValue(0)}",
+						value:"${specialite.getValue(cookie['lang'].value)}",
 						id:"${specialite}"
 					},
 				</c:forEach>

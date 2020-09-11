@@ -7,7 +7,5 @@
 	<session-config>
     	<session-timeout>-1</session-timeout>
 	</session-config>
-    <error-page>
-        <location>/WEB-INF/error.jsp</location>
-    </error-page>
+   
 </web-app>

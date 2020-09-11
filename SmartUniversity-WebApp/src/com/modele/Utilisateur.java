@@ -21,11 +21,11 @@ public class Utilisateur
 	 */
 	public enum Type_Utilisateur
 	{
-		etudiant("Étudiant", "PLACE HOLDER", "PLACE HOLDER"),
-		enseignant("Enseignant", "PLACE HOLDER", "PLACE HOLDER"), 
-		chefDepartement("Chef de département", "PLACE HOLDER", "PLACE HOLDER"),
-		responsableFormation("Résponsable de formation", "PLACE HOLDER", "PLACE HOLDER"), 
-		admin("Administrateur", "PLACE HOLDER", "PLACE HOLDER");
+		etudiant("Étudiant", "Student", "PLACE HOLDER"),
+		enseignant("Enseignant", "Teacher", "PLACE HOLDER"), 
+		chefDepartement("Chef de département", "Head of Department", "PLACE HOLDER"),
+		responsableFormation("Responsable de formation", "Training Manager", "PLACE HOLDER"), 
+		admin("Administrateur", "Administrator", "PLACE HOLDER");
 
 		private final List<String> values;
 		
@@ -43,6 +43,21 @@ public class Utilisateur
 		{
 			return values.get(index);
 		}
+		
+		public String getValue(String lang)
+		{
+			switch (lang)
+			{
+			case "fr":
+				return values.get(0);
+
+			case "en":
+				return values.get(1);
+				
+			default:
+				return values.get(1);
+			}
+		}
 	}
 
 	/***
@@ -51,9 +66,9 @@ public class Utilisateur
 	 */
 	public enum Code_Departement
 	{
-		MI("Tronc commun mathématiques et informatique", "PLACE HOLDER", "PLACE HOLDER"), 
-		TLSI("Technologies des Logiciels et des Systèmes d'information", "PLACE HOLDER", "PLACE HOLDER"), 
-		IFA("Informatique Fondamentale et ses Applications", "PLACE HOLDER", "PLACE HOLDER");
+		MI("Tronc commun mathématiques et informatique", "Common core mathematics and computer science", "PLACE HOLDER"), 
+		TLSI("Technologies des Logiciels et des Systèmes d'information", "Software and Information Systems Technologies", "PLACE HOLDER"), 
+		IFA("Informatique Fondamentale et ses Applications", "Fundamental Computing and its Applications", "PLACE HOLDER");
 		
 		private final List<String> values;
 		
@@ -70,6 +85,21 @@ public class Utilisateur
 		public String getValue(int index)
 		{
 			return values.get(index);
+		}
+		
+		public String getValue(String lang)
+		{
+			switch (lang)
+			{
+			case "fr":
+				return values.get(0);
+
+			case "en":
+				return values.get(1);
+				
+			default:
+				return values.get(1);
+			}
 		}
 	}
 

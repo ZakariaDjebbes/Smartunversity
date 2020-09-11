@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response.Status;
 import com.controllers.Redirect;
 import com.helpers.RequestResponse;
 import com.modele.Module;
+import com.utility.Utility;
 
 @WebServlet("/User/ConsulterModuleAdmin")
 public class ConsulterModuleAdmin extends HttpServlet
@@ -86,7 +87,7 @@ public class ConsulterModuleAdmin extends HttpServlet
 		
 		RequestResponse requestResponse = apiResponse.readEntity(RequestResponse.class);		
 		apiResponse.close();
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("message", message);
 		session.setAttribute("isDone", isDone);
 		if(isDone)

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,14 +41,14 @@ div.card-link.card {
 					<div class="card mb-4 py-3 border-bottom-success">
 						<div class="card-body">
 							<div class="text-center">
-								<h2 class="text-success">Gérer les séances de la faculté</h2>
-								<p>Sélectionnez une année et une spécialité</p>
+								<h2 class="text-success"><fmt:message key="pages.index_admin.gerer_seance_title"></fmt:message></h2>
+								<p><fmt:message key="pages.index_admin.gerer_seance_subtitle_01"></fmt:message></p>
 							</div>
 							<c:forEach var="entry" items="${specialitesByAnnee}">
 								<c:set var="c_specialites" value="${entry.value}"></c:set>
 								<c:set var="annee" value="${entry.key}"></c:set>
 								<div class="row">
-									<h5>${annee.getValue(0)}:</h5>
+									<h5>${annee.getValue(cookie['lang'].value)}:</h5>
 								</div>
 								<div class="row">
 									<c:forEach var="specialite" items="${c_specialites}">

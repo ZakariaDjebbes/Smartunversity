@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.controllers.Redirect;
 import com.helpers.RequestResponse;
+import com.utility.Utility;
 
 @WebServlet("/User/SupprimerDemandeChangement")
 public class SupprimerDemandeChangement extends HttpServlet {
@@ -47,10 +48,10 @@ public class SupprimerDemandeChangement extends HttpServlet {
 		if (apiResponse.getStatusInfo() == Status.OK)
 		{
 			isDone = true;
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		} else
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		}
 		
 		ConsulterSeancesEnseignant.UpadteSeancesFromAPI(session);

@@ -20,6 +20,7 @@ import com.controllers.Redirect;
 import com.dots.Dot_Affecter_Seance;
 import com.helpers.RequestResponse;
 import com.helpers.SeanceDepartementResponse;
+import com.utility.Utility;
 
 @WebServlet("/User/AffecterSeance")
 public class AffecterSeance extends HttpServlet 
@@ -51,11 +52,11 @@ public class AffecterSeance extends HttpServlet
 		
 		if (apiResponse.getStatusInfo() == Status.OK)
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		}
 		else 
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 			isDone = false;
 		}	
 		

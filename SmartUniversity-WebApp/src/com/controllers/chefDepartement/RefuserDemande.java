@@ -21,6 +21,7 @@ import com.helpers.DemandeChangementSeanceResponse;
 import com.helpers.DemandeCongeAcademiqueResponse;
 import com.helpers.DemandeSeanceSuppResponse;
 import com.helpers.RequestResponse;
+import com.utility.Utility;
 
 
 @WebServlet("/User/RefuserDemande")
@@ -88,7 +89,7 @@ public class RefuserDemande extends HttpServlet
 			isDone = false;
 		}	
 		
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("isDone", isDone);
 		session.setAttribute("message", message);
 		Redirect.SendRedirect(request, response, redirectTo);

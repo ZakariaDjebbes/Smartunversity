@@ -18,6 +18,7 @@ import com.controllers.Redirect;
 import com.helpers.RequestResponse;
 import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
+import com.utility.Utility;
 
 @WebServlet("/User/SupprimerSeanceAdmin")
 public class SupprimerSeanceAdmin extends HttpServlet
@@ -47,7 +48,7 @@ public class SupprimerSeanceAdmin extends HttpServlet
 			isDone = false;
 		}
 		RequestResponse requestResponse = apiResponse.readEntity(RequestResponse.class);		
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("message", message);
 		session.setAttribute("isDone", isDone);
 		Redirect.SendRedirect(request, response, "/User/ConsulterSeancesAdmin?annee=" + annee + "&specialite=" + specialite);

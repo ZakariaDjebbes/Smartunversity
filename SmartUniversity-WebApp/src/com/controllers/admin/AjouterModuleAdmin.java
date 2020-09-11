@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 import com.controllers.Redirect;
 import com.helpers.RequestResponse;
 import com.modele.Module;
+import com.utility.Utility;
 
 @WebServlet("/User/AjouterModuleAdmin")
 public class AjouterModuleAdmin extends HttpServlet
@@ -56,7 +57,7 @@ public class AjouterModuleAdmin extends HttpServlet
 			isDone = false;
 		}	
 		
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("isDone", isDone);
 		session.setAttribute("message", message);
 		Redirect.SendRedirect(request, response, "/User/AjouterModuleAdmin");

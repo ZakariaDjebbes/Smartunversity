@@ -21,6 +21,7 @@ import com.controllers.Redirect;
 import com.dots.Dot_Create_SeanceSupp;
 import com.helpers.RequestResponse;
 import com.modele.Seance.Jour;
+import com.utility.Utility;
 
 @WebServlet("/User/DemanderSeanceSupp")
 public class DemanderSeanceSupp extends HttpServlet {
@@ -51,11 +52,11 @@ public class DemanderSeanceSupp extends HttpServlet {
 
 		if (apiResponse.getStatusInfo() == Status.OK)
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		} else
 		{
 			isDone = false;
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		}
 		
 		ConsulterSeancesEnseignant.UpadteSeancesFromAPI(session);

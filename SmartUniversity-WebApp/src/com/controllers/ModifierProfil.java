@@ -25,6 +25,7 @@ import com.modele.ChefDepartement;
 import com.modele.Enseignant;
 import com.modele.Etudiant;
 import com.modele.Utilisateur;
+import com.utility.Utility;
 
 @WebServlet("/User/ModifierProfil")
 public class ModifierProfil extends HttpServlet
@@ -87,18 +88,36 @@ public class ModifierProfil extends HttpServlet
 				}
 
 				isDone = true;
-				message = "Modification réussi.";
+				switch (Utility.GetValueOfCookieWithName(request, "lang"))
+				{
+				case "fr":
+					message = "Modification réussi.";
+					break;
+				case "en":
+					message = "Modification successful.";				
+					break;
+
+				}
 			} 
 			else
 			{
-				message = requestResponse.getMessage_fr();
+				message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 				session.setAttribute("message", message);
 			}
 			apiResponse.close();
 		} 
 		else
 		{
-			message = "Veuillez modifier au moins un champs.";
+			switch (Utility.GetValueOfCookieWithName(request, "lang"))
+			{
+			case "fr":
+				message = "Veuillez modifier au moins un champ.";
+				break;
+			case "en":
+				message = "Please edit at least one field.";				
+				break;
+
+			}
 		}
 
 		session.setAttribute("isDone", isDone);

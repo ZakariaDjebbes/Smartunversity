@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.controllers.Redirect;
 import com.helpers.RequestResponse;
+import com.utility.Utility;
 
 @WebServlet("/User/SupprimerJustification")
 public class SupprimerJustification extends HttpServlet
@@ -42,11 +43,11 @@ public class SupprimerJustification extends HttpServlet
 
 		if (apiResponse.getStatusInfo() == Status.OK)
 		{
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		} else
 		{
 			isDone = false;
-			message = requestResponse.getMessage_fr();
+			message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		}
 		
 		ConsulterSeancesEnseignant.UpadteSeancesFromAPI(session);

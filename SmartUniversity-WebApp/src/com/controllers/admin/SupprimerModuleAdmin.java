@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.controllers.Redirect;
 import com.helpers.RequestResponse;
+import com.utility.Utility;
 
 @WebServlet("/User/SupprimerModuleAdmin")
 public class SupprimerModuleAdmin extends HttpServlet
@@ -43,7 +44,7 @@ public class SupprimerModuleAdmin extends HttpServlet
 			isDone = false;
 		}
 		RequestResponse requestResponse = apiResponse.readEntity(RequestResponse.class);		
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("message", message);
 		session.setAttribute("isDone", isDone);
 		Redirect.SendRedirect(request, response, "/User/ConsulterListeModulesAdmin");

@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.controllers.Redirect;
 import com.helpers.RequestResponse;
+import com.utility.Utility;
 
 @WebServlet("/User/ValiderJustification")
 public class ValiderJustification extends HttpServlet {
@@ -52,7 +53,7 @@ public class ValiderJustification extends HttpServlet {
 		}	
 		
 
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("isDone", isDone);
 		session.setAttribute("message", message);
 		Redirect.SendRedirect(request, response, "/User/ConsulterAbsence?numero-absence=" + numero_asence + "&numero-justification=" + numero_justification);

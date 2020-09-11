@@ -29,6 +29,7 @@ import com.helpers.RequestResponse;
 import com.modele.Etudiant.Annee;
 import com.modele.Etudiant.Specialite;
 import com.modele.Utilisateur.Type_Utilisateur;
+import com.utility.Utility;
 
 @WebServlet("/User/AjouterEtudiantAdmin")
 public class AjouterEtudiantAdmin extends HttpServlet
@@ -69,7 +70,7 @@ public class AjouterEtudiantAdmin extends HttpServlet
 			isDone = false;
 		}	
 		
-		message = requestResponse.getMessage_fr();
+		message = requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang"));
 		session.setAttribute("isDone", isDone);
 		session.setAttribute("message", message);
 		Redirect.SendRedirect(request, response, "/User/AjouterEtudiantAdmin");

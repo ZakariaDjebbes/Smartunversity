@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +11,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Ajouter un module - NTIC</title>
+<title><fmt:message key="pages.index_admin.add_module_title"></fmt:message> - NTIC</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link href="assets/fontawesome-sb/css/all.min.css" rel="stylesheet" type="text/css">
@@ -27,8 +30,8 @@
 					<div class="card mb-4 py-3 border-bottom-success">
 						<div class="card-body">
 							<div class="text-center">
-								<h2 class="text-success">Ajouter un module</h2>
-								<p>Ajouter un module dans le système</p>
+								<h2 class="text-success"><fmt:message key="pages.index_admin.add_module_title"></fmt:message></h2>
+								<p><fmt:message key="pages.index_admin.add_module_subtitle"></fmt:message></p>
 							</div>
 							<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  action="${pageContext.request.contextPath}/User/AjouterModuleAdmin" method="post" class="form-special form-sidebar">
 								<c:if test="${not empty isDone && not empty message}">
@@ -59,18 +62,18 @@
 								<div class="form-row">
 									<div class="col-12">
 										<div class="form-group">
-											<label>Code du module</label>
+											<label><fmt:message key="pages.index_admin.code_module"></fmt:message></label>
 											<input class="form-control" name="code-module" placeholder="ALGO" type="text" required>
 										</div>
 										<div class="form-group">
-											<label>Nom complet du module</label>
+											<label><fmt:message key="pages.index_admin.nom_module"></fmt:message></label>
 											<input class="form-control" name="nom" placeholder="Algorithmique et structures de données" type="text" required>
 										</div>
 									</div>
 								</div>
 								<div class="form-row">
 									<div class="col text-center">
-										<button class="btn btn-outline-success" type="submit">Ajouter le module</button>
+										<button class="btn btn-outline-success" type="submit"><fmt:message key="labels.add"></fmt:message></button>
 									</div>
 								</div>
 							</form>

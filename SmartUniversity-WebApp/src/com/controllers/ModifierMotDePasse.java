@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.helpers.RequestResponse;
+import com.utility.Utility;
 
 @WebServlet("/ModifierMotDePasse")
 public class ModifierMotDePasse extends HttpServlet
@@ -76,6 +77,6 @@ public class ModifierMotDePasse extends HttpServlet
 		
 		response.setContentType("text/plain");
 	    response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(requestResponse.getMessage_fr());
+		response.getWriter().write(requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang")));
 	}
 }

@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +11,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Acceuil - NTIC</title>
+<title><fmt:message key="headers.index"></fmt:message> - NTIC</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link href="assets/fontawesome-sb/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,7 +28,7 @@
 				<jsp:include page="/WEB-INF/espace_admin/shared/navbar_top_admin.jsp"></jsp:include>
 				<div class="container-fluid">
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">Acceuil</h1>
+						<h1 class="h3 mb-0 text-gray-800"><fmt:message key="labels.home"></fmt:message></h1>
 					</div>
 				</div>
 				<div class="container-fluid">
@@ -32,13 +36,13 @@
 						<div class="card-body">
 							<div class="text-center">
 								<h3 class="text-success">${utilisateur.getNom()} ${utilisateur.getPrenom()}</h3>
-								<p>Bienvenue l'espace ${utilisateur.getUser_type().getValue(0)}</p>
+								<p><fmt:message key="pages.welcome"></fmt:message> ${utilisateur.getUser_type().getValue(cookie['lang'].value)}</p>
 							</div>
 							<div class="text-center">
-								Vous êtes un administrateur du système de gestion d'absences de la faculté NTIC.
+								<fmt:message key="pages.index_admin.admin"></fmt:message>
 								<br>
 								<hr>
-								Ce compte vous permet de gérer les comptes des utilisateurs, les modules et les séances.
+								<fmt:message key="pages.index_admin.compte"></fmt:message>
 							</div>
 						</div>
 					</div>

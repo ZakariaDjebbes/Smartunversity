@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
 <!DOCTYPE html>
 <html>
 
@@ -7,7 +11,7 @@
 <meta charset="utf-8">
 <base href="${pageContext.request.contextPath}/WebContent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Acceuil - NTIC</title>
+<title><fmt:message key="headers.index"></fmt:message> - NTIC</title>
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
@@ -24,24 +28,24 @@
 			<div class="row">
 				<div class="col col-7">
 					<div class="block-heading">
-						<h3 class="text-success">Tâches en attente de traitement</h3>
+						<h3 class="text-success"><fmt:message key="pages.index_chef.taches"></fmt:message></h3>
 						<c:if test="${not empty seancesSansEnseignant and seancesSansEnseignant ne 0}">
 							<div class="alert alert-danger" role="alert">
-								<span><strong>Il y a ${seancesSansEnseignant} séance(s) sans enseignant</strong></span>
+								<span><strong><fmt:message key="pages.index_chef.alert_seances_01"></fmt:message> ${seancesSansEnseignant} <fmt:message key="pages.index_chef.alert_seances_02"></fmt:message></strong></span>
 							</div>
 						</c:if>
 						<c:if test="${not empty demandesNonTraite and demandesNonTraite ne 0}">
 							<div class="alert alert-warning" role="alert">
-								<span><strong>Il y a ${demandesNonTraite} demande(s) non traiter</strong></span>
+								<span><strong><fmt:message key="pages.index_chef.alert_demandes_01"></fmt:message> ${demandesNonTraite} <fmt:message key="pages.index_chef.alert_demandes_02"></fmt:message></strong></span>
 							</div>
 						</c:if>
 						<c:if test="${(empty demandesNonTraite or demandesNonTraite eq 0) and (empty seancesSansEnseignant or seancesSansEnseignant eq 0)}">
 							<div class="alert alert-success" role="alert">
 								<h4 class="alert-heading">
-									Aucune tâche pour le moment
+									<fmt:message key="pages.index_chef.alert_nothing_01"></fmt:message>
 									<br>
 								</h4>
-								<span><strong>Aucun problème a signalé! Votre département n'a aucune tâche en attente de traitement!</strong> <br></span>
+								<span><strong><fmt:message key="pages.index_chef.alert_nothing_02"></fmt:message></strong> <br></span>
 							</div>
 						</c:if>
 					</div>
@@ -49,13 +53,13 @@
 				<div class="col">
 					<div class="block-heading">
 						<h3 class="text-info">${utilisateur.getNom()} ${utilisateur.getPrenom()}</h3>
-						<p>Bienvenue dans votre espace ${utilisateur.getUser_type().getValue(0)}</p>
+						<p><fmt:message key="pages.welcome"></fmt:message> ${utilisateur.getUser_type().getValue(cookie['lang'].value)}</p>
 					</div>
 					<div class="text-center">
-						Vous êtes le chef du département <b>${utilisateur.getCode_departement().getValue(0)}-(${utilisateur.getCode_departement()})</b>.
+						<fmt:message key="pages.index_chef.chef"></fmt:message> <b>${utilisateur.getCode_departement().getValue(cookie['lang'].value)}-(${utilisateur.getCode_departement()})</b>.
 						<br>
 						<hr>
-						Ce compte vous permet de gérer les absences de vos séances et votre département.
+						<fmt:message key="pages.index_chef.compte"></fmt:message>
 					</div>
 				</div>
 			</div>
@@ -64,45 +68,29 @@
 	<section class="clean-block features">
 		<div class="container">
 			<div class="block-heading">
-				<h2 class="text-success">Les Fonctionalités Disponibles</h2>
-				<p>Depuis votre espace enseignant vous disposez des opérations suivantes.</p>
+				<h2 class="text-success"><fmt:message key="pages.index_enseignant.features_title"></fmt:message></h2>
+				<p><fmt:message key="pages.index_chef.features_subtitle"></fmt:message></p>
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-md-5 feature-box">
 					<i class="icon-settings icon"></i>
-					<h4>Gérer les absences de vos groupes</h4>
-					<p>Pour chaqu'un de vos groupes vous avez la possibilité de:</p>
-					<ul class="text-muted">
-						<li>Consulter les statistiques.</li>
-						<li>Etablir la liste des étudiants exclus.</li>
-						<li>Consulter les relvées d'absences.</li>
-					</ul>
+					<h4><fmt:message key="pages.index_enseignant.feature_01_title"></fmt:message></h4>
+					<fmt:message key="pages.index_enseignant.feature_01_subtitle"></fmt:message>
 				</div>
 				<div class="col-md-5 feature-box">
 					<i class="icon-pencil icon"></i>
-					<h4>Marquer la présence de vos étudiants</h4>
-					<p>vous pouvez dynamiquement marquer la présence des étudiants présent dans votre séance.</p>
+					<h4><fmt:message key="pages.index_enseignant.feature_02_title"></fmt:message></h4>
+					<p><fmt:message key="pages.index_enseignant.feature_02_subtitle"></fmt:message></p>
 				</div>
 				<div class="col-md-5 feature-box">
 					<i class="fa fa-lg fa-refresh icon"></i>
-					<h4>Demander des ajustements</h4>
-					<p>Vous pourrez ici même faire vos demande au chef de votre département pour:</p>
-					<ul class="text-muted">
-						<li>Ajouter une séance supplémentaire.</li>
-						<li>Modifier l'une de vos séances.</li>
-					</ul>
+					<h4><fmt:message key="pages.index_enseignant.feature_03_title"></fmt:message></h4>
+					<fmt:message key="pages.index_enseignant.feature_03_subtitle"></fmt:message>
 				</div>
 				<div class="col-md-5 feature-box">
 					<i class="icon-settings icon"></i>
-					<h4>Gérer votre département</h4>
-					<p>En tant que chef de departement vous pouvez gérer le département:</p>
-					<ul class="text-muted">
-						<li>Affecter ou désaffecter une séance.</li>
-						<li>Consulter, accepter ou refuser les justifications des absences.</li>
-						<li>Consulter la liste des étudiants exclus du département.</li>
-						<li>Consulter et gérer les demandes des enseignants et étudiants du département.</li>
-						<li>Consulter les statistiques des absences du département.</li>
-					</ul>
+					<h4><fmt:message key="pages.index_chef.feature_01_title"></fmt:message></h4>
+					<fmt:message key="pages.index_chef.feature_01_subtitle"></fmt:message>
 				</div>
 			</div>
 		</div>

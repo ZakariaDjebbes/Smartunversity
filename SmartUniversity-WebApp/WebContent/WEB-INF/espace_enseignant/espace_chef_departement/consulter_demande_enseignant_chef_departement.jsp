@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Traitement de la demande pour ${demande.getModule().getNom()}</title>
+<title>${demande.getModule().getNom()}</title>
 <link rel="icon" href="assets/img/Logo/logo.png">
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -28,13 +31,13 @@
 					<div class="block-heading">
 						<c:choose>
 							<c:when test="${typeDemande eq 'supp'}">
-								<h2 class="text-success">Demande de séance supplémentaire</h2>
+								<h2 class="text-success"><fmt:message key="pages.consulter_demande.demande_de"></fmt:message> <fmt:message key="pages.consulter_demandes.supp"></fmt:message></h2>
 							</c:when>
 							<c:otherwise>
-								<h2 class="text-success">Demande de changement de séance</h2>
+								<h2 class="text-success"><fmt:message key="pages.consulter_demande.demande_de"></fmt:message> <fmt:message key="pages.consulter_demandes.changement"></fmt:message></h2>
 							</c:otherwise>
 						</c:choose>
-						<p>Acceptez ou refusez cette demande</p>
+						<p><fmt:message key="pages.consulter_demande.subtitle"></fmt:message></p>
 					</div>
 				</div>
 			</div>
@@ -63,31 +66,31 @@
 			<div class="row">
 				<div class="col mt-3">
 					<div class="text-left">
-						<h4 style="display:inline-block" class="text-success">Séance d'origine</h4>
-						<a href="${pageContext.request.contextPath}/User/ConsulterSeanceChefDepartement?code-seance=${demande.getSeance().getCode_seance()}" style="float: right" class="badge badge-info">Consulter</a>
+						<h4 style="display:inline-block" class="text-success"><fmt:message key="pages.consulter_seance.detail_seance"></fmt:message></h4>
+						<a href="${pageContext.request.contextPath}/User/ConsulterSeanceChefDepartement?code-seance=${demande.getSeance().getCode_seance()}" style="float: right" class="badge badge-info"><fmt:message key="labels.consult"></fmt:message></a>
 					</div>
 					<div class="table-responsive">
 						<table class="table table-sm">
 							<tbody>
 								<tr>
-									<th style="width: 30%">Module</th>
+									<th style="width: 30%"><fmt:message key="labels.module"></fmt:message></th>
 									<td>${demande.getModule().getNom()} (${demande.getModule().getCode_module()})</td>
 								</tr>
 								<tr>
-									<th>Type</th>
-									<td>${demande.getSeance().getType().getValue(0)}(${demande.getSeance().getType()})</td>
+									<th><fmt:message key="labels.type"></fmt:message></th>
+									<td>${demande.getSeance().getType().getValue(cookie['lang'].value)}(${demande.getSeance().getType()})</td>
 								</tr>
 								<tr>
-									<th>Année et spécialité</th>
-									<td>${demande.getSeance().getAnnee().getValue(0)} (${demande.getSeance().getAnnee()}), ${demande.getSeance().getSpecialite().getValue(0)} (${demande.getSeance().getSpecialite()})</td>
+									<th><fmt:message key="labels.annee"></fmt:message>, <fmt:message key="labels.specialite"></fmt:message></th>
+									<td>${demande.getSeance().getAnnee().getValue(cookie['lang'].value)} (${demande.getSeance().getAnnee()}), ${demande.getSeance().getSpecialite().getValue(cookie['lang'].value)} (${demande.getSeance().getSpecialite()})</td>
 								</tr>
 								<tr>
-									<th>Groupe</th>
+									<th><fmt:message key="labels.group"></fmt:message></th>
 									<td>${demande.getSeance().getGroupe()}</td>
 								</tr>
 								<tr>
-									<th>Enseigner le:</th>
-									<td>${demande.getSeance().getJour().getValue(0)} à ${demande.getSeance().getHeure()}</td>
+									<th><fmt:message key="labels.enseigne_le"></fmt:message></th>
+									<td>${demande.getSeance().getJour().getValue(cookie['lang'].value)} à ${demande.getSeance().getHeure()}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -95,40 +98,40 @@
 				</div>
 				<div class="col col-xs-12 col-md-12 col-lg-6 mt-3">
 					<div class="table-responsive">
-						<h4 class="text-success">Enseignant de la séance</h4>
+						<h4 class="text-success"><fmt:message key="pages.consulter_seance.detail_enseignant"></fmt:message></h4>
 						<table class="table table-sm">
 							<tbody>
 								<tr>
-									<th style="width: 30%">Nom et prénom</th>
+									<th style="width: 30%"><fmt:message key="labels.nom"></fmt:message>, <fmt:message key="labels.prenom"></fmt:message></th>
 									<td>${demande.getEnseignant().getNom()} ${demande.getEnseignant().getPrenom()}</td>
 								</tr>
 								<tr>
-									<th>Né le</th>
+									<th><fmt:message key="labels.ne_le"></fmt:message></th>
 									<td>${demande.getEnseignant().getDate()}</td>
 								</tr>
 								<tr>
-									<th>Adresse physique</th>
+									<th><fmt:message key="labels.adresse"></fmt:message></th>
 									<td>${demande.getEnseignant().getAdresse()}</td>
 								</tr>
 								<tr>
-									<th>Contact</th>
+									<th><fmt:message key="labels.contact"></fmt:message></th>
 									<td>
 										<ul>
 											<li>
-												<b>Adresse mail</b>: ${demande.getEnseignant().getEmail()}
+												<b><fmt:message key="labels.email"></fmt:message></b>: ${demande.getEnseignant().getEmail()}
 											</li>
 											<li>
-												<b>Téléphone</b>: ${demande.getEnseignant().getTelephone()}
+												<b><fmt:message key="labels.telephone"></fmt:message></b>: ${demande.getEnseignant().getTelephone()}
 											</li>
 										</ul>
 									</td>
 								</tr>
 								<tr>
-									<th>Grade</th>
+									<th><fmt:message key="labels.grade"></fmt:message></th>
 									<td>${demande.getEnseignant().getGrade()}</td>
 								</tr>
 								<tr>
-									<th>Département actuel</th>
+									<th><fmt:message key="labels.departement"></fmt:message></th>
 									<td>${demande.getEnseignant().getCode_departement()}</td>
 								</tr>
 							</tbody>
@@ -139,24 +142,24 @@
 			<div class="row">
 				<div class="col">
 					<div class="text-center">
-						<h4 class="text-success">Details de la demande</h4>
+						<h4 class="text-success"><fmt:message key="pages.consulter_demande.detail_demande"></fmt:message></h4>
 						<c:choose>
 							<c:when test="${typeDemande eq 'supp'}">					
 								<c:set var="etat" value="${demande.getSeanceSupp().getEtat_seance()}"></c:set>
 								<p>
-									Ajout d'une séance supplémentaire le <span class="font-weight-bold">${demande.getSeanceSupp().getJour().getValue(0)}</span>&nbsp;à <span class="font-weight-bold">${demande.getSeanceSupp().getHeure()}</span>.
+									<fmt:message key="pages.consulter_demande.supp"></fmt:message> <span class="font-weight-bold">${demande.getSeanceSupp().getJour().getValue(cookie['lang'].value)}</span>, <span class="font-weight-bold">${demande.getSeanceSupp().getHeure()}</span>.
 								</p>
 								<p>
-									<span class="font-weight-bold">Etat actuel</span>&nbsp;: 
+									<span class="font-weight-bold"><fmt:message key="labels.etat"></fmt:message></span>&nbsp;: 
 									<c:choose>
 										<c:when test="${demande.getSeanceSupp().getEtat_seance() eq 'valide'}">
-											<span class="text-success">${demande.getSeanceSupp().getEtat_seance().getValue(0)}</span>
+											<span class="text-success">${demande.getSeanceSupp().getEtat_seance().getValue(cookie['lang'].value)}</span>
 										</c:when>
 										<c:when test="${demande.getSeanceSupp().getEtat_seance() eq 'refuse'}">
-											<span class="text-danger">${demande.getSeanceSupp().getEtat_seance().getValue(0)}</span>
+											<span class="text-danger">${demande.getSeanceSupp().getEtat_seance().getValue(cookie['lang'].value)}</span>
 										</c:when>
 										<c:when test="${demande.getSeanceSupp().getEtat_seance() eq 'nonTraite'}">
-											<span class="text-warning">${demande.getSeanceSupp().getEtat_seance().getValue(0)}</span>
+											<span class="text-warning">${demande.getSeanceSupp().getEtat_seance().getValue(cookie['lang'].value)}</span>
 										</c:when>
 									</c:choose>
 								</p>
@@ -164,19 +167,19 @@
 							<c:when test="${typeDemande eq 'changement'}">	
 								<c:set var="etat" value="${demande.getChangementSeance().getEtat_seance()}"></c:set>			
 								<p>
-									Changer l'horaire de cette séance vers <span class="font-weight-bold">${demande.getChangementSeance().getNouveau_jour().getValue(0)}</span>&nbsp;à <span class="font-weight-bold">${demande.getChangementSeance().getHeure()}</span>.
+									<fmt:message key="pages.consulter_demande.changement"></fmt:message> <span class="font-weight-bold">${demande.getChangementSeance().getNouveau_jour().getValue(cookie['lang'].value)}</span>, <span class="font-weight-bold">${demande.getChangementSeance().getHeure()}</span>.
 								</p>
 								<p>
-									<span class="font-weight-bold">Etat actuel</span>&nbsp;: 
+									<span class="font-weight-bold"><fmt:message key="labels.etat"></fmt:message></span>&nbsp;: 
 									<c:choose>
 										<c:when test="${demande.getChangementSeance().getEtat_seance() eq 'valide'}">
-											<span class="text-success">${demande.getChangementSeance().getEtat_seance().getValue(0)}</span>
+											<span class="text-success">${demande.getChangementSeance().getEtat_seance().getValue(cookie['lang'].value)}</span>
 										</c:when>
 										<c:when test="${demande.getChangementSeance().getEtat_seance() eq 'refuse'}">
-											<span class="text-danger">${demande.getChangementSeance().getEtat_seance().getValue(0)}</span>
+											<span class="text-danger">${demande.getChangementSeance().getEtat_seance().getValue(cookie['lang'].value)}</span>
 										</c:when>
 										<c:when test="${demande.getChangementSeance().getEtat_seance() eq 'nonTraite'}">
-											<span class="text-warning">${demande.getChangementSeance().getEtat_seance().getValue(0)}</span>
+											<span class="text-warning">${demande.getChangementSeance().getEtat_seance().getValue(cookie['lang'].value)}</span>
 										</c:when>
 									</c:choose>
 								</p>
@@ -186,16 +189,16 @@
 							<c:when test="${typeDemande eq 'supp'}">
 								<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post">
 									<div class="form-group text-center">
-										<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ValiderDemande" type="submit">Accepter</button>
-										<button class="btn btn-outline-danger ml-5" formaction="${pageContext.request.contextPath}/User/RefuserDemande" type="submit">Refuser</button>
+										<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ValiderDemande" type="submit"><fmt:message key="labels.valide"></fmt:message></button>
+										<button class="btn btn-outline-danger ml-5" formaction="${pageContext.request.contextPath}/User/RefuserDemande" type="submit"><fmt:message key="labels.refuse"></fmt:message></button>
 									</div>
 								</form>
 							</c:when>
 							<c:when test="${typeDemande eq 'changement' and demande.getChangementSeance().getEtat_seance() eq 'nonTraite'}">
 								<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post">
 									<div class="form-group text-center">
-										<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ValiderDemande" type="submit">Accepter</button>
-										<button class="btn btn-outline-danger ml-5" formaction="${pageContext.request.contextPath}/User/RefuserDemande" type="submit">Refuser</button>
+										<button class="btn btn-outline-success" formaction="${pageContext.request.contextPath}/User/ValiderDemande" type="submit"><fmt:message key="labels.valide"></fmt:message></button>
+										<button class="btn btn-outline-danger ml-5" formaction="${pageContext.request.contextPath}/User/RefuserDemande" type="submit"><fmt:message key="labels.refuse"></fmt:message></button>
 									</div>
 								</form>
 							</c:when>

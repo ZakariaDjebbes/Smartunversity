@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +12,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Liste des étudiants - NTIC</title>
+<title><fmt:message key="pages.index_admin.consulter_liste"></fmt:message> <fmt:message key="labels.etudiant"></fmt:message> - NTIC</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link href="assets/fontawesome-sb/css/all.min.css" rel="stylesheet" type="text/css">
@@ -52,64 +56,64 @@
 							</c:if>
 							<div class="row">
 								<div class="col text-center">
-									<h2 class="text-success">Liste des comptes étudiant</h2>
-									<p>Liste de tout les comptes étudiants dans le système, consultez ou supprimez les.</p>
+									<h2 class="text-success"><fmt:message key="pages.index_admin.consulter_liste"></fmt:message> <fmt:message key="labels.etudiant"></fmt:message></h2>
+									<p><fmt:message key="pages.index_admin.liste_etudiants_subtitle"></fmt:message></p>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-12 col-md-6 col-lg-3 mt-3">
 									<div class="dropdown keep-open">
-										<a class="btn btn-outline-success dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Affichage</a>
+										<a class="btn btn-outline-success dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><fmt:message key="labels.display"></fmt:message></a>
 										<div class="dropdown-menu w-10 p-2">
 											<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  class="px-1">
 
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" checked class="custom-control-input display-cb" id="display-cb-0" data-target="0">
-													<label class="custom-control-label" for="display-cb-0"> Nom d'utilisateur </label>
+													<label class="custom-control-label" for="display-cb-0"> <fmt:message key="labels.user"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" checked class="custom-control-input display-cb" id="display-cb-1" data-target="1">
-													<label class="custom-control-label" for="display-cb-1"> Nom </label>
+													<label class="custom-control-label" for="display-cb-1"> <fmt:message key="labels.nom"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" checked class="custom-control-input display-cb" id="display-cb-2" data-target="2">
-													<label class="custom-control-label" for="display-cb-2"> Prénom </label>
+													<label class="custom-control-label" for="display-cb-2"> <fmt:message key="labels.prenom"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input display-cb" id="display-cb-3" data-target="3">
-													<label class="custom-control-label" for="display-cb-3"> Email </label>
+													<label class="custom-control-label" for="display-cb-3"> <fmt:message key="labels.email"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input display-cb" id="display-cb-4" data-target="4">
-													<label class="custom-control-label" for="display-cb-4"> Adresse </label>
+													<label class="custom-control-label" for="display-cb-4"> <fmt:message key="labels.adresse"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input display-cb" id="display-cb-5" data-target="5">
-													<label class="custom-control-label" for="display-cb-5"> Date de naissance </label>
+													<label class="custom-control-label" for="display-cb-5"> <fmt:message key="labels.date_n"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input display-cb" id="display-cb-6" data-target="6">
-													<label class="custom-control-label" for="display-cb-6"> Téléphone </label>
+													<label class="custom-control-label" for="display-cb-6"> <fmt:message key="labels.telephone"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" checked class="custom-control-input display-cb" id="display-cb-7" data-target="7">
-													<label class="custom-control-label" for="display-cb-7"> Département </label>
+													<label class="custom-control-label" for="display-cb-7"> <fmt:message key="labels.departement"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" checked class="custom-control-input display-cb" id="display-cb-8" data-target="8">
-													<label class="custom-control-label" for="display-cb-8"> Année </label>
+													<label class="custom-control-label" for="display-cb-8"> <fmt:message key="labels.annee"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" checked class="custom-control-input display-cb" id="display-cb-9" data-target="9">
-													<label class="custom-control-label" for="display-cb-9"> Spécialité </label>
+													<label class="custom-control-label" for="display-cb-9"> <fmt:message key="labels.specialite"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" checked class="custom-control-input display-cb" id="display-cb-10" data-target="10">
-													<label class="custom-control-label" for="display-cb-10"> Groupe </label>
+													<label class="custom-control-label" for="display-cb-10"> <fmt:message key="labels.group"></fmt:message> </label>
 												</div>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" checked class="custom-control-input display-cb" id="display-cb-11" data-target="11">
-													<label class="custom-control-label" for="display-cb-11"> Etat </label>
+													<label class="custom-control-label" for="display-cb-11"> <fmt:message key="labels.etat"></fmt:message> </label>
 												</div>
 											</form>
 										</div>
@@ -122,19 +126,19 @@
 										<table id="table-etudiants" class="table table-striped table-bordered">
 											<thead>
 												<tr class="table-success">
-													<th>Nom d'utilisateur</th>
-													<th>Nom</th>
-													<th>Prénom</th>
-													<th>Email</th>
-													<th>Adresse</th>
-													<th>Date de naissance</th>
-													<th>Telephone</th>
-													<th>Département</th>
-													<th>Année</th>
-													<th>Spécialité</th>
-													<th>Groupe</th>
-													<th>Etat</th>
-													<th>Opérations</th>
+													<th><fmt:message key="labels.user"></fmt:message></th>
+													<th><fmt:message key="labels.nom"></fmt:message></th>
+													<th><fmt:message key="labels.prenom"></fmt:message></th>
+													<th><fmt:message key="labels.email"></fmt:message></th>
+													<th><fmt:message key="labels.adresse"></fmt:message></th>
+													<th><fmt:message key="labels.date_n"></fmt:message></th>
+													<th><fmt:message key="labels.telephone"></fmt:message></th>
+													<th><fmt:message key="labels.departement"></fmt:message></th>
+													<th><fmt:message key="labels.annee"></fmt:message></th>
+													<th><fmt:message key="labels.specialite"></fmt:message></th>
+													<th><fmt:message key="labels.group"></fmt:message></th>
+													<th><fmt:message key="labels.etat"></fmt:message></th>
+													<th><fmt:message key="labels.gestion"></fmt:message></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -151,7 +155,7 @@
 														<td>${etudiant.getAnnee()}</td>
 														<td>${etudiant.getSpecialite()}</td>
 														<td>${etudiant.getGroupe()}</td>
-														<td>${etudiant.getEtat_etudiant()}</td>
+														<td>${etudiant.getEtat_etudiant().getValue(cookie['lang'].value)}</td>
 														<td class="text-center">
 															<a href="${pageContext.request.contextPath}/User/ConsulterEtudiantAdmin?id_etudiant=${etudiant.getId_utilisateur()}" class="btn btn-primary btn-circle btn-sm">
 																<i class="fa fa-pen"></i>
@@ -175,20 +179,20 @@
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Supprimer l'étudiant?</h5>
+			        <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="labels.delete"></fmt:message> <fmt:message key="labels.utilisateur"></fmt:message>?</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
-			        Voulez vous supprimer l'étudiant <span class="text-info" id="nom"></span> <span id="prenom" class="text-info"></span>
+			        <fmt:message key="pages.index_admin.delete_user"></fmt:message> <span class="text-info" id="nom"></span> <span id="prenom" class="text-info"></span>
 			      </div>
 			      <div class="modal-footer">
 			      	<form  onsubmit="return (typeof submitted == 'undefined') ? (submitted = true) : !submitted"  method="post">
 			      		<input type="hidden" name="delete" value="etudiant">
 			      		<input type="hidden" name="id_utilisateur">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-				        <button type="submit" formaction="${pageContext.request.contextPath}/User/SupprimerCompteAdmin"  type="submit" class="btn btn-outline-danger">Supprimer l'étudiant</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="labels.cancel"></fmt:message></button>
+				        <button type="submit" formaction="${pageContext.request.contextPath}/User/SupprimerCompteAdmin"  type="submit" class="btn btn-outline-danger"><fmt:message key="labels.delete"></fmt:message></button>
 			        </form>
 			      </div>
 			    </div>

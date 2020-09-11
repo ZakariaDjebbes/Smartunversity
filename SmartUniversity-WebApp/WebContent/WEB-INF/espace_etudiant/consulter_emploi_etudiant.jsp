@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="resources.ApplicationResources"/>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Emploi du temps - ${utilisateur.getNom()} ${utilisateur.getPrenom()}</title>
+<title><fmt:message key="labels.emploi"></fmt:message> - ${utilisateur.getNom()} ${utilisateur.getPrenom()}</title>
 <base href="${pageContext.request.contextPath}/WebContent">
 <link rel="icon" href="assets/img/Logo/logo.png">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -25,32 +29,32 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="block-heading">
-						<h2 class="text-success">Emploi du temps</h2>
-						<p>Toutes vos séances par jour et par heure</p>
+						<h2 class="text-success"><fmt:message key="labels.emploi"></fmt:message></h2>
+						<p><fmt:message key="pages.emploi_etudiant.subtitle"></fmt:message></p>
 					</div>
 				</div>
 			</div>
-			<div class="dropdown">
+			<!-- <div class="dropdown">
 				<button class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Telecharger au format</button>
 				<div class="dropdown-menu" role="menu">
 					<a class="dropdown-item" role="presentation" id="btn-download-excel">
 						Excel&nbsp;<i class="fa fa-file-excel-o float-right fa-lg text-success"></i>
 					</a>
 				</div>
-			</div>
+			</div>-->
 			<div class="row">
 				<div class="col-md-12">
 					<div class="table-responsive">
 						<table class="table table-bordered" id="table-emploi">
-							  <caption class="text-center font-weight-bold">Emploi du temps - ${utilisateur.getAnnee()}, ${utilisateur.getSpecialite()} Groupe ${utilisateur.getGroupe()}</caption>
+							  <caption class="text-center font-weight-bold"><fmt:message key="labels.emploi"></fmt:message> - ${utilisateur.getAnnee()}, ${utilisateur.getSpecialite()} <fmt:message key="labels.group"></fmt:message> ${utilisateur.getGroupe()}</caption>
 							<thead>
 								<tr class="text-center">
 									<th></th>
-									<th>Dimanche</th>
-									<th>Lundi</th>
-									<th>Mardi</th>
-									<th>Mercredi</th>
-									<th>Jedui</th>
+									<th><fmt:message key="labels.sunday"></fmt:message></th>
+									<th><fmt:message key="labels.monday"></fmt:message></th>
+									<th><fmt:message key="labels.tuesday"></fmt:message></th>
+									<th><fmt:message key="labels.wednesday"></fmt:message></th>
+									<th><fmt:message key="labels.thursday"></fmt:message></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -214,7 +218,7 @@
 			+'<br>'
 			+'<a href="${pageContext.request.contextPath}/User/ConsulterSeanceEtudiant?code-seance=' + code_seance + '"><span class="badge badge-primary">Consulter</span></a>'
 			+'<hr>'
-			+'<span class="' + absencesColor + '">' + nombreAbsences + ' absences</span>';
+			+'<span class="' + absencesColor + '">' + nombreAbsences + ' absence(s)</span>';
 			
 			return template;
 		}

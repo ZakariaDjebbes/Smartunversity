@@ -73,7 +73,7 @@ public class MotDePasseOublier extends HttpServlet
 		}
 		else
 		{
-		    response.getWriter().write(requestResponse.getMessage_fr());    
+		    response.getWriter().write(requestResponse.getMessage(Utility.GetValueOfCookieWithName(request, "lang")));    
 		}
 	}
 }
