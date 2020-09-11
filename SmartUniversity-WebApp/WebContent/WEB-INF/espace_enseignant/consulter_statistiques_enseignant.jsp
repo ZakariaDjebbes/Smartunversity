@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/filter-select.css">
 <link rel="stylesheet" href="assets/css/custom-checkbox.css">
-<link rel="stylesheet" href="assets/alertify/css/themes/bootstrap.min.css">
+
 </head>
 <body>
 	<jsp:include page="/WEB-INF/espace_enseignant/shared/header_enseignant.jsp"></jsp:include>

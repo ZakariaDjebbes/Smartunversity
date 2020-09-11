@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/filter-select.css">
 <link rel="stylesheet" href="assets/css/custom-checkbox.css">
-<link rel="stylesheet" href="assets/alertify/css/themes/bootstrap.min.css">
+
 </head>
 <body>
 	<jsp:include page="/WEB-INF/espace_enseignant/shared/header_enseignant.jsp"></jsp:include>
@@ -80,10 +80,10 @@
 			const byHour = "heure";
 			const byModule= "module";
 			const byEnseignant = "enseignant";
-			const titleByDay = '<fmt:message key="pages.stats.per_day_title"></fmt:message> ' + annee + " - " + specialite;
-			const titleByHour = '<fmt:message key="pages.stats.per_hour_title"></fmt:message> ' + annee + " - " + specialite;
-			const titleByGroup = '<fmt:message key="pages.stats.per_group_title"></fmt:message> ' + annee + " - " + specialite;
-			const titleByEnseignant = '<fmt:message key="pages.stats.per_enseignant_title"></fmt:message> ' + annee + " - " + specialite;
+			const titleByDay = '<fmt:message key="pages.stats.per_day_title"></fmt:message> ' + annee + ' - ' + specialite;
+			const titleByHour = '<fmt:message key="pages.stats.per_hour_title"></fmt:message> ' + annee + ' - ' + specialite;
+			const titleByGroup = '<fmt:message key="pages.stats.per_group_title"></fmt:message> ' + annee + ' - ' + specialite;
+			const titleByEnseignant = '<fmt:message key="pages.stats.per_enseignant_title"></fmt:message> ' + annee + ' - ' + specialite;
 			let statTypeSelect = $("#stat-type");
 			let chartTypeSelect = $("#chart-type");
 			let statModuleOption = $("option[value='stat-module']");			

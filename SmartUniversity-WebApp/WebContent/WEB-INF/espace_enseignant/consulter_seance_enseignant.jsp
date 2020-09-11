@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/filter-select.css">
 <link rel="stylesheet" href="assets/css/custom-checkbox.css">
-<link rel="stylesheet" href="assets/alertify/css/themes/bootstrap.min.css">
+
 </head>
 <body>
 	<jsp:include page="/WEB-INF/espace_enseignant/shared/header_enseignant.jsp"></jsp:include>
@@ -323,7 +323,7 @@
 									<c:otherwise>
 										<div class="text-center">
 											<h6 class="text-bold">
-												<i class="icon-exclamation fa-lg text-info"></i><fmt:message key="pages.consulter_seance_enseignant.already_changement"></fmt:message>
+												<i class="icon-exclamation fa-lg text-info"></i><fmt:message key="pages.consulter_seance_enseignant.changment_exist"></fmt:message>
 											</h6>
 										</div>
 										<div class="row">
@@ -337,7 +337,7 @@
 												<input class="form-control" type="text" placeholder="${seance.getSeance().getJour().getValue(cookie['lang'].value)}" readonly>
 											</div>
 											<div class="form-group col">
-												<label><fmt:message key="new.valide"></fmt:message> <fmt:message key="labels.day"></fmt:message></label>
+												<label><fmt:message key="labels.new"></fmt:message> <fmt:message key="labels.day"></fmt:message></label>
 												<input class="form-control" type="text" placeholder="${seance.getChangementSeance().getNouveau_jour().getValue(cookie['lang'].value)}" readonly>
 											</div>
 										</div>
