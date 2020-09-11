@@ -107,7 +107,7 @@
 							<label><fmt:message key="labels.user_type"></fmt:message></label>
 							<input class="form-control" type="text" value="${utilisateur.getUser_type().getValue(cookie['lang'].value)}" readonly required>
 						</div>
-						<c:if test="${utilisateur.getUser_type() eq 'enseignant' or utilisateur.getUser_type() eq 'chefDepartement'}">
+						<c:if test="${utilisateur.getUser_type() eq 'enseignant' or utilisateur.getUser_type() eq 'chefDepartement' or utilisateur.getUser_type() eq 'responsableFormation'}">
 							<div class="form-group">
 								<label><fmt:message key="labels.grade"></fmt:message></label>
 								<input class="form-control" type="text" value="${utilisateur.getGrade()}" readonly required>
@@ -131,7 +131,7 @@
 								<input class="form-control" type="text" value="${utilisateur.getGroupe()}" readonly required>
 							</div>
 						</c:if>
-						<c:if test="${utilisateur.getUser_type() eq 'enseignant' or utilisateur.getUser_type() eq 'chefDepartement'}">
+						<c:if test="${utilisateur.getUser_type() eq 'enseignant' or utilisateur.getUser_type() eq 'chefDepartement' or utilisateur.getUser_type() eq 'responsableFormation'}">
 							<div class="text-center">
 								<h4 class="text-danger"><fmt:message key="pages.update_profil.delete_account"></fmt:message></h4>
 								<small class="d-block"><fmt:message key="pages.update_profil.small_delete_account"></fmt:message>
