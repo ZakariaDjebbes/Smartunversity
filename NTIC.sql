@@ -205,33 +205,6 @@ INSERT INTO `departement` VALUES ('MI',NULL),('TLSI',NULL),('IFA',NULL);
 UNLOCK TABLES;
 
 --
--- Table structure for table `emploiedutemps`
---
-
-DROP TABLE IF EXISTS `emploiedutemps`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `emploiedutemps` (
-  `numero_emploi` int(11) NOT NULL AUTO_INCREMENT,
-  `emploi` blob NOT NULL,
-  `specialite` varchar(10) NOT NULL,
-  `id_chef_departement` int(11) DEFAULT NULL,
-  PRIMARY KEY (`numero_emploi`),
-  KEY `fk_EmploieDuTemps_ChefDepartement` (`id_chef_departement`),
-  CONSTRAINT `fk_EmploieDuTemps_ChefDepartement` FOREIGN KEY (`id_chef_departement`) REFERENCES `chefdepartement` (`id_chef_departement`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `emploiedutemps`
---
-
-LOCK TABLES `emploiedutemps` WRITE;
-/*!40000 ALTER TABLE `emploiedutemps` DISABLE KEYS */;
-/*!40000 ALTER TABLE `emploiedutemps` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `enseignant`
 --
 
@@ -610,4 +583,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-11 23:26:25
+-- Dump completed on 2020-09-11 23:52:59
