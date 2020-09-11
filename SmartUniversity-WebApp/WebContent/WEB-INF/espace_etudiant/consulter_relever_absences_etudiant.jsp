@@ -39,10 +39,10 @@
 						<c:choose>
 							<c:when test="${releverAbsences.isEmpty()}">
 								<div class="alert alert-success" role="alert">
-								  <h4 class="alert-heading"><fmt:message key="pages.releve_etuiant.alert_no_absences_01"></fmt:message></h4>
-								  <p><fmt:message key="pages.releve_etuiant.alert_no_absences_02"></fmt:message></p>
+								  <h4 class="alert-heading"><fmt:message key="pages.releve_etudiant.alert_no_absences_01"></fmt:message></h4>
+								  <p><fmt:message key="pages.releve_etudiant.alert_no_absences_02"></fmt:message></p>
 								  <hr>
-								  <p class="mb-0"><fmt:message key="pages.releve_etuiant.alert_no_absences_03"></fmt:message></p>
+								  <p class="mb-0"><fmt:message key="pages.releve_etudiant.alert_no_absences_03"></fmt:message></p>
 								</div>
 							</c:when>
 							<c:otherwise>
