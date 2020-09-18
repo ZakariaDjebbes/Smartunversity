@@ -51,14 +51,17 @@ public class Update
 	public Response UpdateUser(Utilisateur utilisateur, @QueryParam("is_android") boolean isAndroid)
 	{
 		Utilisateur oldUtilisateur = DAO_User.GetUserByID(utilisateur.getId_utilisateur());
-		
-		boolean checkUser = !DAO_User.UsernameExists(utilisateur.getUser()) || oldUtilisateur.getUser().equals(utilisateur.getUser());
-		boolean checkEmail = !DAO_User.EmailExists(utilisateur.getEmail()) || oldUtilisateur.getEmail().equals(utilisateur.getEmail());
-		
+
+		boolean checkUser = !DAO_User.UsernameExists(utilisateur.getUser())
+				|| oldUtilisateur.getUser().equals(utilisateur.getUser());
+		boolean checkEmail = !DAO_User.EmailExists(utilisateur.getEmail())
+				|| oldUtilisateur.getEmail().equals(utilisateur.getEmail());
+
 		if (checkUser && checkEmail)
 		{
 			// validation
-			Dot_Login_User dots_Login_User = new Dot_Login_User(utilisateur.getUser(), utilisateur.getPass(), isAndroid);
+			Dot_Login_User dots_Login_User = new Dot_Login_User(utilisateur.getUser(), utilisateur.getPass(),
+					isAndroid);
 
 			dots_Login_User.Validate();
 
@@ -96,16 +99,16 @@ public class Update
 			}
 		} else
 		{
-			if(!checkEmail)
+			if (!checkEmail)
 			{
 				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_email"));
 			}
-			if(!checkUser)
+			if (!checkUser)
 			{
-				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_username"));	
+				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_username"));
 			}
-			
-			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("internal_error"));	
+
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("internal_error"));
 		}
 	}
 
@@ -116,12 +119,34 @@ public class Update
 	@Path("/admin/etudiant")
 	public Response UpdateEtudiant(Etudiant etudiant)
 	{
-		if (DAO_Etudiant.UpdateEtudiant(etudiant))
+		Utilisateur oldUtilisateur = DAO_User.GetUserByID(etudiant.getId_utilisateur());
+
+		boolean checkUser = !DAO_User.UsernameExists(etudiant.getUser())
+				|| oldUtilisateur.getUser().equals(etudiant.getUser());
+		boolean checkEmail = !DAO_User.EmailExists(etudiant.getEmail())
+				|| oldUtilisateur.getEmail().equals(etudiant.getEmail());
+
+		if (checkUser && checkEmail)
 		{
-			return Utility.Response(Status.OK, MessageReader.GetNode("student_updated"));
+			if (DAO_Etudiant.UpdateEtudiant(etudiant))
+			{
+				return Utility.Response(Status.OK, MessageReader.GetNode("student_updated"));
+			} else
+			{
+				return Utility.Response(Status.INTERNAL_SERVER_ERROR, MessageReader.GetNode("student_not_updated"));
+			}
 		} else
 		{
-			return Utility.Response(Status.INTERNAL_SERVER_ERROR, MessageReader.GetNode("student_not_updated"));
+			if (!checkEmail)
+			{
+				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_email"));
+			}
+			if (!checkUser)
+			{
+				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_username"));
+			}
+
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("internal_error"));
 		}
 	}
 
@@ -148,12 +173,34 @@ public class Update
 	@Path("/admin/enseignant")
 	public Response UpdateEnseignant(Enseignant enseignant)
 	{
-		if (DAO_Enseignant.UpdateEnseignant(enseignant))
+		Utilisateur oldUtilisateur = DAO_User.GetUserByID(enseignant.getId_utilisateur());
+
+		boolean checkUser = !DAO_User.UsernameExists(enseignant.getUser())
+				|| oldUtilisateur.getUser().equals(enseignant.getUser());
+		boolean checkEmail = !DAO_User.EmailExists(enseignant.getEmail())
+				|| oldUtilisateur.getEmail().equals(enseignant.getEmail());
+
+		if (checkUser && checkEmail)
 		{
-			return Utility.Response(Status.OK, MessageReader.GetNode("teacher_updated"));
+			if (DAO_Enseignant.UpdateEnseignant(enseignant))
+			{
+				return Utility.Response(Status.OK, MessageReader.GetNode("teacher_updated"));
+			} else
+			{
+				return Utility.Response(Status.INTERNAL_SERVER_ERROR, MessageReader.GetNode("teacher_not_updated"));
+			}
 		} else
 		{
-			return Utility.Response(Status.INTERNAL_SERVER_ERROR, MessageReader.GetNode("teacher_not_updated"));
+			if (!checkEmail)
+			{
+				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_email"));
+			}
+			if (!checkUser)
+			{
+				throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("change_username"));
+			}
+
+			throw new RequestNotValidException(Status.BAD_REQUEST, MessageReader.GetNode("internal_error"));
 		}
 	}
 
