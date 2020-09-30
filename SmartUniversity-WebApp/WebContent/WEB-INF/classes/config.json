@@ -1,7 +1,7 @@
 {
 	"mailerConfig": {
-		"user": "itachiuchiwa03@gmail.com",
-		"password": "jngsytseapohjlqu",
+		"user": "your@email.exp",
+		"password": "password@example",
 		"mail.smtp.auth": "true",
 		"mail.smtp.starttls.enable": "true",
 		"mail.smtp.host": "smtp.gmail.com",
